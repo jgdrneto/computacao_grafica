@@ -1,176 +1,182 @@
-/*!
- * TO COMMENT.
- */
-template<class ValueType> 
-inline std::istream& operator>>(std::istream& is, Vector<ValueType>& v) {
-    is >> v.e[Vector<ValueType>::X] >> v.e[Vector<ValueType>::Y] >> v.e[Vector<ValueType>::Z];
-    return is;
-}
+#include "vec3.h"
 
-/*!
- * TO COMMENT.
- */
-template<class ValueType> 
-inline std::ostream& operator<<(std::ostream& os, const Vector<ValueType>& v) {
-    os << "{ " << v.e[Vector<ValueType>::X] << " "
-               << v.e[Vector<ValueType>::Y] << " "
-               << v.e[Vector<ValueType>::Z] << " }";
-    return os;
-}
+    //
+    //=== Member function implementation.
+    //
+    inline void vec3::make_unit_vector( void )
+    {
+        /**
+         * +---> unit vector.
+         * |
+         *
+         * ^     1
+         * v = _____ * v
+         *     ||v||
+         *
+         * ||v|| = sqrt( v dot v )
+         *
+         *      1
+         * k =_____
+         *    ||v||
+         */
+        auto v_dot_v = e[X]*e[X] + e[Y]*e[Y] + e[Z]*e[Z] ;
+        // make sure we divide by zero here.
+        assert( fabs( v_dot_v - 0.f ) > 0.000001 );
+        value_type k = 1.f/ sqrt( v_dot_v );
+        e[X] *= k;
+        e[Y] *= k;
+        e[Z] *= k;
+    }
 
-/*!
- * TO COMMENT.
- */
-template<class ValueType>
-inline Vector<ValueType> operator+(const Vector<ValueType>& v1, const Vector<ValueType>& v2) {
-    return Vector<ValueType>(v1.e[Vector<ValueType>::X] + v2.e[Vector<ValueType>::X],
-                v1.e[Vector<ValueType>::Y] + v2.e[Vector<ValueType>::Y],
-                v1.e[Vector<ValueType>::Z] + v2.e[Vector<ValueType>::Z]);
-}
+    //
+    //=== Non-member function implementation: operator overloading.
+    //
 
-/*!
- * TO COMMENT.
- */
-template<class ValueType>
-inline Vector<ValueType> operator-(const Vector<ValueType>& v1, const Vector<ValueType>& v2) {
-    return Vector<ValueType>(v1.e[Vector<ValueType>::X] - v2.e[Vector<ValueType>::X],
-                           v1.e[Vector<ValueType>::Y] - v2.e[Vector<ValueType>::Y],
-                           v1.e[Vector<ValueType>::Z] - v2.e[Vector<ValueType>::Z]);
-}
+    inline std::istream& operator>>( std::istream& is, vec3 & v )
+    {
+        is >> v.e[vec3::field_t::X]
+            >> v.e[vec3::field_t::Y]
+            >> v.e[vec3::field_t::Z];
+        return is;
+    }
 
-/*!
- * TO COMMENT.
- */
-template<class ValueType>
-inline Vector<ValueType> operator*(const Vector<ValueType>& v1, const Vector<ValueType>& v2) {
-    return Vector<ValueType>(v1.e[Vector<ValueType>::X] * v2.e[Vector<ValueType>::X],
-                           v1.e[Vector<ValueType>::Y] * v2.e[Vector<ValueType>::Y],
-                           v1.e[Vector<ValueType>::Z] * v2.e[Vector<ValueType>::Z]);
-}
+    inline std::ostream& operator<<( std::ostream& os, const vec3 & v )
+    {
+        os << std::fixed << std::setprecision( 2 ) 
+            << "{ "
+            << v.e[vec3::field_t::X]
+            << " "
+            << v.e[vec3::field_t::Y]
+            << " "
+            << v.e[vec3::field_t::Z]
+            << " }";
 
-/*!
- * TO COMMENT.
- */
-template<class ValueType>
-inline Vector<ValueType> operator/(const Vector<ValueType>& v1, const Vector<ValueType>& v2) {
-    return Vector<ValueType>(v1.e[Vector<ValueType>::X] / v2.e[Vector<ValueType>::X],
-                           v1.e[Vector<ValueType>::Y] / v2.e[Vector<ValueType>::Y],
-                           v1.e[Vector<ValueType>::Z] / v2.e[Vector<ValueType>::Z]);
-}
+        return os;
+    }
 
-/*!
- * TO COMMENT.
- */
-template<class ValueType> 
-inline Vector<ValueType> operator*(const Vector<ValueType>& v, ValueType t) {
-    return Vector<ValueType>(v.e[Vector<ValueType>::X] * t,
-                           v.e[Vector<ValueType>::Y] * t,
-                           v.e[Vector<ValueType>::Z] * t);
-}
+    inline vec3 operator+( const vec3 & v1, const vec3 & v2 )
+    {
+        return vec3( v1.e[vec3::X] + v2.e[vec3::X],
+                v1.e[vec3::Y] + v2.e[vec3::Y],
+                v1.e[vec3::Z] + v2.e[vec3::Z] );
+    }
 
-/*!
- * TO COMMENT.
- */
-template<class ValueType> 
-inline Vector<ValueType> operator*(ValueType t, const Vector<ValueType>& v) {
-    return Vector<ValueType>( t * v.e[Vector<ValueType>::X] ,
-                            t * v.e[Vector<ValueType>::Y] ,
-                            t * v.e[Vector<ValueType>::Z]);
-}
+    inline vec3 operator-( const vec3 & v1, const vec3 & v2 )
+    {
+        return vec3( v1.e[vec3::X] - v2.e[vec3::X],
+                v1.e[vec3::Y] - v2.e[vec3::Y],
+                v1.e[vec3::Z] - v2.e[vec3::Z] );
+    }
 
-/*!
- * TO COMMENT.
- */
-template<class ValueType> 
-inline Vector<ValueType> operator/(const Vector<ValueType>& v, ValueType t) {
-    return Vector<ValueType>(v.e[Vector<ValueType>::X] / t,
-                           v.e[Vector<ValueType>::Y] / t,
-                           v.e[Vector<ValueType>::Z] / t);
-}
+    inline vec3 operator*( const vec3 & v1, const vec3 & v2 )
+    {
+        return vec3( v1.e[vec3::X] * v2.e[vec3::X],
+                v1.e[vec3::Y] * v2.e[vec3::Y],
+                v1.e[vec3::Z] * v2.e[vec3::Z] );
+    }
 
-/*!
- * TO COMMENT.
- */
-template<class ValueType>  
-inline ValueType dot(const Vector<ValueType>& v1, const Vector<ValueType>& v2) {
-    return (v1[Vector<ValueType>::X] * v2[Vector<ValueType>::X] +
-            v1[Vector<ValueType>::Y] * v2[Vector<ValueType>::Y] +
-            v1[Vector<ValueType>::Z] * v2[Vector<ValueType>::Z]);
-}
+    inline vec3 operator/( const vec3 & v1, const vec3 & v2 )
+    {
+        return vec3( v1.e[vec3::X] / v2.e[vec3::X],
+                v1.e[vec3::Y] / v2.e[vec3::Y],
+                v1.e[vec3::Z] / v2.e[vec3::Z] );
+    }
 
-/*!
- * TO COMMENT.
- */
-template<class ValueType> 
-inline Vector<ValueType> cross(const Vector<ValueType>& v1, const Vector<ValueType>& v2) {
-    return Vector<ValueType>((v1[Vector<ValueType>::Y] * v2[Vector<ValueType>::Z] - v1[Vector<ValueType>::Z] * v2[Vector<ValueType>::Y]),
-                           (v1[Vector<ValueType>::X] * v2[Vector<ValueType>::Z] - v1[Vector<ValueType>::Z] * v2[Vector<ValueType>::X]),
-                           (v1[Vector<ValueType>::X] * v2[Vector<ValueType>::Y] - v1[Vector<ValueType>::Y] * v2[Vector<ValueType>::X]));
-}
+    inline vec3 operator*( const vec3 & v, vec3::value_type t )
+    {
+        return vec3( v.e[vec3::X] * t,
+                v.e[vec3::Y] * t,
+                v.e[vec3::Z] * t );
+    }
 
-template<class ValueType> 
-inline Vector<ValueType>& Vector<ValueType>::operator+=(const Vector<ValueType>& v) {
-    e[Vector<ValueType>::X] += v.e[Vector<ValueType>::X];
-    e[Vector<ValueType>::Y] += v.e[Vector<ValueType>::Y];
-    e[Vector<ValueType>::Z] += v.e[Vector<ValueType>::Z];
-    return *this;
-}
+    inline vec3 operator*( vec3::value_type t, const vec3 & v )
+    {
+        return vec3( v.e[vec3::X] * t,
+                v.e[vec3::Y] * t,
+                v.e[vec3::Z] * t );
+    }
 
-template<class ValueType> 
-inline Vector<ValueType>& Vector<ValueType>::operator-=(const Vector<ValueType>& v) {
-    e[Vector<ValueType>::X] -= v.e[Vector<ValueType>::X];
-    e[Vector<ValueType>::Y] -= v.e[Vector<ValueType>::Y];
-    e[Vector<ValueType>::Z] -= v.e[Vector<ValueType>::Z];
-    return *this;
-}
+    inline vec3 operator/( const vec3 & v, vec3::value_type t )
+    {
+        return vec3( v.e[vec3::X] / t,
+                v.e[vec3::Y] / t,
+                v.e[vec3::Z] / t );
+    }
 
-template<class ValueType> 
-inline Vector<ValueType>& Vector<ValueType>::operator*=(const Vector<ValueType>& v) {
-    e[Vector<ValueType>::X] *= v.e[Vector<ValueType>::X];
-    e[Vector<ValueType>::Y] *= v.e[Vector<ValueType>::Y];
-    e[Vector<ValueType>::Z] *= v.e[Vector<ValueType>::Z];
-    return *this;
-}
+    inline vec3::value_type dot( const vec3 & v1, const vec3 & v2 )
+    {
+        return v1.e[vec3::X] * v2.e[vec3::X] +
+            v1.e[vec3::Y] * v2.e[vec3::Y] +
+            v1.e[vec3::Z] * v2.e[vec3::Z] ;
+    }
 
-template<class ValueType> 
-inline Vector<ValueType>& Vector<ValueType>::operator/=(const Vector<ValueType>& v) {
-    e[Vector<ValueType>::X] /= v.e[Vector<ValueType>::X];
-    e[Vector<ValueType>::Y] /= v.e[Vector<ValueType>::Y];
-    e[Vector<ValueType>::Z] /= v.e[Vector<ValueType>::Z];
-    return *this;
-}
+    inline vec3 cross( const vec3 & v1, const vec3 & v2 )
+    {
+        return vec3(    v1.e[vec3::Y] * v2.e[vec3::Z] - v1.e[vec3::Z] * v2.e[vec3::Y]  ,
+                -( v1.e[vec3::X] * v2.e[vec3::Z] - v1.e[vec3::Z] * v2.e[vec3::X] ),
+                v1.e[vec3::X] * v2.e[vec3::Y] - v1.e[vec3::Y] * v2.e[vec3::X]    );
+    }
 
-template<class ValueType>
-inline Vector<ValueType>& Vector<ValueType>::operator*=(const ValueType t) {
-    e[Vector<ValueType>::X] *= t;
-    e[Vector<ValueType>::Y] *= t;
-    e[Vector<ValueType>::Z] *= t;
-    return *this;
-}
+    inline vec3& vec3::operator+=( const vec3 & v )
+    {
+        e[X] += v.e[X];
+        e[Y] += v.e[Y];
+        e[Z] += v.e[Z];
 
-template<class ValueType>
-inline Vector<ValueType>& Vector<ValueType>::operator/=(const ValueType t) {
-    e[Vector<ValueType>::X] /= t;
-    e[Vector<ValueType>::Y] /= t;
-    e[Vector<ValueType>::Z] /= t;
-    return *this;
-}
+        return *this;
+    }
 
-/*!
- * TO COMMENT.
- */
-template<class ValueType>
-inline Vector<ValueType> unitVector(const Vector<ValueType>& v) {
-    return v / v.length();
-}
+    inline vec3& vec3::operator-=( const vec3 & v )
+    {
+        e[X] -= v.e[X];
+        e[Y] -= v.e[Y];
+        e[Z] -= v.e[Z];
 
-/*!
- * TO COMMENT.
- */
-template<class ValueType> 
-inline void Vector<ValueType>::makeUnitVector(void) {
-    ValueType k = (1 / sqrt(dot(*this, *this)));
-    e[Vector<ValueType>::X] *= k;
-    e[Vector<ValueType>::Y] *= k;
-    e[Vector<ValueType>::Z] *= k;
-}
+        return *this;
+    }
+
+    inline vec3& vec3::operator*=( const vec3 & v )
+    {
+        e[X] *= v.e[X];
+        e[Y] *= v.e[Y];
+        e[Z] *= v.e[Z];
+
+        return *this;
+    }
+
+    inline vec3& vec3::operator/=( const vec3 & v )
+    {
+        e[X] /= v.e[X];
+        e[Y] /= v.e[Y];
+        e[Z] /= v.e[Z];
+
+        return *this;
+    }
+
+    inline vec3& vec3::operator*=( const value_type t )
+    {
+        e[X] *= t;
+        e[Y] *= t;
+        e[Z] *= t;
+
+        return *this;
+    }
+
+    inline vec3& vec3::operator/=( const value_type t )
+    {
+        assert( fabs( t - 0.f ) > 0.000001 );
+        value_type k = 1.f/t;
+
+        e[X] *= k;
+        e[Y] *= k;
+        e[Z] *= k;
+
+        return *this;
+    }
+
+    inline static vec3 unit_vector( const vec3 & v )
+    {
+        return v / v.length() ;
+    }
+
+//==============================[ vec3.inl ]==============================//

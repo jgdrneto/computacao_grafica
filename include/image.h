@@ -6,7 +6,7 @@ class Image {
     public:
     
         // Image pixels
-        Pixel* pixels;
+        rgb* pixels;
         // Image width
         unsigned int width;
         // Image height

@@ -21,24 +21,24 @@
                                 this->scene.height = std::stoi(lexemes[i+2],nullptr,0);
                             }else{
                                 if(lexemes[i]=="UPPER_LEFT"){
-                                    this->scene.upper_left[Pixel::R] = std::stoi(lexemes[i+2],nullptr,0);
-                                    this->scene.upper_left[Pixel::G] = std::stoi(lexemes[i+3],nullptr,0);
-                                    this->scene.upper_left[Pixel::B] = std::stoi(lexemes[i+4],nullptr,0);
+                                    this->scene.upper_left[rgb::R] = std::stoi(lexemes[i+2],nullptr,0);
+                                    this->scene.upper_left[rgb::G] = std::stoi(lexemes[i+3],nullptr,0);
+                                    this->scene.upper_left[rgb::B] = std::stoi(lexemes[i+4],nullptr,0);
                                 }else{
                                     if(lexemes[i]=="UPPER_RIGHT"){
-                                        this->scene.upper_right[Pixel::R] = std::stoi(lexemes[i+2],nullptr,0);
-                                        this->scene.upper_right[Pixel::G] = std::stoi(lexemes[i+3],nullptr,0);
-                                        this->scene.upper_right[Pixel::B] = std::stoi(lexemes[i+4],nullptr,0);
+                                        this->scene.upper_right[rgb::R] = std::stoi(lexemes[i+2],nullptr,0);
+                                        this->scene.upper_right[rgb::G] = std::stoi(lexemes[i+3],nullptr,0);
+                                        this->scene.upper_right[rgb::B] = std::stoi(lexemes[i+4],nullptr,0);
                                     }else{
                                         if(lexemes[i]=="LOWER_RIGHT"){
-                                            this->scene.lower_right[Pixel::R] = std::stoi(lexemes[i+2],nullptr,0);
-                                            this->scene.lower_right[Pixel:: G] = std::stoi(lexemes[i+3],nullptr,0);
-                                            this->scene.lower_right[Pixel::B] = std::stoi(lexemes[i+4],nullptr,0);
+                                            this->scene.lower_right[rgb::R] = std::stoi(lexemes[i+2],nullptr,0);
+                                            this->scene.lower_right[rgb:: G] = std::stoi(lexemes[i+3],nullptr,0);
+                                            this->scene.lower_right[rgb::B] = std::stoi(lexemes[i+4],nullptr,0);
                                         }else{
                                             if(lexemes[i]=="LOWER_LEFT"){
-                                                this->scene.lower_left[Pixel::R] = std::stoi(lexemes[i+2],nullptr,0);
-                                                this->scene.lower_left[Pixel:: G] = std::stoi(lexemes[i+3],nullptr,0);
-                                                this->scene.lower_left[Pixel::B] = std::stoi(lexemes[i+4],nullptr,0);
+                                                this->scene.lower_left[rgb::R] = std::stoi(lexemes[i+2],nullptr,0);
+                                                this->scene.lower_left[rgb:: G] = std::stoi(lexemes[i+3],nullptr,0);
+                                                this->scene.lower_left[rgb::B] = std::stoi(lexemes[i+4],nullptr,0);
                                             }
                                         }
                                     }

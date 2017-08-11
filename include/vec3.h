@@ -1,169 +1,110 @@
-#ifndef _Vector_H_
-#define _Vector_H_
+#ifndef _VEC3_H_
+#define _VEC3_H_
 
-#include <cmath>
-#include <iostream>
-#include <cassert>
+#include <cmath>        // sqrt, fabs
+#include <iostream>     // cout, cin, endl
+#include <cassert>      // assert()
+#include <initializer_list> // initializer_list
+#include <algorithm>    // copy
+#include <iterator>     // std::begin(), std::end(), std::next()
+#include <iomanip>      // setprecision()
 
-/*!
- * This class represents a 3D vector, that might be used to represent points,
- * directions, vectors, colors, offset.
- */
-template <class ValueType>
-class Vector {
+    /*!
+     * Represents a 3D vector, that might be used to represent
+     * points, directions, vectors, colors, offset
+     */
 
-    public:
-        // Aliases
-        
-        //typedef float ValueType;
-        
-        enum FieldType : int {X = 0, Y = 1, Z = 2,
-                              R = 0, G = 1, B = 2};
+    class vec3
+    {
+        public:
+            //=== Aliases
+            typedef float value_type;
+            enum field_t { X=0, Y=1, Z=2, R=0, G=1, B=2 };
 
-        // 3D vector
-        ValueType e[3];
+            //=== Members
+            value_type e[ 3 ];
 
-        /*!
-         * 3D vector constructor.
-         *
-         * @param e0_ Element 0
-         * @param e1_ Element 1
-         * @param e2_ Element 2
-         */
-        Vector(ValueType e0_ = 0, ValueType e1_ = 0, ValueType e2_ = 0)
-            : e{e0_, e1_, e2_} { /* empty */ }
+            //=== Special members
+            explicit vec3( float e0_=0.f, float e1_=0.f, float e2_=0.f )
+                : e{ e0_, e1_, e2_ }
+            { /* empty */ }
 
-        /* ----------------------- Access Operators ------------------------- */
+            // Copy contructor
+            vec3( const vec3 & other_ )
+                : e{ other_.e[X], other_.e[Y], other_.e[Z] }
+            { /* empty */ }
 
-        /*!
-         * Get x value.
-         *
-         * @return X value
-         */
-        inline ValueType x() const { return e[X]; }
+            vec3( std::initializer_list< value_type > il_ )
+            {
+                assert( il_.size() >= 3 ) ;
+                std::copy( il_.begin(), std::next( il_.begin(), 3 ), std::begin(e) );
+            }
 
-        /*!
-         * Get y value.
-         *
-         * @return Y value
-         */
-        inline ValueType y() const { return e[Y]; }
+            //=== Access operators
+            inline value_type x() const { return e[X]; }
+            inline value_type y() const { return e[Y]; }
+            inline value_type z() const { return e[Z]; }
+            inline value_type r() const { return e[R]; }
+            inline value_type g() const { return e[G]; }
+            inline value_type b() const { return e[B]; }
 
-        /*!
-         * Get z value.
-         *
-         * @return Z value
-         */
-        inline ValueType z() const { return e[Z]; }
+            // indexed access operator (rhs)
+            inline value_type operator[]( size_t idx ) const { return e[ idx ]; }
+            // indexed access operator (lhs)
+            inline value_type& operator[]( size_t idx ) { return e[ idx ]; }
 
-        /*!
-         * Get red value.
-         *
-         * @return Red value
-         */
-        inline ValueType r() const { return e[R]; }
+            //=== Algebraic operators
 
-        /*!
-         * Get green value.
-         *
-         * @return Green value
-         */
-        inline ValueType g() const { return e[G]; }
+            bool operator==( const vec3 & other_ ) const
+            {
+                return fabs( e[X] - other_.e[X] ) < 0.00001f and
+                    fabs( e[Y] - other_.e[Y] ) < 0.00001f and
+                    fabs( e[Z] - other_.e[Z] ) < 0.00001f    ;
+            }
 
-        /*!
-         * Get blue value.
-         *
-         * @return Blue value
-         */
-        inline ValueType b() const { return e[B]; }
+            vec3 & operator=( const vec3 & other_ )
+            {
+                e[X] = other_.e[X];
+                e[Y] = other_.e[Y];
+                e[Z] = other_.e[Z];
+                return *this;
+            }
 
-        /*!
-         * Indexed access operator (rhs).
-         *
-         * @param idx Index
-         */
-        inline ValueType operator[](size_t idx) const { return e[idx]; }
+            vec3 & operator=(std::initializer_list< value_type > il_ )
+            {
+                assert( il_.size() >= 3 ) ;
+                std::copy( il_.begin(), std::next( il_.begin(), 3 ), std::begin(e) );
+                return *this;
+            }
 
-        /*!
-         * Indexed access operator (lhs).
-         *
-         * @param Index
-         */
-        inline ValueType& operator[](size_t idx) { return e[idx]; }
 
-        /* --------------------- Algebraic Operators ------------------------ */
+            // Unary '+'
+            inline const vec3& operator+( void ) const { return *this; }
+            // Unary '-'
+            inline vec3 operator-( void ) const { return vec3( -e[X], -e[Y], -e[Z] ); }
 
-        /*!
-         * Unary '+'.
-         */
-        inline const Vector& operator+(void) const { return *this; }
+            inline vec3& operator+=( const vec3& );
+            inline vec3& operator-=( const vec3& );
+            inline vec3& operator*=( const vec3& );
+            inline vec3& operator/=( const vec3& );
+            inline vec3& operator*=( const value_type );
+            inline vec3& operator/=( const value_type );
 
-        /*!
-         * Unary '-'.
-         */
-        inline Vector operator-(void) const { return Vector(-e[X], -e[Y], -e[Z]); }
+            inline value_type length( void ) const
+            {
+                return sqrt( e[X]*e[X] + e[Y]*e[Y] + e[Z]*e[Z] );
+            }
+            inline value_type squared_length( void ) const
+            {
+                return ( e[X]*e[X] + e[Y]*e[Y] + e[Z]*e[Z] );
+            }
+            inline void make_unit_vector( void );
+    };
 
-        /*!
-         * TO COMMENT.
-         */
-        inline Vector& operator+=(const Vector&);
-
-        /*!
-         * TO COMMENT.
-         */
-        inline Vector& operator-=(const Vector&);
-
-        /*!
-         * TO COMMENT.
-         */
-        inline Vector& operator*=(const Vector&);
-
-        /*!
-         * TO COMMENT.
-         */
-        inline Vector& operator/=(const Vector&);
-
-        /*!
-         * TO COMMENT.
-         */
-        inline Vector& operator*=(const ValueType);
-
-        /*!
-         * TO COMMENT.
-         */
-        inline Vector& operator/=(const ValueType);
-
-        /* ------------------------------------------------------------------ */
-
-        /*!
-         * Get vector length.
-         *
-         * @return Vector length
-         */
-        inline ValueType length(void) const {
-            return sqrt(squaredLength());
-        }
-
-        /*!
-         * Get vector length squared.
-         *
-         * @return Vector length squared
-         */
-        inline ValueType squaredLength(void) const {
-            return (e[X]*e[X] + e[Y]*e[Y] + e[Z]*e[Z]);
-        }
-
-        /*!
-         * Make this vector an unit vector.
-         */
-        inline void makeUnitVector(void);
-};
-
-typedef Vector<unsigned char> Pixel; 
-typedef Vector<unsigned char> Color;
-typedef Vector<float> Offset;
-typedef Vector<float> Point3;
-typedef Vector<float> Vec3;
+    typedef vec3 rgb;
+    typedef vec3 offset;
+    typedef vec3 point3;
+    // namespace utility
 
 #include "../src/vec3.inl"
 

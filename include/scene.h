@@ -20,10 +20,10 @@ class Scene {
         int height;
 
         //Values of pixels of bords
-        Pixel upper_left;
-        Pixel lower_left;
-        Pixel upper_right;
-        Pixel lower_right;
+        rgb upper_left;
+        rgb lower_left;
+        rgb upper_right;
+        rgb lower_right;
     
 };
 

@@ -3,15 +3,13 @@
 
 #include "vec3.h"
 
-using namespace utility;
-
 class Ray {
 
 	private:
 		// Ray origin
-		Point3 origin;
+		point3 origin;
 		// Ray direction
-		Vec3 direction;
+		vec3 direction;
 
 	public:
 		// Alias
@@ -23,7 +21,7 @@ class Ray {
 		 * @param origin_ Ray origin
 		 * @param direction_ Ray direction
 		 */
-		Ray(Point3 origin_ = Point3(), Vec3 direction_ = Vec3()) :
+		Ray(point3 origin_ = point3(), vec3 direction_ = vec3()) :
 			origin(origin_), direction(direction_) { /* Empty */ }
 
 		/* ------------------------ Access Methods -------------------------- */
@@ -33,19 +31,19 @@ class Ray {
 		 *
 		 * @return Ray direction
 		 */
-		inline Vec3 getDirection(void) const { return direction; }
+		inline vec3 get_direction(void) const { return direction; }
 
 		/**
 		 * Get ray origin.
 		 *
 		 * @return Ray origin
 		 */
-		inline Vec3 getOrigin(void) const { return origin; }
+		inline vec3 get_origin(void) const { return origin; }
 
 		/**
 		 * TO COMMENT.
 		 */
-		Point3 pointAt(RealType t_) const {
+		point3 pointAt(RealType t_) const {
 			return origin + t_ * direction;
 		}
 };

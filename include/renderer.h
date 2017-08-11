@@ -2,16 +2,17 @@
 #define _READERER_H_
 
 #include "scene.h"
+#include "image.h"
+#include "camera.h"
+#include "ray.h"	
 
 class Renderer{
     private:    
         Scene scene;
+        Camera camera;
     public:
         Renderer(Scene&);
-        Renderer(Scene&, Pixel* pixels);
-        Image& createImage();    
-        
-        
+        Image& createILImage();            
 };
 
 #include "../src/renderer.cpp"
