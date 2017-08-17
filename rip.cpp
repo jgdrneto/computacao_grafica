@@ -13,8 +13,8 @@ int main(int argc, char *argv[]) {
     	ReaderScene reader(argv[1]);
     
  		Renderer renderer(reader.getScene());                       
-   	
- 		Printer p(renderer.createILImage(), "PPM","saida.ppm");
+   		
+ 		Printer p(renderer.createSphImage(), "PPM","saida.ppm");
  	}
     return 0;
 }

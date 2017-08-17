@@ -12,7 +12,8 @@ class Renderer{
         Camera camera;
     public:
         Renderer(Scene&);
-        Image& createILImage();            
+        Image& createILImage();
+        Image& createSphImage();            
 };
 
 #include "../src/renderer.cpp"
