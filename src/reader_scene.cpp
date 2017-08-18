@@ -21,24 +21,40 @@
                                 this->scene.height = std::stoi(lexemes[i+2],nullptr,0);
                             }else{
                                 if(lexemes[i]=="UPPER_LEFT"){
-                                    this->scene.upper_left[rgb::R] = std::stoi(lexemes[i+2],nullptr,0);
-                                    this->scene.upper_left[rgb::G] = std::stoi(lexemes[i+3],nullptr,0);
-                                    this->scene.upper_left[rgb::B] = std::stoi(lexemes[i+4],nullptr,0);
+                                    this->scene.upper_left[rgb::R] = std::stof(lexemes[i+2].c_str())/255;
+                                    this->scene.upper_left[rgb::G] = std::stof(lexemes[i+3].c_str())/255;
+                                    this->scene.upper_left[rgb::B] = std::stof(lexemes[i+4].c_str())/255;
                                 }else{
                                     if(lexemes[i]=="UPPER_RIGHT"){
-                                        this->scene.upper_right[rgb::R] = std::stoi(lexemes[i+2],nullptr,0);
-                                        this->scene.upper_right[rgb::G] = std::stoi(lexemes[i+3],nullptr,0);
-                                        this->scene.upper_right[rgb::B] = std::stoi(lexemes[i+4],nullptr,0);
+                                        this->scene.upper_right[rgb::R] = std::stof(lexemes[i+2].c_str())/255;
+                                        this->scene.upper_right[rgb::G] = std::stof(lexemes[i+3].c_str())/255;
+                                        this->scene.upper_right[rgb::B] = std::stof(lexemes[i+4].c_str())/255;
                                     }else{
                                         if(lexemes[i]=="LOWER_RIGHT"){
-                                            this->scene.lower_right[rgb::R] = std::stoi(lexemes[i+2],nullptr,0);
-                                            this->scene.lower_right[rgb:: G] = std::stoi(lexemes[i+3],nullptr,0);
-                                            this->scene.lower_right[rgb::B] = std::stoi(lexemes[i+4],nullptr,0);
+                                            this->scene.lower_right[rgb::R] = std::stof(lexemes[i+2].c_str())/255;
+                                            this->scene.lower_right[rgb:: G] = std::stof(lexemes[i+3].c_str())/255;
+                                            this->scene.lower_right[rgb::B] = std::stof(lexemes[i+4].c_str())/255;
                                         }else{
                                             if(lexemes[i]=="LOWER_LEFT"){
-                                                this->scene.lower_left[rgb::R] = std::stoi(lexemes[i+2],nullptr,0);
-                                                this->scene.lower_left[rgb:: G] = std::stoi(lexemes[i+3],nullptr,0);
-                                                this->scene.lower_left[rgb::B] = std::stoi(lexemes[i+4],nullptr,0);
+                                                this->scene.lower_left[rgb::R] = std::stof(lexemes[i+2].c_str())/255;
+                                                this->scene.lower_left[rgb:: G] = std::stof(lexemes[i+3].c_str())/255;
+                                                this->scene.lower_left[rgb::B] = std::stof(lexemes[i+4].c_str())/255;
+                                            }else{
+                                                if(lexemes[i]=="FOREGROUND_DEPTH"){
+                                                    this->scene.foreground_depth[rgb::R] = std::stof(lexemes[i+2].c_str())/255;
+                                                    this->scene.foreground_depth[rgb:: G] = std::stof(lexemes[i+3].c_str())/255;
+                                                    this->scene.foreground_depth[rgb::B] = std::stof(lexemes[i+4].c_str())/255;
+                                                }else{
+                                                    if(lexemes[i]=="BACKGROUND_DEPTH"){
+                                                        this->scene.background_depth[rgb::R] = std::stof(lexemes[i+2].c_str())/255;
+                                                        this->scene.background_depth[rgb:: G] = std::stof(lexemes[i+3].c_str())/255;
+                                                        this->scene.background_depth[rgb::B] = std::stof(lexemes[i+4].c_str())/255;
+                                                    }else{
+                                                        if(lexemes[i]=="MAX_DEPHT"){
+                                                            this->scene.max_depth = std::stof(lexemes[i+2].c_str());
+                                                        }
+                                                    }
+                                                }
                                             }
                                         }
                                     }

@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
     
  		Renderer renderer(reader.getScene());                       
    		
- 		Printer p(renderer.createSphImage(), "PPM","saida.ppm");
+ 		Printer p(renderer.createSpheresImage(), "PPM","saida.ppm");
  	}
     return 0;
 }

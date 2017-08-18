@@ -4,7 +4,8 @@
 #include "scene.h"
 #include "image.h"
 #include "camera.h"
-#include "ray.h"	
+#include "ray.h"
+#include "sphere.h"	
 
 class Renderer{
     private:    
@@ -13,7 +14,8 @@ class Renderer{
     public:
         Renderer(Scene&);
         Image& createILImage();
-        Image& createSphImage();            
+        Image& createSphImage();
+        Image& createSpheresImage();            
 };
 
 #include "../src/renderer.cpp"

@@ -24,6 +24,11 @@ class Scene {
         rgb lower_left;
         rgb upper_right;
         rgb lower_right;
+
+        rgb foreground_depth;
+        rgb background_depth;
+
+        float max_depth;
     
 };
 

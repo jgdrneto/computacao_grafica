@@ -43,7 +43,7 @@ class Ray {
 		/**
 		 * TO COMMENT.
 		 */
-		point3 pointAt(RealType t_) const {
+		point3 point_at(RealType t_) const {
 			return origin + t_ * direction;
 		}
 };
