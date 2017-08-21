@@ -12,11 +12,8 @@ class Renderizador{
         Cena cena;
         Camera camera;
     public:
-	
-	CorRGB (*colorir)(Raio&); 
-	
         Renderizador(Cena&);
-        Imagem& CriarImagem();            
+        Imagem& CriarImagem( CorRGB (*colorir)(Raio&,Cena&));            
 };
 
 #include "../src/renderizador.cpp"

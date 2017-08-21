@@ -3,21 +3,21 @@
 
 #include <string>
 
-#include "vec3.h"
+#include "Vetor.h"
 
-class Scene {
+class Cena {
     
     public:
         // Image name
-        std::string name;
+        std::string nome;
         // Image type
-        std::string type;
+        std::string tipo;
         // Image codification
-        std::string codification;
+        std::string codificacao;
         // Image width
-        int width;
+        int largura;
         // Image height
-        int height;
+        int altura;
 
         //Values of pixels of bords
         rgb upper_left;
@@ -28,7 +28,7 @@ class Scene {
         rgb foreground_depth;
         rgb background_depth;
 
-        float max_depth;
+        float profundidadeMaxima;
     
 };
 
