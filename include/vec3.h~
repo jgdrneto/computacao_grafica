@@ -105,7 +105,8 @@
     typedef vec3 offset;
     typedef vec3 Ponto3;
     typedef vec3 Vetor3;
- 
+    // namespace utility
+
 #include "../src/vec3.inl"
 
 #endif

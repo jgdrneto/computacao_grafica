@@ -20,13 +20,13 @@ class Cena {
         int altura;
 
         //Values of pixels of bords
-        rgb upper_left;
-        rgb lower_left;
-        rgb upper_right;
-        rgb lower_right;
+        CorRGB superiorEsquerdo;
+        CorRGB inferiorEsquerdo;
+        CorRGB superiorDireito;
+        CorRGB inferiorDireito;
 
-        rgb foreground_depth;
-        rgb background_depth;
+        CorRGB primeiroPlano;
+        CorRGB ultimoPlano;
 
         float profundidadeMaxima;
     

@@ -1,6 +1,6 @@
 //================================================================
 
-//Useful methods
+//Métodos uteis
 
 //================================================================
 
@@ -11,31 +11,31 @@
 #include <fstream>
 #include <iterator>
 
-std::vector<std::string> readLines(std::string file_name){
+std::vector<std::string> lerLinhas(std::string nomeArquivo){
 
-    std::ifstream file;
+    std::ifstream arquivo;
 
-    std::string line;
-    std::vector<std::string> lines;
+    std::string linha;
+    std::vector<std::string> linhas;
 
-    file.open(file_name);
+    arquivo.open(nomeArquivo);
 
-    if (file.is_open()){
+    if (arquivo.is_open()){
         
-        while ( getline (file,line) ) {
+        while ( getline (arquivo,linha) ) {
 
             //add line in vector of lines
 
-            if(!line.empty()){
+            if(!linha.empty()){
 
-                lines.push_back(line);
+                linhas.push_back(linha);
 
             }
         }
-        file.close();
+        arquivo.close();
     }
     
-    return lines;
+    return linhas;
 }
 
 std::vector<std::string> split(const std::string& str) {
@@ -43,7 +43,7 @@ std::vector<std::string> split(const std::string& str) {
     return {std::istream_iterator<std::string>{ss}, std::istream_iterator<std::string>{}};
 }
 
-std::vector<std::string> readLexemes(std::vector<std::string> lines){
+std::vector<std::string> lerLexemas(std::vector<std::string> lines){
 
     std::vector<std::string> lexemes;
 

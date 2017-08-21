@@ -1,0 +1,17 @@
+
+Impressora::Impressora(Imagem& imagem,std::string type ,std::string file_name){
+	
+	std::ofstream outfile (file_name);
+	
+	if(type=="PPM"){
+		
+		outfile << "P3\n";
+		outfile << imagem.largura << " " << imagem.altura << "\n";
+		outfile << "255\n";
+		for(unsigned int i=0;i<imagem.altura*imagem.altura;i++){
+			outfile << imagem.pixeis[i].e[CorRGB::R] << " " << imagem.pixeis[i].e[CorRGB::G] << " " << imagem.pixeis[i].e[CorRGB::B] << "\n";
+		}
+	}
+
+	outfile.close();
+}

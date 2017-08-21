@@ -17,6 +17,6 @@ public:
 	Acerto* Acertar(Raio,float,float);
 };
 
-#include "../src/esfera.cpp"
+#include "../src/sphere.cpp"
 
 #endif

@@ -16,7 +16,7 @@ bool hit_sphere( const Raio& raio, const Ponto3& centro, float r){
     auto oc = raio.get_origin() - centro;
     auto a = dot(raio.getDirecao(), raio.getDirecao());
     auto b = 2 * dot(oc, raio.getDirecao());
-    auto c = dot(oc, oc) - (r*r);
+    auto c = dot(oc, oc) - (r* r);
 
     return (b*b - 4*a*c) >=0;
 
