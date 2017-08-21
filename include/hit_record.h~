@@ -4,7 +4,7 @@
 #include "vec3.h"
 #include "material.h"
 
-class HitRecord{
+class Acerto{
 
 public:
 

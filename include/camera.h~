@@ -12,7 +12,7 @@ public:
     Ponto3 origem;
 
     Camera();
-    Camera(Ponto3&,Vetor3&,Vetor3&,Ponto3&);
+    Camera(Ponto3&,Vetor3&,Vector3&,Ponto3&);
 
 };
 

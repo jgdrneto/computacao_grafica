@@ -1,16 +1,16 @@
-#ifndef _IMAGE_H_
-#define _IMAGE_H_
+#ifndef _IMAGEM_H_
+#define _IMAGEM_H_
 
-class Image {
+class Imagem {
     
     public:
     
         // Image pixels
-        rgb* pixels;
+        CorRGB* pixeis;
         // Image width
-        unsigned int width;
+        unsigned int largura;
         // Image height
-        unsigned int height;
+        unsigned int altura;
 
         /**
          * Image constructor.
@@ -18,14 +18,14 @@ class Image {
          * @param Image width
          * @param Image height
          */
-        Image(unsigned int, unsigned int);
+        Imagem(unsigned int, unsigned int);
         
         /**
          * Image destructor.
          */
-        ~Image();
+        ~Imagem();
 };
 
-#include "../src/image.cpp"
+#include "../src/imagem.cpp"
 
 #endif
