@@ -1,9 +1,0 @@
-#ifndef _MATERIAL_H_
-#define _MATERIAL_H_
-
-#include "vector.h"
-
-class Material{
-	
-};
-#endif
