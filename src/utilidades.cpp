@@ -1,3 +1,6 @@
+#ifndef _UTILIDADES_
+#define _UTILIDADES_
+
 //================================================================
 
 //Métodos uteis
@@ -6,7 +9,9 @@
 
 #include <string>
 #include <vector>
+
 #include <iostream>
+
 #include <sstream>
 #include <fstream>
 #include <iterator>
@@ -58,3 +63,5 @@ std::vector<std::string> lerLexemas(std::vector<std::string> linhas){
 
     return lexemas;
 }
+
+#endif

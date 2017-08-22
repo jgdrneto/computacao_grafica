@@ -7,6 +7,8 @@
 
 #include "vetor.h"
 
+#include "../src/utilidades.cpp"
+
 class LeitorCena {
     
     private :

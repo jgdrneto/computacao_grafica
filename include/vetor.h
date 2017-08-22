@@ -106,6 +106,6 @@
     typedef vec3 Ponto3;
     typedef vec3 Vetor3;
  
-#include "../src/vec3.inl"
+#include "../src/vetor.inl"
 
 #endif

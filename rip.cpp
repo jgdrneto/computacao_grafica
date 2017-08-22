@@ -1,20 +1,20 @@
 #include <iostream>
 #include <stdlib.h>
 
-#include "reader_scene.h"
-#include "vec3.h"
-#include "renderer.h"
-#include "printer.h"
+#include "leitor_cena.h"
+#include "vetor.h"
+#include "renderizador.h"
+#include "impressora.h"
 
 int main(int argc, char *argv[]) {
     
 	if(argc>1){
 
-    	ReaderScene reader(argv[1]);
+    	LeitorCena reader(argv[1]);
     
- 		Renderer renderer(reader.getScene());                       
+ 		Renderizador renderer(reader.getCena());                       
    		
- 		Printer p(renderer.createSpheresImage(), "PPM","saida.ppm");
+ 		Impressora p(renderer.criarImagem(colorSphere), "PPM","saida.ppm");
  	}
     return 0;
 }

@@ -1,5 +1,3 @@
-#include "vec3.h"
-
     //
     //=== Member function implementation.
     //

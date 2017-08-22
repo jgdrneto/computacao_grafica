@@ -11,32 +11,30 @@ Renderizador::Renderizador(Cena& nCena){
     this->camera = *(new Camera(*canto_inferior_esquerdo,*horizontal,*vertical,*origem));
 
 }
-
 bool hit_sphere( const Raio& raio, const Ponto3& centro, float r){
-    auto oc = raio.get_origin() - centro;
+    auto oc = raio.getOrigem() - centro;
     auto a = dot(raio.getDirecao(), raio.getDirecao());
     auto b = 2 * dot(oc, raio.getDirecao());
     auto c = dot(oc, oc) - (r*r);
 
     return (b*b - 4*a*c) >=0;
-
 }
 
-rgb colorSphere(const Raio & r_, Cena& scene){
-    rgb top (0.5, 0.7, 1 );
-    rgb bottom(1,1,1);
+CorRGB colorSphere(Raio& raio, Cena& scene){
+    CorRGB top (0.5, 0.7, 1 );
+    CorRGB bottom(1,1,1);
     
-    if(hit_sphere(r_, point3(0.5,0,-1), 0.5)){
-        return rgb(1,0,0);
+    if(hit_sphere(raio, Ponto3(0.5,0,-1), 0.5)){
+        return CorRGB(1,0,0);
     }
 
-    auto unit_ray = unit_vector(r_.get_direction());
+    auto unit_ray = unit_vector(raio.getDirecao());
 
     auto unit_ray_y = unit_ray.y();
 
     auto t = 0.5*(unit_ray_y+1);
 
-    rgb result = bottom*(1-t)+top*t;
+    CorRGB result = bottom*(1-t)+top*t;
 
     // TODO: determine the background color, which is an linear interpolation between bottom->top.
     // The interpolation is based on where the ray hits the background.
@@ -45,19 +43,18 @@ rgb colorSphere(const Raio & r_, Cena& scene){
 
     return result; // Stub, replace it accordingly
 }
-
-Image& Renderizador::createSphImage(){
-    Image* image = new Image(this->scene.width,scene.height);
+Imagem& Renderizador::criarImagem(CorRGB (*colorir)(Raio&,Cena&)){
+    Imagem* imagem = new Imagem(this->cena.largura,this->cena.altura);
 
     int cont=0;
 
-    for ( auto row{this->scene.height-1} ; row >= 0 ; --row ) // Y
+    for ( auto row{this->cena.altura-1} ; row >= 0 ; --row ) // Y
     {
-        for( auto col{0} ; col < this->scene.width ; col++ ) // X
+        for( auto col{0} ; col < this->cena.largura ; col++ ) // X
         {
             // Determine how much we have 'walked' on the image: in [0,1]
-            auto u = float(col) / float( this->scene.width ); // walked u% of the horizontal dimension of the view plane.
-            auto v = float(row) / float( this->scene.height ); // walked v% of the vertical dimension of the view plane.
+            auto u = float(col) / float( this->cena.largura ); // walked u% of the horizontal dimension of the view plane.
+            auto v = float(row) / float( this->cena.altura ); // walked v% of the vertical dimension of the view plane.
 
             // Determine the ray's direction, based on the pixel coordinate (col,row).
             // We are mapping (matching) the view plane (vp) to the image.
@@ -68,48 +65,48 @@ Image& Renderizador::createSphImage(){
             // (b) To get the end point of ray we just have to 'walk' from the
             // vp's origin + horizontal displacement (proportional to 'col') +
             // vertical displacement (proportional to 'row').
-            point3 end_point = this->camera.lower_left_corner + u*this->camera.horizontal + v*this->camera.vertical ;
+            Ponto3 end_point = this->camera.canto_inferior_esquerdo + u*this->camera.horizontal + v*this->camera.vertical ;
             // The ray:
-            Raio r( this->camera.origin, end_point - this->camera.origin );
+            Raio r( this->camera.origem, end_point - this->camera.origem );
 
             // Determine the color of the ray, as it travels through the virtual space.
-            auto c = colorSphere( r ,this->scene);
+            auto c = colorir( r ,this->cena);
   
-            int ir = int( 255.99f * c[rgb::R] );
-            int ig = int( 255.99f * c[rgb::G] );
-            int ib = int( 255.99f * c[rgb::B] );
+            int ir = int( 255.99f * c[CorRGB::R] );
+            int ig = int( 255.99f * c[CorRGB::G] );
+            int ib = int( 255.99f * c[CorRGB::B] );
             
             //std::cout << ir << " " << ig << " " << ib << "\n";
 
-            image->pixels[cont++] = *(new rgb(ir,ig,ib));
+            imagem->pixeis[cont++] = *(new CorRGB(ir,ig,ib));
         }
     }
 
-    return *(image);
+    return *(imagem);
 }
 
-rgb color( const Raio & r_, Cena& scene)
+CorRGB color(Raio& r_, Cena& cena)
 {	
+	
+	CorRGB upper_left = cena.superiorEsquerdo;
+	CorRGB upper_right = cena.superiorDireito;
+	CorRGB lower_left = cena.inferiorEsquerdo;
+	CorRGB lower_right = cena.inferiorDireito;
 
-	rgb upper_left = scene.upper_left;
-	rgb upper_right = scene.upper_right;
-	rgb lower_left = scene.lower_left;
-	rgb lower_right = scene.lower_right;
-
-	/*
-    rgb top (0.5, 0.7, 1 );
-    rgb bottom(1,1,1);
+	
+    CorRGB top (0.5, 0.7, 1 );
+    CorRGB bottom(1,1,1);
     
-    if(hit_sphere(r_, point3(0.5,0,-1), 0.2))
-        return rgb(1,0,0);
+    if(hit_sphere(r_, Ponto3(0.5,0,-1), 0.2))
+        return CorRGB(1,0,0);
 
-    if(hit_sphere(r_, point3(0,0,-1), 0.2))
-        return rgb(1,0,0);
+    if(hit_sphere(r_, Ponto3(0,0,-1), 0.2))
+        return CorRGB(1,0,0);
 
-    if(hit_sphere(r_, point3(-0.5,0,-1), 0.2))
-        return rgb(1,0,0);
-	*/
-    auto unit_ray = r_.get_direction();
+    if(hit_sphere(r_, Ponto3(-0.5,0,-1), 0.2))
+        return CorRGB(1,0,0);
+	
+    auto unit_ray = r_.getDirecao();
 
     auto unit_ray_y = unit_ray.y();
     auto unit_ray_x = unit_ray.x();
@@ -117,7 +114,7 @@ rgb color( const Raio & r_, Cena& scene)
     auto t = 0.5*(unit_ray_y)+0.5;
     auto u = 0.25*(unit_ray_x)+0.5;
 
-    rgb result = (lower_left*(1-t)*(1-u) +
+    CorRGB result = (lower_left*(1-t)*(1-u) +
     			  upper_left*t*(1-u) +
     			  lower_right*(1-t)*(u) +
     			  upper_right*t*u 	
@@ -129,8 +126,9 @@ rgb color( const Raio & r_, Cena& scene)
     // the virtual world we want to visualize is empty!
 
     return result; // Stub, replace it accordingly
+    
 }
-
+/*
 Image& Renderizador::createILImage(){
 	
 	Image* image = new Image(this->scene.width,scene.height);
@@ -175,12 +173,13 @@ Image& Renderizador::createILImage(){
 }            
 
 //=====================================================================================================
-
+*/
 /*  
  * Returns de Z component, if the ray hits the sphere, or infinity otherwise  
  *  
  * TODO: only works with a 2D sphere  
- */ 
+ */
+/*  
 float hit_sphere_z ( const Raio & r_, const point3 & c_, float radius_ )
 {  
     // First, manipulate the 1), 2) and 3) line to create the 4) equation   
@@ -298,4 +297,4 @@ Image& Renderizador::createSpheresImage(){
 
     return *(image);
 }            
-
+*/

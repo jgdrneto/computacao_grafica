@@ -14,7 +14,7 @@ public:
 
 	Esfera(Ponto3,Material,float);
 	
-	Acerto* Acertar(Raio,float,float);
+	Acerto* acertar(Raio,float,float);
 };
 
 #include "../src/esfera.cpp"

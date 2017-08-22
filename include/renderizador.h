@@ -5,9 +5,7 @@
 #include "imagem.h"
 #include "camera.h"
 #include "raio.h"
-#include "Esfera.h"	
-#include "../src/utilidades.cpp"
-
+#include "esfera.h"	
 
 class Renderizador{
     private:    
@@ -15,7 +13,7 @@ class Renderizador{
         Camera camera;
     public:
         Renderizador(Cena&);
-        Imagem& CriarImagem( CorRGB (*colorir)(Raio&,Cena&));            
+        Imagem& criarImagem( CorRGB (*colorir)(Raio&,Cena&));            
 };
 
 #include "../src/renderizador.cpp"
