@@ -1,6 +1,8 @@
 #ifndef _RENDERIZADOR_H_
 #define _RENDERIZADOR_H_
 
+#include <random>
+
 #include "cena.h"
 #include "imagem.h"
 #include "camera.h"

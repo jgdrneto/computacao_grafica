@@ -52,6 +52,10 @@
                                                     }else{
                                                         if(lexemas[i]=="MAX_DEPHT"){
                                                             this->cena.profundidadeMaxima = std::stof(lexemas[i+2].c_str());
+                                                        }else{
+                                                            if(lexemas[i]=="SAMPLES"){
+                                                                this->cena.amostras = std::stoi(lexemas[i+2].c_str(), nullptr,0);
+                                                            }
                                                         }
                                                     }
                                                 }

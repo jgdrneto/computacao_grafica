@@ -44,6 +44,7 @@ CorRGB colorSphere(Raio& raio, Cena& scene){
     return result; // Stub, replace it accordingly
 }
 Imagem& Renderizador::criarImagem(CorRGB (*colorir)(Raio&,Cena&)){
+    
     Imagem* imagem = new Imagem(this->cena.largura,this->cena.altura);
 
     int cont=0;
@@ -51,34 +52,41 @@ Imagem& Renderizador::criarImagem(CorRGB (*colorir)(Raio&,Cena&)){
     for ( auto row{this->cena.altura-1} ; row >= 0 ; --row ) // Y
     {
         for( auto col{0} ; col < this->cena.largura ; col++ ) // X
-        {
-            // Determine how much we have 'walked' on the image: in [0,1]
-            auto u = float(col) / float( this->cena.largura ); // walked u% of the horizontal dimension of the view plane.
-            auto v = float(row) / float( this->cena.altura ); // walked v% of the vertical dimension of the view plane.
+        {   
+            CorRGB somaCores(0,0,0);
 
-            // Determine the ray's direction, based on the pixel coordinate (col,row).
-            // We are mapping (matching) the view plane (vp) to the image.
-            // To create a ray we need: (a) an origin, and (b) an end point.
-            //
-            // (a) The ray's origin is the origin of the camera frame (which is the same as the world's frame).
-            //
-            // (b) To get the end point of ray we just have to 'walk' from the
-            // vp's origin + horizontal displacement (proportional to 'col') +
-            // vertical displacement (proportional to 'row').
-            Ponto3 end_point = this->camera.canto_inferior_esquerdo + u*this->camera.horizontal + v*this->camera.vertical ;
-            // The ray:
-            Raio r( this->camera.origem, end_point - this->camera.origem );
+            for(int i=0;i<cena.amostras;i++)
+            {
+                // Determine how much we have 'walked' on the image: in [0,1]
+                auto u = float(col + drand48()) / float( this->cena.largura ); // walked u% of the horizontal dimension of the view plane.
+                auto v = float(row + drand48()) / float( this->cena.altura ); // walked v% of the vertical dimension of the view plane.
 
-            // Determine the color of the ray, as it travels through the virtual space.
-            auto c = colorir( r ,this->cena);
-  
-            int ir = int( 255.99f * c[CorRGB::R] );
-            int ig = int( 255.99f * c[CorRGB::G] );
-            int ib = int( 255.99f * c[CorRGB::B] );
-            
-            //std::cout << ir << " " << ig << " " << ib << "\n";
+                // Determine the ray's direction, based on the pixel coordinate (col,row).
+                // We are mapping (matching) the view plane (vp) to the image.
+                // To create a ray we need: (a) an origin, and (b) an end point.
+                //
+                // (a) The ray's origin is the origin of the camera frame (which is the same as the world's frame).
+                //
+                // (b) To get the end point of ray we just have to 'walk' from the
+                // vp's origin + horizontal displacement (proportional to 'col') +
+                // vertical displacement (proportional to 'row').
+                Ponto3 end_point = this->camera.canto_inferior_esquerdo + u*this->camera.horizontal + v*this->camera.vertical ;
+                // The ray:
+                Raio r( this->camera.origem, end_point - this->camera.origem );
 
-            imagem->pixeis[cont++] = *(new CorRGB(ir,ig,ib));
+                // Determine the color of the ray, as it travels through the virtual space.
+                somaCores+=colorir( r ,this->cena);
+
+                //std::cout << ir << " " << ig << " " << ib << "\n";
+            }
+
+                CorRGB c = somaCores/cena.amostras;
+
+                int ir = int( 255.99f * c[CorRGB::R] );
+                int ig = int( 255.99f * c[CorRGB::G] );
+                int ib = int( 255.99f * c[CorRGB::B] );
+
+                imagem->pixeis[cont++] = *(new CorRGB(ir,ig,ib));
         }
     }
 

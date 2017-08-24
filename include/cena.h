@@ -19,6 +19,8 @@ class Cena {
         // Image height
         int altura;
 
+        int amostras;
+
         //Values of pixels of bords
         CorRGB superiorEsquerdo;
         CorRGB inferiorEsquerdo;
@@ -29,7 +31,11 @@ class Cena {
         CorRGB ultimoPlano;
 
         float profundidadeMaxima;
-    
+        
+        Cena();
+
 };
+
+#include "../src/cena.cpp"
 
 #endif

@@ -1,0 +1,11 @@
+Cena::Cena():
+nome("Nulo"),
+tipo("PPM"),
+codificacao("ascii"),
+largura(0),
+altura(0),
+amostras(1),
+profundidadeMaxima(10)
+{
+	//NULL
+}
