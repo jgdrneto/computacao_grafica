@@ -8,7 +8,7 @@
 
 class Impressora{
 public:
-	Impressora(Imagem&,std::string,std::string);
+	static void salvarImagem(Imagem&,std::string,std::string);
 };
 
 #include "../src/impressora.cpp"

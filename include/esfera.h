@@ -11,6 +11,8 @@ class Esfera : public Objeto {
 public:
 
 	float r;
+	
+	Esfera();
 
 	Esfera(Ponto3,Material,float);
 	

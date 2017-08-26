@@ -10,17 +10,9 @@
 #include "../src/utilidades.cpp"
 
 class LeitorCena {
-    
-    private :
-    
-        Cena cena;
-    
-    public :
-    
-        LeitorCena(std::string);
-        
-        Cena& getCena();
-        
+
+	public :
+        static Cena& lerCena(std::string);    
 };
 
 #include "../src/leitor_cena.cpp"

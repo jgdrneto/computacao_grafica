@@ -10,11 +10,12 @@
 #include "raio.h"
 #include "esfera.h"	
 
-class Renderizador{
-    private:    
-        Cena cena;
-        Camera camera;
+class Renderizador{    
     public:
+    	Cena cena;
+        Camera camera;
+
+    	Renderizador();
         Renderizador(Cena&);
         Imagem& criarImagem( CorRGB (*colorir)(Raio&,Cena&));          
 };

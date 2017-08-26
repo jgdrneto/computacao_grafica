@@ -1,5 +1,5 @@
 
-Impressora::Impressora(Imagem& imagem,std::string tipo ,std::string nomeArquivo){
+void Impressora::salvarImagem(Imagem& imagem,std::string tipo ,std::string nomeArquivo){
 	
 	std::ofstream arquivo (nomeArquivo);
 	

@@ -11,14 +11,15 @@ profundidadeMaxima(10)
 }
 
 Acerto* Cena::acertarObjetos(Raio& raio, float tMin, float tMax){
-	Acerto* acerto = nullptr;
+	
 	Acerto* tempAcerto = nullptr;
+	Acerto* acerto = nullptr;
 
 	double tDec = tMax;
 
 	for(unsigned int i=0;i<this->objetos.size();i++){
 		
-		tempAcerto = this->objetos[i]->acertar(raio,tMin,tDec); 
+		tempAcerto = this->objetos[i]->acertar(raio,tMin,tDec);
 
 		if(tempAcerto!=nullptr){
 			

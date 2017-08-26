@@ -1,4 +1,9 @@
+Renderizador::Renderizador(){
+    //NULL
+}
+
 Renderizador::Renderizador(Cena& nCena){
+    /*
     this->cena = nCena;
 
     //Make camera
@@ -15,7 +20,7 @@ Renderizador::Renderizador(Cena& nCena){
     Esfera* esfera = new Esfera(Ponto3(0,0,-1),Material(),0.5f);
 
     this->cena.objetos.push_back(esfera);
-
+    */
 }
 
 CorRGB colorSphere(Raio& raio, Cena& cena){
@@ -29,8 +34,7 @@ CorRGB colorSphere(Raio& raio, Cena& cena){
         return 0.5*Vetor3(acerto->normal.x()+1,acerto->normal.y()+1,acerto->normal.z()+1);
     }else{
         Vetor3 unit_ray = unit_vector(raio.getDirecao());
-        auto unit_ray_y = unit_ray.y();
-        float t = 0.5*(unit_ray_y+1);
+        float t = 0.5*(unit_ray.y()+1.0);
         return (1-t)*bottom+t*top;
     }
 
