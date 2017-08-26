@@ -10,39 +10,32 @@ Renderizador::Renderizador(Cena& nCena){
 
     this->camera = *(new Camera(*canto_inferior_esquerdo,*horizontal,*vertical,*origem));
 
-}
-bool hit_sphere( const Raio& raio, const Ponto3& centro, float r){
-    auto oc = raio.getOrigem() - centro;
-    auto a = dot(raio.getDirecao(), raio.getDirecao());
-    auto b = 2 * dot(oc, raio.getDirecao());
-    auto c = dot(oc, oc) - (r*r);
+    //Criando objetos na cena
 
-    return (b*b - 4*a*c) >=0;
+    Esfera* esfera = new Esfera(Ponto3(0,0,-1),Material(),0.5f);
+
+    this->cena.objetos.push_back(esfera);
+
 }
 
-CorRGB colorSphere(Raio& raio, Cena& scene){
+CorRGB colorSphere(Raio& raio, Cena& cena){
+    
     CorRGB top (0.5, 0.7, 1 );
     CorRGB bottom(1,1,1);
-    
-    if(hit_sphere(raio, Ponto3(0.5,0,-1), 0.5)){
-        return CorRGB(1,0,0);
+
+    Acerto* acerto = cena.acertarObjetos(raio,0,cena.profundidadeMaxima);
+
+    if(acerto!=nullptr){
+        return 0.5*Vetor3(acerto->normal.x()+1,acerto->normal.y()+1,acerto->normal.z()+1);
+    }else{
+        Vetor3 unit_ray = unit_vector(raio.getDirecao());
+        auto unit_ray_y = unit_ray.y();
+        float t = 0.5*(unit_ray_y+1);
+        return (1-t)*bottom+t*top;
     }
 
-    auto unit_ray = unit_vector(raio.getDirecao());
-
-    auto unit_ray_y = unit_ray.y();
-
-    auto t = 0.5*(unit_ray_y+1);
-
-    CorRGB result = bottom*(1-t)+top*t;
-
-    // TODO: determine the background color, which is an linear interpolation between bottom->top.
-    // The interpolation is based on where the ray hits the background.
-    // Imagine that the background is attached to the view-plane; in other words,
-    // the virtual world we want to visualize is empty!
-
-    return result; // Stub, replace it accordingly
 }
+
 Imagem& Renderizador::criarImagem(CorRGB (*colorir)(Raio&,Cena&)){
     
     Imagem* imagem = new Imagem(this->cena.largura,this->cena.altura);
@@ -76,8 +69,6 @@ Imagem& Renderizador::criarImagem(CorRGB (*colorir)(Raio&,Cena&)){
 
                 // Determine the color of the ray, as it travels through the virtual space.
                 somaCores+=colorir( r ,this->cena);
-
-                //std::cout << ir << " " << ig << " " << ib << "\n";
             }
 
                 CorRGB c = somaCores/cena.amostras;
@@ -92,7 +83,7 @@ Imagem& Renderizador::criarImagem(CorRGB (*colorir)(Raio&,Cena&)){
 
     return *(imagem);
 }
-
+/*
 CorRGB color(Raio& r_, Cena& cena)
 {	
 	
@@ -136,6 +127,7 @@ CorRGB color(Raio& r_, Cena& cena)
     return result; // Stub, replace it accordingly
     
 }
+*/
 /*
 Image& Renderizador::createILImage(){
 	

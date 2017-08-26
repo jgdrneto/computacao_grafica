@@ -2,6 +2,7 @@
 #define _RENDERIZADOR_H_
 
 #include <random>
+#include <vector>
 
 #include "cena.h"
 #include "imagem.h"
@@ -15,7 +16,7 @@ class Renderizador{
         Camera camera;
     public:
         Renderizador(Cena&);
-        Imagem& criarImagem( CorRGB (*colorir)(Raio&,Cena&));            
+        Imagem& criarImagem( CorRGB (*colorir)(Raio&,Cena&));          
 };
 
 #include "../src/renderizador.cpp"

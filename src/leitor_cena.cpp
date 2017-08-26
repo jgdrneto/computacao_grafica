@@ -55,6 +55,10 @@
                                                         }else{
                                                             if(lexemas[i]=="SAMPLES"){
                                                                 this->cena.amostras = std::stoi(lexemas[i+2].c_str(), nullptr,0);
+                                                            }else{
+                                                                if(lexemas[i]=="RAY_DEPTH"){
+                                                                    this->cena.profundidadeRaio = std::stoi(lexemas[i+2].c_str(), nullptr,0);
+                                                                }
                                                             }
                                                         }
                                                     }

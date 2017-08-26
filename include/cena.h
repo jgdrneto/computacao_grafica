@@ -4,6 +4,8 @@
 #include <string>
 
 #include "vetor.h"
+#include "objeto.h"
+#include "acerto.h"
 
 class Cena {
     
@@ -32,7 +34,14 @@ class Cena {
 
         float profundidadeMaxima;
         
+        float profundidadeRaio;
+
+        std::vector<Objeto*> objetos;
+
+        //Métodos
         Cena();
+
+        Acerto* acertarObjetos(Raio&,float,float);
 
 };
 
