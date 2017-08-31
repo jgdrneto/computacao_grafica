@@ -27,11 +27,14 @@ Rip::Rip(std::string arquivoCena){
     this->renderizador.camera = LeitorCamera::lerConfCamera(arquivoCena);
 }
 
-void Rip::renderizar(CorRGB (*colorir)(Raio&,Cena&)){
+void Rip::renderizar(CorRGB (*nAcertarObjetos)(Raio&,Renderizador&, Acerto&), CorRGB (*nNacertarObjetos)(Raio&,Renderizador&, Acerto&) = nullptr){
         
     std::cout << "Realizando Renderização da imagem..." << std::endl;
-        
-    this->imagem = this->renderizador.criarImagem(colorir);
+    
+    this->renderizador.acertarObjetos = nAcertarObjetos;
+    this->renderizador.nAcertarObjetos = nNacertarObjetos;
+
+    this->imagem = this->renderizador.criarImagem();
 
 }
 

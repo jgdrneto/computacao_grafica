@@ -3,6 +3,9 @@
 
 #include "rip.h"
 
+#include "funcoesColorir.cpp"
+
+//Método principal
 int main(int argc, char *argv[]) {
 
 	if(argc>1){
@@ -19,10 +22,10 @@ int main(int argc, char *argv[]) {
 			break;	
 		}	
 	
-		rip->renderizar(colorSphere);
+		rip->renderizar(acertarObjetos,nAcertarObjetos);
 
 		rip->salvarImagem("PPM", "saida.ppm");
- 	
+ 		
 	}
 
     return 0;

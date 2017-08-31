@@ -23,24 +23,30 @@ Renderizador::Renderizador(Cena& nCena){
     */
 }
 
-CorRGB colorSphere(Raio& raio, Cena& cena){
+CorRGB Renderizador::colorir(Raio& raio){
     
+    /*
     CorRGB top (0.5, 0.7, 1 );
     CorRGB bottom(1,1,1);
+	*/
 
-    Acerto* acerto = cena.acertarObjetos(raio,0,cena.profundidadeMaxima);
+    Acerto* acerto = this->cena.acertarObjetos(raio,0,this->cena.profundidadeMaxima);
 
     if(acerto!=nullptr){
-        return 0.5*Vetor3(acerto->normal.x()+1,acerto->normal.y()+1,acerto->normal.z()+1);
+
+    	return this->acertarObjetos(raio, *(this), *(acerto));
     }else{
-        Vetor3 unit_ray = unit_vector(raio.getDirecao());
-        float t = 0.5*(unit_ray.y()+1.0);
-        return (1-t)*bottom+t*top;
+
+    	if(this->nAcertarObjetos!=nullptr){
+    		return this->nAcertarObjetos(raio,*(this),*(acerto));
+		}else{
+			return cena.ultimoPlano;
+		}
     }
 
 }
 
-Imagem& Renderizador::criarImagem(CorRGB (*colorir)(Raio&,Cena&)){
+Imagem& Renderizador::criarImagem(){
    	
    	std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
 
@@ -76,10 +82,12 @@ Imagem& Renderizador::criarImagem(CorRGB (*colorir)(Raio&,Cena&)){
                 Raio r( this->camera.origem, end_point - this->camera.origem );
 
                 // Determine the color of the ray, as it travels through the virtual space.
-                somaCores+=colorir( r ,this->cena);
+                somaCores+=colorir(r);
             }
 
                 CorRGB c = somaCores/cena.amostras;
+
+                c = CorRGB(sqrt(c[CorRGB::R]),sqrt(c[CorRGB::G]),sqrt(c[CorRGB::B]));
 
                 int ir = int( 255.99f * c[CorRGB::R] );
                 int ig = int( 255.99f * c[CorRGB::G] );

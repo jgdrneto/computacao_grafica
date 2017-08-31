@@ -20,7 +20,7 @@ public:
 
 	Rip(std::string,std::string);
 
-	void renderizar(CorRGB (*colorir)(Raio&,Cena&));
+	void renderizar(CorRGB (*nAcertarObjetos)(Raio&,Renderizador&, Acerto&), CorRGB (*nNacertarObjetos)(Raio&,Renderizador&, Acerto&));
 
 	void salvarImagem(std::string,std::string);
 };

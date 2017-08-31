@@ -15,13 +15,19 @@
 class Renderizador{    
 	private:
     	BarraProgresso barraProgresso;
+
     public:
     	Cena cena;
         Camera camera;
 
+        CorRGB (*acertarObjetos)(Raio&,Renderizador&, Acerto&); 
+
+    	CorRGB (*nAcertarObjetos)(Raio&,Renderizador&, Acerto&);
+
     	Renderizador();
         Renderizador(Cena&);
-        Imagem& criarImagem( CorRGB (*colorir)(Raio&,Cena&));          
+        Imagem& criarImagem();
+        CorRGB colorir(Raio&);          
 };
 
 #include "../src/renderizador.cpp"
