@@ -41,7 +41,11 @@ CorRGB colorSphere(Raio& raio, Cena& cena){
 }
 
 Imagem& Renderizador::criarImagem(CorRGB (*colorir)(Raio&,Cena&)){
-    
+   	
+   	std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
+
+   	this->barraProgresso.setDimensao(this->cena.altura*this->cena.largura);
+
     Imagem* imagem = new Imagem(this->cena.largura,this->cena.altura);
 
     int cont=0;
@@ -82,8 +86,16 @@ Imagem& Renderizador::criarImagem(CorRGB (*colorir)(Raio&,Cena&)){
                 int ib = int( 255.99f * c[CorRGB::B] );
 
                 imagem->pixeis[cont++] = *(new CorRGB(ir,ig,ib));
+
+                barraProgresso.incrementar();
         }
     }
+
+    std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
+     
+    std::chrono::duration<double> duration = t2 - t1;
+
+    std::cout << "\nTempo de renderização: " << duration.count() << " segundo(s)" << std::endl;
 
     return *(imagem);
 }

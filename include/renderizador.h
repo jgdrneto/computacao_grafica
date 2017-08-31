@@ -3,14 +3,18 @@
 
 #include <random>
 #include <vector>
+#include <chrono>
 
 #include "cena.h"
 #include "imagem.h"
 #include "camera.h"
 #include "raio.h"
-#include "esfera.h"	
+#include "esfera.h"
+#include "barra_progresso.h"	
 
 class Renderizador{    
+	private:
+    	BarraProgresso barraProgresso;
     public:
     	Cena cena;
         Camera camera;
