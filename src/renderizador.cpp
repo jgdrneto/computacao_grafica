@@ -25,16 +25,12 @@ Renderizador::Renderizador(Cena& nCena){
 
 CorRGB Renderizador::colorir(Raio& raio){
     
-    /*
-    CorRGB top (0.5, 0.7, 1 );
-    CorRGB bottom(1,1,1);
-	*/
-
     Acerto* acerto = this->cena.acertarObjetos(raio,0,this->cena.profundidadeMaxima);
 
     if(acerto!=nullptr){
-
-    	return this->acertarObjetos(raio, *(this), *(acerto));
+    	
+        return this->acertarObjetos(raio, *(this), *(acerto));
+    
     }else{
 
     	if(this->nAcertarObjetos!=nullptr){
@@ -87,7 +83,7 @@ Imagem& Renderizador::criarImagem(){
 
                 CorRGB c = somaCores/cena.amostras;
 
-                c = CorRGB(sqrt(c[CorRGB::R]),sqrt(c[CorRGB::G]),sqrt(c[CorRGB::B]));
+                c = CorRGB(pow(c[CorRGB::R],1.0/this->cena.gama),pow(c[CorRGB::G],1.0/this->cena.gama),pow(c[CorRGB::B],1.0/this->cena.gama));
 
                 int ir = int( 255.99f * c[CorRGB::R] );
                 int ig = int( 255.99f * c[CorRGB::G] );

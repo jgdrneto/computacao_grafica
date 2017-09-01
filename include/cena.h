@@ -23,6 +23,8 @@ class Cena {
 
         int amostras;
 
+        int gama;
+
         //Values of pixels of bords
         CorRGB superiorEsquerdo;
         CorRGB inferiorEsquerdo;

@@ -14,7 +14,7 @@ CorRGB acertarObjetos(Raio& raio, Renderizador& renderizador, Acerto& acerto){
 
 	Vetor3 alvo = acerto.ponto + acerto.normal + aleatoriaNaEsfera();
 
-	return 0.5*renderizador.colorir( *(new Raio(acerto.ponto, alvo - acerto.ponto)));
+	return 0.5*gitrenderizador.colorir( *(new Raio(acerto.ponto, alvo - acerto.ponto)));
 }
 
 //Função para quando não acertar um objeto

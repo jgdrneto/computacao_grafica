@@ -60,6 +60,10 @@ Cena& LeitorCena::lerCena(std::string nomeArquivo){
                                                         }else{
                                                             if(lexemas[i]=="RAY_DEPTH"){
                                                                 cena->profundidadeRaio = std::stoi(lexemas[i+2].c_str(), nullptr,0);
+                                                            }else{
+                                                                if(lexemas[i]=="GAMA"){
+                                                                    cena->gama = std::stoi(lexemas[i+2].c_str(), nullptr,0);
+                                                                }
                                                             }
                                                         }
                                                     }

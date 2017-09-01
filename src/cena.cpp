@@ -5,6 +5,7 @@ codificacao("ascii"),
 largura(0),
 altura(0),
 amostras(1),
+gama(1),
 profundidadeMaxima(10)
 {
 	//NULL
