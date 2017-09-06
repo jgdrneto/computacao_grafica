@@ -4,6 +4,8 @@
 #include "vetor.h"
 
 class Material{
+
+public:
 	
 };
 #endif

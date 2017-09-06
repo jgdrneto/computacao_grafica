@@ -1,4 +1,4 @@
-Esfera::Esfera(Ponto3 nOrigem,Material nMaterial, float nR)
+Esfera::Esfera(Ponto3 nOrigem,Material* nMaterial, float nR)
 {
 	this->origem = nOrigem;
 	this->material = nMaterial;
@@ -33,7 +33,7 @@ Acerto* Esfera::acertar(Raio raio,float tMin,float tMax){
     	   	acerto->t = temp;
     		acerto->ponto = raio.apontar(acerto->t);	
     		acerto->normal = (acerto->ponto - this->origem)/this->r;
-    	    
+    	    acerto->material = this->material;
             return acerto;   
         }	
 
@@ -46,7 +46,8 @@ Acerto* Esfera::acertar(Raio raio,float tMin,float tMax){
             acerto->t = temp;
             acerto->ponto = raio.apontar(acerto->t);    
             acerto->normal = (acerto->ponto - this->origem)/this->r;
-            
+            acerto->material = this->material;
+
             return acerto;  
         }	
     	

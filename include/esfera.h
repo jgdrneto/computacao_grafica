@@ -14,7 +14,7 @@ public:
 	
 	Esfera();
 
-	Esfera(Ponto3,Material,float);
+	Esfera(Ponto3,Material*,float);
 	
 	Acerto* acertar(Raio,float,float);
 };

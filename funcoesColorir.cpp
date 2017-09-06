@@ -1,4 +1,3 @@
-
 Vetor3 aleatoriaNaEsfera(){
 	Vetor3 p;
 
@@ -14,7 +13,7 @@ CorRGB acertarObjetos(Raio& raio, Renderizador& renderizador, Acerto& acerto){
 
 	Vetor3 alvo = acerto.ponto + acerto.normal + aleatoriaNaEsfera();
 
-	return 0.5*gitrenderizador.colorir( *(new Raio(acerto.ponto, alvo - acerto.ponto)));
+	return 0.5*renderizador.colorir( *(new Raio(acerto.ponto, alvo - acerto.ponto)));
 }
 
 //Função para quando não acertar um objeto
@@ -27,3 +26,13 @@ CorRGB nAcertarObjetos(Raio& raio,Renderizador& renderizador, Acerto& acerto){
     float t = 0.5*(unit_ray.y()+1.0);
     return (1-t)*bottom+t*top;
 }
+
+
+//BlinFound shader
+
+CorRGB blinnFound(Raio& raio, Renderizador& renderizador, Acerto& acerto){
+
+	
+	
+	return CorRGB(0,0,0);
+}	

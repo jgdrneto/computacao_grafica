@@ -6,7 +6,7 @@
 
 #include "objeto.h"
 #include "esfera.h"
-
+#include "lambertiano.h"
 #include "vetor.h"
 
 #include "../src/utilidades.cpp"

@@ -6,6 +6,7 @@
 #include "vetor.h"
 #include "objeto.h"
 #include "acerto.h"
+#include "luz.h"
 
 class Cena {
     
@@ -24,6 +25,10 @@ class Cena {
         int amostras;
 
         int gama;
+
+        std::vector<Luz> luzesAmbientes; 
+
+        Luz luzDirecional;
 
         //Values of pixels of bords
         CorRGB superiorEsquerdo;

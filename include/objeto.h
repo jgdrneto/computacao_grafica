@@ -9,7 +9,7 @@ class Objeto{
 
 public:
 	Ponto3 origem;
-	Material material; 
+	Material* material; 
 	virtual Acerto* acertar (Raio,float,float)=0;
 };
 

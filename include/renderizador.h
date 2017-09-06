@@ -4,6 +4,7 @@
 #include <random>
 #include <vector>
 #include <chrono>
+#include <thread>
 
 #include "cena.h"
 #include "imagem.h"
@@ -13,13 +14,11 @@
 #include "barra_progresso.h"	
 
 class Renderizador{    
-	private:
-    	BarraProgresso barraProgresso;
-
     public:
     	Cena cena;
         Camera camera;
-
+        BarraProgresso barraProgresso;
+        
         CorRGB (*acertarObjetos)(Raio&,Renderizador&, Acerto&); 
 
     	CorRGB (*nAcertarObjetos)(Raio&,Renderizador&, Acerto&);

@@ -11,7 +11,7 @@ public:
 	float t;
 	Vetor3 normal;
 	Ponto3 ponto;
-	Material material;
+	Material* material;
 };
 
 
