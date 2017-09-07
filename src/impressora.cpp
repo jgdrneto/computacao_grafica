@@ -1,9 +1,13 @@
 
 void Impressora::salvarImagem(Imagem& imagem,std::string tipo ,std::string nomeArquivo){
 	
-	std::ofstream arquivo (nomeArquivo);
+	std::stringstream ss;
+
+	ss << nomeArquivo << "." << tipo;
+
+	std::ofstream arquivo (ss.str());
 	
-	if(tipo=="PPM"){
+	if(tipo=="ppm"){
 		
 		arquivo << "P3\n";
 		arquivo << imagem.largura << " " << imagem.altura << "\n";

@@ -22,9 +22,17 @@ int main(int argc, char *argv[]) {
 			break;	
 		}	
 	
-		rip->renderizar(acertarObjetos,nAcertarObjetos);
+		rip->renderizar(blinnFoundObjetos,nAcertarObjetos);
 
-		rip->salvarImagem("PPM", "saida.ppm");
+		std::string arquivo(argv[1]);
+
+  		std::size_t pos = arquivo.find(".");
+
+  		std::string nome = arquivo.substr(0,pos);  
+
+  		std::cout << "Nome: " << nome << std::endl;
+ 
+		rip->salvarImagem("ppm", nome);
  		
 	}
 
