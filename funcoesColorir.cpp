@@ -73,20 +73,22 @@ CorRGB blinnFoundObjetos(Raio& raio, Renderizador& renderizador, Acerto& acerto)
 	Vetor3 ia = lambertiano->ambiente;
 	Vetor3 kd = lambertiano->difuso;
 	Vetor3 N = acerto.normal;
-	Vetor3 ka = renderizador.cena.luzesAmbientes[0].intensidade;
-	Luz luz = renderizador.cena.luzDirecional;
-
+	Vetor3 ka = renderizador.cena.luzAmbiente.intensidade;
+	
 	CorRGB c1, c2;
 
-	Vetor3 halfDir = unit_vector(unit_vector(luz.direcao) - raio.getDirecao());
-	float especular = max(0.0, dot(halfDir, acerto.normal));
-	
-	especular = pow(especular, p);
+	for(Luz luz : renderizador.cena.luzesDirecionais){
+
+		Vetor3 halfDir = unit_vector(unit_vector(luz.direcao) - raio.getDirecao());
+		float especular = max(0.0, dot(halfDir, acerto.normal));
 		
-	c1 += (kd * dot(unit_vector(luz.direcao  - N), acerto.normal)) * luz.intensidade;
-	c2 += ks * especular * luz.intensidade; 
+		especular = pow(especular, p);
+			
+		c1 += (kd * max(0,dot(unit_vector(luz.direcao  - N), acerto.normal))) * luz.intensidade;
+		c2 += ks * especular * luz.intensidade; 
+	}
 
 	CorRGB c0 = ka*ia;
 
-	return normalizarMinMax(c0+c1+c2);	
+	return normalizarMinMax(c1+c2)+c0;	
 }		

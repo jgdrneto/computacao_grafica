@@ -26,9 +26,9 @@ class Cena {
 
         int gama;
 
-        std::vector<Luz> luzesAmbientes; 
+        std::vector<Luz> luzesDirecionais; 
 
-        Luz luzDirecional;
+        Luz luzAmbiente;
 
         //Values of pixels of bords
         CorRGB superiorEsquerdo;
