@@ -25,7 +25,7 @@ Renderizador::Renderizador(Cena& nCena){
 
 CorRGB Renderizador::colorir(Raio& raio){
     
-    Acerto* acerto = this->cena.acertarObjetos(raio,0,this->cena.profundidadeMaxima);
+    Acerto* acerto = this->cena.acertarObjetos(raio,0.001,this->cena.profundidadeMaxima);
 
     if(acerto!=nullptr){
     	

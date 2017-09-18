@@ -24,6 +24,8 @@ int main(int argc, char *argv[]) {
 	
 		rip->renderizar(blinnFoundObjetos,nAcertarObjetos);
 
+		//rip->renderizar(mapaProfundidadeAcerto,mapaProfundidadenAcerto);
+
 		std::string arquivo(argv[1]);
 
   		std::size_t pos = arquivo.find(".");

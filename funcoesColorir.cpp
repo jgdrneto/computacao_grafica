@@ -42,7 +42,7 @@ float max(float a, float b){
 	return b;
 }
 
-CorRGB normalizarMinMax(CorRGB c){
+CorRGB corrigirCor(CorRGB c){
 	if(c.r() > 1.f){
 		c.e[0] = 1.0;
 	}
@@ -71,24 +71,66 @@ CorRGB blinnFoundObjetos(Raio& raio, Renderizador& renderizador, Acerto& acerto)
 	Vetor3 ks = lambertiano->especular;
 	float p = lambertiano->expoenteEspecular;
 	Vetor3 ia = lambertiano->ambiente;
-	Vetor3 kd = lambertiano->difuso;
+	CorRGB kd = lambertiano->difuso;
 	Vetor3 N = acerto.normal;
 	Vetor3 ka = renderizador.cena.luzAmbiente.intensidade;
+
+	//=================================
+
 	
-	CorRGB c1, c2;
-
-	for(Luz luz : renderizador.cena.luzesDirecionais){
-
-		Vetor3 halfDir = unit_vector(unit_vector(luz.direcao) - raio.getDirecao());
-		float especular = max(0.0, dot(halfDir, acerto.normal));
-		
-		especular = pow(especular, p);
-			
-		c1 += (kd * max(0,dot(unit_vector(luz.direcao  - N), acerto.normal))) * luz.intensidade;
-		c2 += ks * especular * luz.intensidade; 
-	}
+	
+	//=================================
 
 	CorRGB c0 = ka*ia;
+	CorRGB c1,c2;
 
-	return normalizarMinMax(c1+c2)+c0;	
+	for(Luz luz : renderizador.cena.luzesDirecionais){
+		
+		Vetor3 halfDir = unit_vector(unit_vector(luz.direcao) - raio.getDirecao());
+		float especular = max(0.0, dot(halfDir, acerto.normal));
+		especular = pow(especular, p);
+		
+		Raio r(acerto.ponto,luz.direcao);		
+
+		Acerto* acerto2 = renderizador.cena.acertarObjetos(r,0.001,renderizador.cena.profundidadeMaxima);
+
+		if(acerto2!=NULL){
+			c1+= (kd * max(0, dot(unit_vector(luz.direcao - N), acerto.normal))) * luz.intensidade;				
+		}
+
+		c2+= ks * especular * luz.intensidade;
+		
+		
+		/*
+		Vetor3 h = raio.getDirecao() + luz.direcao;
+
+		Vetor3 H = h/sqrt( (h.e[X]*h.e[X] + h.e[Y]*h.e[Y] + h.e[Z]*h.e[Z]) );  
+
+		c1 += corrigirCor(kd * dot(acerto.direcao,N));
+		c1 += corrigirCor(ks * dot(N,H));
+		//c1 += normalizarMinMax((kd * dot(unit_vector(luz.direcao  - N), acerto.normal)) * luz.intensidade);
+		//c2 += normalizarMinMax(ks * especular * luz.intensidade); 
+
+
+
+		Acerto* acerto = renderizador.cena.acertarObjetos(r,0.001,renderizador.cena.profundidadeMaxima);
+
+		
+		*/
+		
+	}
+
+	return corrigirCor(c0+c1+c2);
+	//return c1+c2+c0;	
 }		
+
+CorRGB mapaProfundidadeAcerto(Raio& raio, Renderizador& renderizador, Acerto& acerto){
+	
+	float d = acerto.t/renderizador.cena.profundidadeMaxima;
+
+	return renderizador.cena.primeiroPlano * (1-d) + renderizador.cena.ultimoPlano * d;  
+}
+
+CorRGB mapaProfundidadenAcerto(Raio& raio, Renderizador& renderizador, Acerto& acerto){
+	return renderizador.cena.ultimoPlano;
+}
