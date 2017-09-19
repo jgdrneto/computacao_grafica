@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
 			break;	
 		}	
 	
-		rip->renderizar(blinnFoundObjetos,nAcertarObjetos);
+		rip->renderizar(blinnFoundObjetos2,nAcertarObjetos);
 
 		//rip->renderizar(mapaProfundidadeAcerto,mapaProfundidadenAcerto);
 
