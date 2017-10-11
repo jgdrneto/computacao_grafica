@@ -2,7 +2,7 @@
 #define _ACERTO_H_
 
 #include "vetor.h"
-#include "material.h"
+#include "materiais/material.h"
 
 class Acerto{
 

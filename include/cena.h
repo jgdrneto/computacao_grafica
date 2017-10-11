@@ -4,9 +4,9 @@
 #include <string>
 
 #include "vetor.h"
-#include "objeto.h"
+#include "objetos/objeto.h"
 #include "acerto.h"
-#include "luz.h"
+#include "luzes/luz.h"
 
 class Cena {
     

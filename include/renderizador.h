@@ -8,9 +8,9 @@
 
 #include "cena.h"
 #include "imagem.h"
-#include "camera.h"
+#include "cameras/camera.h"
 #include "raio.h"
-#include "esfera.h"
+#include "objetos/esfera.h"
 #include "barra_progresso.h"	
 
 class Renderizador{    
@@ -19,14 +19,14 @@ class Renderizador{
         Camera camera;
         BarraProgresso barraProgresso;
         
-        CorRGB (*acertarObjetos)(Raio&,Renderizador&, Acerto&); 
+        CorRGB (*acertarObjetos)(Raio&, Renderizador&, Acerto&); 
 
     	CorRGB (*nAcertarObjetos)(Raio&,Renderizador&, Acerto&);
-
+        
     	Renderizador();
         Renderizador(Cena&);
         Imagem& criarImagem();
-        CorRGB colorir(Raio&);          
+        CorRGB colorir(Raio&);         
 };
 
 #include "../src/renderizador.cpp"

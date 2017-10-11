@@ -3,11 +3,12 @@
 
 #include <string>
 
-#include "leitor_cena.h"
-#include "leitor_camera.h"
-#include "leitor_objetos.h"
+#include "leitores/leitor_cena.h"
+#include "leitores/leitor_camera.h"
+#include "leitores/leitor_objetos.h"
 #include "renderizador.h"
 #include "impressora.h"
+#include "../src/sombreadores/blinnphong.cpp"
 
 class Rip {
 
@@ -16,11 +17,13 @@ private:
 	Imagem imagem;
 public:
 
-	Rip(std::string);
+	Rip(std::string, std::string);
 
-	Rip(std::string,std::string);
-
+	Rip(std::string,std::string, std::string);
+	/*
 	void renderizar(CorRGB (*nAcertarObjetos)(Raio&,Renderizador&, Acerto&), CorRGB (*nNacertarObjetos)(Raio&,Renderizador&, Acerto&));
+	*/
+	void renderizar();
 
 	void salvarImagem(std::string,std::string);
 };

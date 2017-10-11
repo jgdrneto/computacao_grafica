@@ -1,28 +1,25 @@
 #include <iostream>
 #include <stdlib.h>
 
-#include "rip.h"
-
-#include "funcoesColorir.cpp"
+#include "include/rip.h"
 
 //Método principal
 int main(int argc, char *argv[]) {
 
-	if(argc>1){
+	if(argc>2){
 
 		Rip* rip = nullptr;
 
 		switch(argc){
-
-			case 2:
-				rip = new Rip(argv[1]);
-			break;
 			case 3:
 				rip = new Rip(argv[1],argv[2]);
+			break;
+			case 4:
+				rip = new Rip(argv[1],argv[2],argv[3]);
 			break;	
 		}	
 	
-		rip->renderizar(blinnFoundObjetos2,nAcertarObjetos);
+		rip->renderizar();
 
 		//rip->renderizar(mapaProfundidadeAcerto,mapaProfundidadenAcerto);
 
