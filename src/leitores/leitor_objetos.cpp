@@ -1,4 +1,6 @@
 #include <iostream>
+
+#define PI 3.14159265
     
 std::vector<Objeto*>& LeitorObjetos::lerObjetos(std::string nomeArquivo){
     
@@ -61,12 +63,39 @@ std::vector<Objeto*>& LeitorObjetos::lerObjetos(std::string nomeArquivo){
                         if(lexemas[i]=="EXP_ESP"){
                             l->expoenteEspecular = std::stoi(lexemas[i+2].c_str(), nullptr,0);
                         
-                        i+=3;
-                        
+                            i+=3;
                         }
 
                         esfera->material = l;
-                    }else{
+                    }else if(lexemas[i+2]=="TOON"){
+                        i+=3;
+
+                        ToonMaterial* l = new ToonMaterial();
+
+                        while(i<lexemas.size() && ( lexemas[i]=="MAT_GRA" || lexemas[i]=="MAT_ANG")){
+                            if(lexemas[i]=="MAT_GRA"){
+
+                                l->gradientes.push_back(*(new CorRGB(std::stof(lexemas[i+2].c_str()),std::stof(lexemas[i+3].c_str()),std::stof(lexemas[i+4].c_str()))));
+                                
+                                i+=5;
+                            }else{
+                                if(lexemas[i]=="MAT_ANG"){
+                                    i+=2;
+                                    while(i<lexemas.size() && lexemas[i]!="TYPE"){
+
+                                        float angulo = std::stof(lexemas[i].c_str());
+
+                                        angulo = cos(angulo* PI / 180.0);
+
+                                        l->angulos.push_back(angulo);
+                                        i++;
+                                    }    
+                                }
+                            }
+                        }
+
+                        esfera->material=l;
+                    }else{    
                         esfera->material = nullptr;
                     }
                 }

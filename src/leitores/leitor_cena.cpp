@@ -66,7 +66,7 @@ Cena& LeitorCena::lerCena(std::string nomeArquivo){
         
         }else if(lexemas[i] == "LIGHT_DIR"){
             
-            Luz* luz =  new Luz();
+            Luz* luz =  new LuzDirecional();
 
             luz->intensidade[CorRGB::R] = std::stof(lexemas[i+2].c_str());
             luz->intensidade[CorRGB::G] = std::stof(lexemas[i+3].c_str());
@@ -76,13 +76,29 @@ Cena& LeitorCena::lerCena(std::string nomeArquivo){
             luz->direcao[Vetor3::Y] = std::stof(lexemas[i+6].c_str());
             luz->direcao[Vetor3::Z] = std::stof(lexemas[i+7].c_str()); 
             
-            cena->luzesDirecionais.push_back(*luz);
+            cena->luzes.push_back(luz);
 
         }else if(lexemas[i] == "LIGHT_AMB"){
 
-            cena->luzAmbiente.intensidade[CorRGB::R] = std::stof(lexemas[i+2].c_str());
-            cena->luzAmbiente.intensidade[CorRGB::G] = std::stof(lexemas[i+3].c_str());
-            cena->luzAmbiente.intensidade[CorRGB::B] = std::stof(lexemas[i+4].c_str()); 
+            cena->luzAmbiente =  new LuzDirecional();            
+
+            cena->luzAmbiente->intensidade[CorRGB::R] = std::stof(lexemas[i+2].c_str());
+            cena->luzAmbiente->intensidade[CorRGB::G] = std::stof(lexemas[i+3].c_str());
+            cena->luzAmbiente->intensidade[CorRGB::B] = std::stof(lexemas[i+4].c_str());
+
+        }else if(lexemas[i] == "LIGHT_PON"){
+
+            Luz* luz = new LuzPontual(); 
+
+            luz->intensidade[CorRGB::R] = std::stof(lexemas[i+2].c_str());
+            luz->intensidade[CorRGB::G] = std::stof(lexemas[i+3].c_str());
+            luz->intensidade[CorRGB::B] = std::stof(lexemas[i+4].c_str()); 
+
+            luz->direcao[Vetor3::X] = std::stof(lexemas[i+5].c_str());
+            luz->direcao[Vetor3::Y] = std::stof(lexemas[i+6].c_str());
+            luz->direcao[Vetor3::Z] = std::stof(lexemas[i+7].c_str());
+
+            cena->luzes.push_back(luz); 
         }
     }
         

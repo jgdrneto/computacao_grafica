@@ -9,6 +9,7 @@
 #include "renderizador.h"
 #include "impressora.h"
 #include "../src/sombreadores/blinnphong.cpp"
+#include "../src/sombreadores/toon.cpp"
 
 class Rip {
 

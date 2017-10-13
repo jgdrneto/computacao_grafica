@@ -7,6 +7,8 @@
 #include "objetos/objeto.h"
 #include "acerto.h"
 #include "luzes/luz.h"
+#include "luzes/luz_pontual.h"
+#include "luzes/luz_direcional.h"
 
 class Cena {
     
@@ -26,9 +28,9 @@ class Cena {
 
         int gama;
 
-        std::vector<Luz> luzesDirecionais; 
+        std::vector<Luz*> luzes; 
 
-        Luz luzAmbiente;
+        Luz* luzAmbiente;
 
         //Values of pixels of bords
         CorRGB superiorEsquerdo;

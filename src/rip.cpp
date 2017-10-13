@@ -7,6 +7,9 @@ Rip::Rip(std::string arquivoCena,std::string arquivoObjs,std::string sombreador)
     if(sombreador=="blinnphong"){ 
         this->renderizador.acertarObjetos = BlinnPhong::acertarObjetos;
         this->renderizador.nAcertarObjetos =  BlinnPhong::nAcertarObjetos;
+    }else if(sombreador=="toon"){ 
+        this->renderizador.acertarObjetos = Toon::acertarObjetos;
+        this->renderizador.nAcertarObjetos =  Toon::nAcertarObjetos;
     }else{
         std::cout << "Sombreador não suportado" << std::endl;
     }
@@ -19,13 +22,15 @@ Rip::Rip(std::string arquivoCena,std::string arquivoObjs,std::string sombreador)
     std::cout << "Camera horizontal: " << renderizador.camera.horizontal << std::endl;
     std::cout << "Camera vertical: " << renderizador.camera.vertical << std::endl;
     std::cout << "Camera LLC: " << renderizador.camera.canto_inferior_esquerdo << std::endl;
+    */
     
-    for(unsigned int i=0;i<this->renderizador.cena.luzesAmbientes.size();i++){
+    for(unsigned int i=0;i<this->renderizador.cena.luzes.size();i++){
         std::cout << "Luz ambiente " << i << std::endl;
-        std::cout << "Intensidade: " << this->renderizador.cena.luzesAmbientes[i].intensidade << std::endl;
-        std::cout << "Direcao: " << this->renderizador.cena.luzesAmbientes[i].direcao << std::endl;
+        std::cout << "Intensidade: " << this->renderizador.cena.luzes[i]->intensidade << std::endl;
+        std::cout << "Direcao: " << this->renderizador.cena.luzes[i]->direcao << std::endl;
     }
 
+    /*
     std::cout << "Luz Direcional " << std::endl;
     std::cout << "Intensidade: " << this->renderizador.cena.luzDirecional.intensidade << std::endl;
     std::cout << "Direcao: " << this->renderizador.cena.luzDirecional.direcao << std::endl;
@@ -38,7 +43,22 @@ Rip::Rip(std::string arquivoCena,std::string arquivoObjs,std::string sombreador)
         std::cout << "KS : " << ((Lambertiano*)obj->material)->especular << std::endl;
         std::cout << "ES : " << ((Lambertiano*)obj->material)->expoenteEspecular << std::endl;
     }
-    */    
+    */
+    /*
+    for(Objeto* obj : this->renderizador.cena.objetos){
+        std::cout << "Origem: " << obj->origem << std::endl;
+        std::cout << "Raio: " << ((Esfera*)obj)->r << std::endl;
+        std::cout << "Gradientes: " << std::endl;
+        for(CorRGB c : ((ToonMaterial*)obj->material)->gradientes){
+            std::cout << "\tCor: " << c << std::endl;
+        }
+        std::cout << "Angulos: "; 
+        for(float t : ((ToonMaterial*)obj->material)->angulos){
+            std::cout << t << " ";
+        };
+        std::cout << "" << std::endl;
+    } 
+    */   
 }
 
 Rip::Rip(std::string arquivoCena, std::string sombreador){

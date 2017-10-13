@@ -15,42 +15,25 @@ Acerto* Esfera::acertar(Raio raio,float tMin,float tMax){
 
     auto oc = raio.getOrigem() - this->origem;
     auto a = dot(raio.getDirecao(), raio.getDirecao());
-    auto b = dot(oc, raio.getDirecao());
+    auto b = 2 * dot(oc, raio.getDirecao());
     auto c = dot(oc, oc) - this->r*this->r;
 
-    float descriminante = b*b - a*c;
+    float delta = b*b - 4 * a*c;
 
-    float temp=0;
+    if(delta > 0){
 
-    if(descriminante > 0){
+    	float t = (-b -sqrt(delta))/(2*a);
 
-    	temp = (-b -sqrt(b*b-a*c))/a;
-
-    	if(temp < tMax && temp>tMin){
+    	if(t < tMax && t>tMin){
 
             acerto = new Acerto();
 
-    	   	acerto->t = temp;
+    	   	acerto->t = t;
     		acerto->ponto = raio.apontar(acerto->t);	
     		acerto->normal = (acerto->ponto - this->origem)/this->r;
     	    acerto->material = this->material;
             return acerto;   
         }	
-
-    	temp = (-b +sqrt(b*b-a*c))/a;
-
-    	if(temp < tMax && temp>tMin){
-    		
-            Acerto* acerto = new Acerto();
-
-            acerto->t = temp;
-            acerto->ponto = raio.apontar(acerto->t);    
-            acerto->normal = (acerto->ponto - this->origem)/this->r;
-            acerto->material = this->material;
-
-            return acerto;  
-        }	
-    	
 	}
 
 	return acerto;

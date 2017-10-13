@@ -8,6 +8,9 @@ class Luz{
 public:
 	Vetor3 direcao;
 	CorRGB intensidade;
+
+	virtual Vetor3 obterDirecao(Ponto3&)=0;
+
 };
 
 #endif	

@@ -3,7 +3,7 @@
 
 #include "material.h"
 
-class  Lambertiano : public Material{
+class Lambertiano : public Material{
 
 public:
 	CorRGB ambiente;

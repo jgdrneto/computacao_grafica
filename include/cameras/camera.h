@@ -2,6 +2,7 @@
 #define _CAMERA_H_
 
 #include "../vetor.h"
+#include "../raio.h"
 
 class Camera{
 
@@ -13,7 +14,7 @@ public:
 
     Camera();
     Camera(Ponto3&,Vetor3&,Vetor3&,Ponto3&);
-
+    Raio obterRaio(float u, float v);
 };
 
 #include "../../src/cameras/camera.cpp"
