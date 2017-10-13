@@ -1,8 +1,8 @@
 #include <iostream>
     
-Camera& LeitorCamera::lerConfCamera(std::string nomeArquivo){
+Camera* LeitorCamera::lerConfCamera(std::string nomeArquivo){
     
-    Camera* camera = new Camera();
+    Camera* camera = new CameraPerspectiva();
 
     std::vector<std::string> lexemas = lerLexemas(lerLinhas(nomeArquivo));
     
@@ -34,5 +34,5 @@ Camera& LeitorCamera::lerConfCamera(std::string nomeArquivo){
 
     }
 
-    return *(camera);
+    return camera;
 }

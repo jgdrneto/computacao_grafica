@@ -16,7 +16,7 @@
 class Renderizador{    
     public:
     	Cena cena;
-        Camera camera;
+        Camera* camera;
         BarraProgresso barraProgresso;
         
         CorRGB (*acertarObjetos)(Raio&, Renderizador&, Acerto&); 

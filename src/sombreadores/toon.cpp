@@ -36,49 +36,28 @@ namespace Toon{
 
         for(Luz* luz : renderizador.cena.luzes){
 
-            //std::cout << "Acerto.ponto: " << acerto.ponto << std::endl;
-            //std::cout << "Luz->direcao: " << luz->direcao << std::endl; 
-            //system("read -p \"Pressione para continuar\" saindo");
-
-            Acerto* acerto2 = renderizador.cena.acertarObjetos(*(new Raio(acerto.ponto,luz->direcao)),0.001f,renderizador.cena.profundidadeMaxima);
+            Acerto* acerto2 = renderizador.cena.acertarObjetos(*(new Raio(acerto.ponto,luz->obterDirecao(acerto.ponto))),0.001f,renderizador.cena.profundidadeMaxima);
 
             if(acerto2==NULL){
 
                 //Direçao da luz normalizada
-                l = luz->direcao - raio.getDirecao();
+                l = luz->obterDirecao(acerto.ponto) - raio.getDirecao();
                 
             	coseno_N_luz = dot( acerto.normal, l)/(acerto.normal.length() * l.length());
-                /*
-                std::cout << "l: " << l << std::endl;
-                std::cout << "coseno: " << coseno_N_luz << std::endl;
-                */
-                //system("read -p \"Pressione para continuar\" saindo");
-                
 
-                // chech if the angle is between the others intervals
             	//Checa se o angulo entá entre os outros intervalos
                 for (int j = tamAngulos-1; j >= 0; --j)
             	{  
                     
-                    //std::cout << "Condicao:" << coseno_N_luz << " >= " << toonM->angulos[0] << std::endl;
-                    //system("read -p \"Pressione para continuar\" saindo");
-                    
                     //Se ele esta entre o primeiro intervalo, o pixel é colorido com a primeira cor
                     if (j==0 && (coseno_N_luz >= toonM->angulos[0]))
                     {
-                        // if the actual light is stronger and the angle is the lower one
-                        
+
                         if (posicaoAnguloEscolhida > j )
                         { 
-                            //std::cout << "Entra aqui: j = " << j << "e angle_picked_position = "<< posicaoAnguloEscolhida << std::endl;
-                            //system("read -p \"Pressione para continuar\" saindo");
-                            
+                    
                             posicaoAnguloEscolhida = j;
 
-                            /*
-                            std::cout << "Entra aqui" << std::endl;
-                            system("PAUSE");
-                            */
                             hue = toonM->gradientes[j]; 
                         }
                     }
@@ -95,9 +74,7 @@ namespace Toon{
                         }
         	    	}
             	}
-            }else{ 
-
-                //std::cout << "Acertou algo" << std::endl;
+            }else{
 
                 sombra = true;
                 contSombra++;
@@ -105,12 +82,8 @@ namespace Toon{
         }
 
         if (sombra) {
-            //std::cout << "Ta na sombra | Cor: " << hue/(renderizador.cena.luzes.size() * contSombra) << std::endl;
-        	//system("read -p \"Pressione para continuar\" saindo");
             return hue/(renderizador.cena.luzes.size() * contSombra);
         }else{
-            //std::cout << "Nao ta na sombra | Cor: " << hue/renderizador.cena.luzes.size() << std::endl;
-         	//system("read -p \"Pressione para continuar\" saindo");
             return hue/renderizador.cena.luzes.size();
         }
 

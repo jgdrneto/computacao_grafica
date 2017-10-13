@@ -4,6 +4,8 @@
 #include <string>
 
 #include "../cameras/camera.h"
+#include "../cameras/camera_paralela.h"
+#include "../cameras/camera_perspectiva.h"
 
 #include "../vetor.h"
 
@@ -12,7 +14,7 @@
 class LeitorCamera {
 
 	public:
-    	static Camera& lerConfCamera(std::string);
+    	static Camera* lerConfCamera(std::string);
 };
 
 #include "../../src/leitores/leitor_camera.cpp"

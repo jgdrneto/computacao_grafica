@@ -12,11 +12,7 @@ public:
     Vetor3 vertical;
     Ponto3 origem;
 
-    Camera();
-    Camera(Ponto3&,Vetor3&,Vetor3&,Ponto3&);
-    Raio obterRaio(float u, float v);
+    virtual Raio obterRaio(float u, float v)=0;
 };
-
-#include "../../src/cameras/camera.cpp"
 
 #endif

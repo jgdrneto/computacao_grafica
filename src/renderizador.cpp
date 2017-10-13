@@ -116,9 +116,9 @@ Imagem& Renderizador::criarImagem(){
                 // (b) To get the end point of ray we just have to 'walk' from the
                 // vp's origin + horizontal displacement (proportional to 'col') +
                 // vertical displacement (proportional to 'row').
-                Ponto3 end_point = this->camera.canto_inferior_esquerdo + u*this->camera.horizontal + v*this->camera.vertical ;
+                Ponto3 end_point = this->camera->canto_inferior_esquerdo + u*this->camera->horizontal + v*this->camera->vertical ;
                 // The ray:
-                Raio r( this->camera.origem, end_point - this->camera.origem );
+                Raio r( this->camera->origem, end_point - this->camera->origem );
 
                 // Determine the color of the ray, as it travels through the virtual space.
                 somaCores+=colorir(r);
