@@ -1,106 +1,122 @@
 #include <iostream>
     
+std::vector<Luz*>& LeitorCena::lerLuzes(json j, Cena* cena){
+    
+    std::vector<Luz*>* luzes = new std::vector<Luz*>();
+
+    for(unsigned int i=0;i<j["LUZES"].size();i++){
+
+        Luz* luz;
+
+        if(j["LUZES"][i]["TIPO"]=="AMBIENTE"){
+
+            cena->luzAmbiente->intensidade[CorRGB::R] = j["LUZES"][i]["INTENSIDADE"]["R"];
+            cena->luzAmbiente->intensidade[CorRGB::G] = j["LUZES"][i]["INTENSIDADE"]["G"];
+            cena->luzAmbiente->intensidade[CorRGB::B] = j["LUZES"][i]["INTENSIDADE"]["B"];        
+        
+        }else if(j["LUZES"][i]["TIPO"] == "DIRECIONAL"){
+
+            LuzDirecional* luzD = new LuzDirecional();
+
+            luzD->intensidade[CorRGB::R] = j["LUZES"][i]["INTENSIDADE"]["R"];
+            luzD->intensidade[CorRGB::G] = j["LUZES"][i]["INTENSIDADE"]["G"];
+            luzD->intensidade[CorRGB::B] = j["LUZES"][i]["INTENSIDADE"]["B"];
+
+            luzD->direcao[Vetor3::X] = j["LUZES"][i]["DIRECAO"]["X"];
+            luzD->direcao[Vetor3::Y] = j["LUZES"][i]["DIRECAO"]["Y"];
+            luzD->direcao[Vetor3::Z] = j["LUZES"][i]["DIRECAO"]["Z"];            
+
+            luz = luzD;
+
+        }else if(j["LUZES"][i]["TIPO"] == "PONTUAL"){
+
+            LuzPontual* luzP = new LuzPontual();
+
+            luzP->intensidade[CorRGB::R] = j["LUZES"][i]["INTENSIDADE"]["R"];
+            luzP->intensidade[CorRGB::G] = j["LUZES"][i]["INTENSIDADE"]["G"];
+            luzP->intensidade[CorRGB::B] = j["LUZES"][i]["INTENSIDADE"]["B"];
+
+            luzP->origem[Vetor3::X] = j["LUZES"][i]["ORIGEM"]["X"];
+            luzP->origem[Vetor3::Y] = j["LUZES"][i]["ORIGEM"]["Y"];
+            luzP->origem[Vetor3::Z] = j["LUZES"][i]["ORIGEM"]["Z"];
+
+            luz = luzP;
+
+        }else if(j["LUZES"][i]["TIPO"] == "Local"){
+
+            LuzLocal* luzL = new LuzLocal();
+
+            luzL->intensidade[CorRGB::R] = j["LUZES"][i]["INTENSIDADE"]["R"];
+            luzL->intensidade[CorRGB::G] = j["LUZES"][i]["INTENSIDADE"]["G"];
+            luzL->intensidade[CorRGB::B] = j["LUZES"][i]["INTENSIDADE"]["B"];
+
+            luzL->origem[Vetor3::X] = j["LUZES"][i]["ORIGEM"]["X"];
+            luzL->origem[Vetor3::Y] = j["LUZES"][i]["ORIGEM"]["Y"];
+            luzL->origem[Vetor3::Z] = j["LUZES"][i]["ORIGEM"]["Z"];
+
+            luzL->direcao[Vetor3::X] = j["LUZES"][i]["DIRECAO"]["X"];
+            luzL->direcao[Vetor3::Y] = j["LUZES"][i]["DIRECAO"]["Y"];
+            luzL->direcao[Vetor3::Z] = j["LUZES"][i]["DIRECAO"]["Z"];
+
+            luzL->angulo = j["LUZES"][i]["ANGULO"];
+
+            luz = luzL;
+
+        }else{
+            luz = nullptr;
+        }
+
+        luzes->push_back(luz);
+    }
+
+    return *(luzes);
+}
+
 Cena& LeitorCena::lerCena(std::string nomeArquivo){
     
+    json j = Leitor::abrirArquivo(nomeArquivo);
+
     Cena* cena = new Cena();
 
-    std::vector<std::string> lexemas = lerLexemas(lerLinhas(nomeArquivo));
+    cena->nome = j["NOME"];
+    cena->tipo = j["TIPO"];
+    cena->codificacao = j["CODIFICACAO"];
+    cena->largura = j["LARGURA"];
+    cena->altura = j["ALTURA"];
+
+    cena->superiorEsquerdo[CorRGB::R] = j["SUP_ESQUERDO"]["R"];
+    cena->superiorEsquerdo[CorRGB::G] = j["SUP_ESQUERDO"]["G"]; 
+    cena->superiorEsquerdo[CorRGB::B] = j["SUP_ESQUERDO"]["B"];
     
-    for(unsigned int i =0;i<lexemas.size();i++){
-        if(lexemas[i]=="NAME"){
-            cena->nome = lexemas[i+2];
-        
-        }else if(lexemas[i]=="TYPE" ){
-            cena->tipo = lexemas[i+2];
-        
-        }else if(lexemas[i]=="CODIFICATION"){
-            cena->codificacao = lexemas[i+2];
-        
-        }else if(lexemas[i]=="WIDTH"){
-            cena->largura = std::stoi(lexemas[i+2],nullptr,0);            
-        
-        }else if(lexemas[i]=="HEIGHT"){
-            cena->altura = std::stoi(lexemas[i+2],nullptr,0);
-        
-        }else if(lexemas[i]=="UPPER_LEFT"){
-            cena->superiorEsquerdo[CorRGB::R] = std::stof(lexemas[i+2].c_str())/255;
-            cena->superiorEsquerdo[CorRGB::G] = std::stof(lexemas[i+3].c_str())/255;
-            cena->superiorEsquerdo[CorRGB::B] = std::stof(lexemas[i+4].c_str())/255;
-        
-        }else if(lexemas[i]=="UPPER_RIGHT"){
-            cena->superiorDireito[CorRGB::R] = std::stof(lexemas[i+2].c_str())/255;
-            cena->superiorDireito[CorRGB::G] = std::stof(lexemas[i+3].c_str())/255;
-            cena->superiorDireito[CorRGB::B] = std::stof(lexemas[i+4].c_str())/255;
-        
-        }else if(lexemas[i]=="LOWER_RIGHT"){
-            cena->inferiorDireito[CorRGB::R] = std::stof(lexemas[i+2].c_str())/255;
-            cena->inferiorDireito[CorRGB::G] = std::stof(lexemas[i+3].c_str())/255;
-            cena->inferiorDireito[CorRGB::B] = std::stof(lexemas[i+4].c_str())/255;
-        
-        }else if(lexemas[i]=="LOWER_LEFT"){
-            cena->inferiorEsquerdo[CorRGB::R] = std::stof(lexemas[i+2].c_str())/255;
-            cena->inferiorEsquerdo[CorRGB::G] = std::stof(lexemas[i+3].c_str())/255;
-            cena->inferiorEsquerdo[CorRGB::B] = std::stof(lexemas[i+4].c_str())/255;
-        
-        }else if(lexemas[i]=="FOREGROUND_DEPTH"){
-            cena->primeiroPlano[CorRGB::R] = std::stof(lexemas[i+2].c_str())/255;
-            cena->primeiroPlano[CorRGB::G] = std::stof(lexemas[i+3].c_str())/255;
-            cena->primeiroPlano[CorRGB::B] = std::stof(lexemas[i+4].c_str())/255;
-        
-        }else if(lexemas[i]=="BACKGROUND_DEPTH"){
-            cena->ultimoPlano[CorRGB::R] = std::stof(lexemas[i+2].c_str())/255;
-            cena->ultimoPlano[CorRGB::G] = std::stof(lexemas[i+3].c_str())/255;
-            cena->ultimoPlano[CorRGB::B] = std::stof(lexemas[i+4].c_str())/255;
-        
-        }else if(lexemas[i]=="MAX_DEPHT"){
-            cena->profundidadeMaxima = std::stof(lexemas[i+2].c_str());
-        
-        }else if(lexemas[i]=="SAMPLES"){
-            cena->amostras = std::stoi(lexemas[i+2].c_str(), nullptr,0);
-        
-        }else if(lexemas[i]=="RAY_DEPTH"){
-            cena->profundidadeRaio = std::stoi(lexemas[i+2].c_str(), nullptr,0);
-        
-        }else if(lexemas[i]=="GAMA"){
-            cena->gama = std::stoi(lexemas[i+2].c_str(), nullptr,0);
-        
-        }else if(lexemas[i] == "LIGHT_DIR"){
-            
-            Luz* luz =  new LuzDirecional();
+    cena->superiorDireito[CorRGB::R] = j["SUP_DIREITO"]["R"];
+    cena->superiorDireito[CorRGB::G] = j["SUP_DIREITO"]["G"]; 
+    cena->superiorDireito[CorRGB::B] = j["SUP_DIREITO"]["B"];
 
-            luz->intensidade[CorRGB::R] = std::stof(lexemas[i+2].c_str());
-            luz->intensidade[CorRGB::G] = std::stof(lexemas[i+3].c_str());
-            luz->intensidade[CorRGB::B] = std::stof(lexemas[i+4].c_str()); 
+    cena->inferiorEsquerdo[CorRGB::R] = j["INF_ESQUERDO"]["R"];
+    cena->inferiorEsquerdo[CorRGB::G] = j["INF_ESQUERDO"]["G"]; 
+    cena->inferiorEsquerdo[CorRGB::B] = j["INF_ESQUERDO"]["B"];
+    
+    cena->inferiorDireito[CorRGB::R] = j["INF_DIREITO"]["R"];
+    cena->inferiorDireito[CorRGB::G] = j["INF_DIREITO"]["G"]; 
+    cena->inferiorDireito[CorRGB::B] = j["INF_DIREITO"]["B"];
+    
+    cena->primeiroPlano[CorRGB::R] = j["PRI_PLANO"]["R"];
+    cena->primeiroPlano[CorRGB::G] = j["PRI_PLANO"]["G"];
+    cena->primeiroPlano[CorRGB::B] = j["PRI_PLANO"]["B"];
 
-            luz->direcao[Vetor3::X] = std::stof(lexemas[i+5].c_str());
-            luz->direcao[Vetor3::Y] = std::stof(lexemas[i+6].c_str());
-            luz->direcao[Vetor3::Z] = std::stof(lexemas[i+7].c_str()); 
-            
-            cena->luzes.push_back(luz);
+    cena->ultimoPlano[CorRGB::R] = j["ULT_PLANO"]["R"];
+    cena->ultimoPlano[CorRGB::G] = j["ULT_PLANO"]["G"];
+    cena->ultimoPlano[CorRGB::B] = j["ULT_PLANO"]["B"];
 
-        }else if(lexemas[i] == "LIGHT_AMB"){
+    cena->profundidadeMaxima = j["PRO_MAXIMA"];
 
-            cena->luzAmbiente =  new LuzDirecional();            
+    cena->amostras = j["AMOSTRAS"];
 
-            cena->luzAmbiente->intensidade[CorRGB::R] = std::stof(lexemas[i+2].c_str());
-            cena->luzAmbiente->intensidade[CorRGB::G] = std::stof(lexemas[i+3].c_str());
-            cena->luzAmbiente->intensidade[CorRGB::B] = std::stof(lexemas[i+4].c_str());
+    cena->profundidadeRaio = j["PRO_RAIO"];
 
-        }else if(lexemas[i] == "LIGHT_PON"){
+    cena->gama = j["GAMA"];
 
-            Luz* luz = new LuzPontual(); 
+    cena->luzes = lerLuzes(j, cena);
 
-            luz->intensidade[CorRGB::R] = std::stof(lexemas[i+2].c_str());
-            luz->intensidade[CorRGB::G] = std::stof(lexemas[i+3].c_str());
-            luz->intensidade[CorRGB::B] = std::stof(lexemas[i+4].c_str()); 
-
-            luz->direcao[Vetor3::X] = std::stof(lexemas[i+5].c_str());
-            luz->direcao[Vetor3::Y] = std::stof(lexemas[i+6].c_str());
-            luz->direcao[Vetor3::Z] = std::stof(lexemas[i+7].c_str());
-
-            cena->luzes.push_back(luz); 
-        }
-    }
-        
     return *(cena);
 }

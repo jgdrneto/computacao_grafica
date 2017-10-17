@@ -41,9 +41,6 @@ namespace BlinnPhong{
 
 		cor+=corAmbiente;
 
-		//Origem do raio da sombra
-		Vetor3 p = raio.getOrigem() + acerto.t * raio.getDirecao();
-
 		Vetor3 raioUnit = unit_vector(raio.getDirecao());
 
 		//Raio refletido
@@ -55,22 +52,22 @@ namespace BlinnPhong{
 		//Iterando entre as luzes
 		for(Luz* luz : renderizador.cena.luzes){
 
+			Vetor3 luzNormalizada = luz->obterDirecao(acerto.ponto);
 
-			Acerto* acerto2 = renderizador.cena.acertarObjetos(*(new Raio(p,luz->obterDirecao(acerto.ponto))),0.001,renderizador.cena.profundidadeMaxima);
+			Acerto* acerto2 = renderizador.cena.acertarObjetos(*(new Raio(acerto.ponto,luzNormalizada)),0.001,luz->obterDirecao(acerto.ponto).length());
 
 			if(acerto2==NULL){
 
 				//Direçao da luz normalizada
-				Vetor3 luzNormalizada = unit_vector(luz->obterDirecao(acerto.ponto) - raio.getDirecao());
-
+				
 				//Componente difuso
-				CorRGB difuso = lambertiano->difuso * max(0.f, dot(luzNormalizada, acerto.normal)) * luz->intensidade;
+				CorRGB difuso = lambertiano->difuso * max(0.f, dot(luzNormalizada, acerto.normal)) * luz->obterIntensidade();
 				
 				//Vetor mediano entre a a luz e o raio da camera
 				Vetor3 H = unit_vector(luzNormalizada + v);	
 
 				//Componente especular
-				Vetor3 especular = lambertiano->especular * pow(max(0.f, dot(acerto.normal, H)) , lambertiano->expoenteEspecular /*5 Componente Alfa*/ ) * luz->intensidade;
+				Vetor3 especular = lambertiano->especular * pow(max(0.f, dot(acerto.normal, H)) , lambertiano->expoenteEspecular /*5 Componente Alfa*/ ) * luz->obterIntensidade();
 
 				CorRGB espelhado(1,1,1);
 
@@ -78,7 +75,7 @@ namespace BlinnPhong{
 
 					renderizador.cena.profundidadeRaio-=1;
 
-					cor += espelhado*renderizador.colorir(*(new Raio(p , raioRefletido)));
+					cor += espelhado*renderizador.colorir(*(new Raio(acerto.ponto , raioRefletido)));
 
 				}
 

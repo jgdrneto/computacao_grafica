@@ -18,9 +18,9 @@ private:
 	Imagem imagem;
 public:
 
-	Rip(std::string, std::string);
+	Rip(std::string, std::string, std::string);
 
-	Rip(std::string,std::string, std::string);
+	Rip(std::string,std::string, std::string,std::string);
 	/*
 	void renderizar(CorRGB (*nAcertarObjetos)(Raio&,Renderizador&, Acerto&), CorRGB (*nNacertarObjetos)(Raio&,Renderizador&, Acerto&));
 	*/

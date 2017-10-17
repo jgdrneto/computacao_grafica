@@ -8,7 +8,10 @@ class LuzPontual : public Luz{
 
 public:
 
+	Ponto3 origem;
+
 	Vetor3 obterDirecao(Ponto3&);
+	Vetor3 obterIntensidade();
 
 };
 

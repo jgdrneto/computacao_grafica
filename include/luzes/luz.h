@@ -10,6 +10,7 @@ public:
 	CorRGB intensidade;
 
 	virtual Vetor3 obterDirecao(Ponto3&)=0;
+	virtual Vetor3 obterIntensidade()=0;
 
 };
 

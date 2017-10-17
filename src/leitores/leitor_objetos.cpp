@@ -2,108 +2,81 @@
 
 #define PI 3.14159265
     
-std::vector<Objeto*>& LeitorObjetos::lerObjetos(std::string nomeArquivo){
-    
-    std::vector<Objeto*>* objetos =  new std::vector<Objeto*>();
+Material* obterMaterial(json j){
 
-    std::vector<std::string> lexemas = lerLexemas(lerLinhas(nomeArquivo));
-    
-    for(unsigned int i =0;i<lexemas.size();){
+    Material* material = nullptr;
 
-        if(lexemas[i]=="TYPE"){
+    if(j["TIPO"] = "LAMBERTIANO"){
 
-            if(lexemas[i+2]=="SPHERE"){
-                
-                i=i+3;
-                
-                Esfera* esfera = new Esfera();    
+        Lambertiano* l = new Lambertiano();
 
-                if(i<lexemas.size() && lexemas[i]=="RADIUS"){
-                    esfera->r =  std::stof(lexemas[i+2].c_str());
-                    i=i+3;
-                }
-                
-                if(i<lexemas.size() && lexemas[i]=="ORIGIN"){
-                    esfera->origem[Vetor3::X] = std::stof(lexemas[i+2].c_str());
-                    esfera->origem[Vetor3::Y] = std::stof(lexemas[i+3].c_str());
-                    esfera->origem[Vetor3::Z] = std::stof(lexemas[i+4].c_str());
-                    i=i+5;
-                }
-                if(i<lexemas.size() && lexemas[i] == "MAT_TYPE"){
-                    
-                    if(lexemas[i+2]=="LAMBERTIAN"){
-                        i+=3;
-                        
-                        Lambertiano* l = new Lambertiano();
+        l->ambiente[CorRGB::R] = j["AMBIENTE"]["R"];
+        l->ambiente[CorRGB::G] = j["AMBIENTE"]["G"];
+        l->ambiente[CorRGB::B] = j["AMBIENTE"]["B"];
+                             
+        l->difuso[CorRGB::R] = j["DIFUSO"]["R"];
+        l->difuso[CorRGB::G] = j["DIFUSO"]["G"];
+        l->difuso[CorRGB::B] = j["DIFUSO"]["B"];
+                           
+        l->especular[CorRGB::R] = j["EXPECULAR"]["R"];
+        l->especular[CorRGB::B] = j["EXPECULAR"]["G"];
+        l->especular[CorRGB::B] = j["EXPECULAR"]["B"];
+                              
+        l->expoenteEspecular = j["EXP_ESPECULAR"];
+        
+        material = l;
 
-                        if(lexemas[i]=="MAT_AMB"){
-                            l->ambiente[CorRGB::R] = std::stof(lexemas[i+2].c_str());
-                            l->ambiente[CorRGB::G] = std::stof(lexemas[i+3].c_str());
-                            l->ambiente[CorRGB::B] = std::stof(lexemas[i+4].c_str());
-                        
-                        i+=5;
-                        }
+    }else if(j["TIPO"] = "TOON"){
 
-                        if(lexemas[i]=="MAT_DIF"){
-                            l->difuso[CorRGB::R] = std::stof(lexemas[i+2].c_str());
-                            l->difuso[CorRGB::G] = std::stof(lexemas[i+3].c_str());
-                            l->difuso[CorRGB::B] = std::stof(lexemas[i+4].c_str());
-                        
-                        i+=5;
-                        }
+        ToonMaterial* t = new ToonMaterial();
 
-                        if(lexemas[i]=="MAT_ESP"){
-                            l->especular[CorRGB::R] = std::stof(lexemas[i+2].c_str());
-                            l->especular[CorRGB::G] = std::stof(lexemas[i+3].c_str());
-                            l->especular[CorRGB::B] = std::stof(lexemas[i+4].c_str());
-                        
-                        i+=5;
-                        }
+        for(unsigned int n = 0; n<j["GRADIENTES"].size();n++){
 
-                        if(lexemas[i]=="EXP_ESP"){
-                            l->expoenteEspecular = std::stoi(lexemas[i+2].c_str(), nullptr,0);
-                        
-                            i+=3;
-                        }
-
-                        esfera->material = l;
-                    }else if(lexemas[i+2]=="TOON"){
-                        i+=3;
-
-                        ToonMaterial* l = new ToonMaterial();
-
-                        while(i<lexemas.size() && ( lexemas[i]=="MAT_GRA" || lexemas[i]=="MAT_ANG")){
-                            if(lexemas[i]=="MAT_GRA"){
-
-                                l->gradientes.push_back(*(new CorRGB(std::stof(lexemas[i+2].c_str()),std::stof(lexemas[i+3].c_str()),std::stof(lexemas[i+4].c_str()))));
-                                
-                                i+=5;
-                            }else{
-                                if(lexemas[i]=="MAT_ANG"){
-                                    i+=2;
-                                    while(i<lexemas.size() && lexemas[i]!="TYPE"){
-
-                                        float angulo = std::stof(lexemas[i].c_str());
-
-                                        angulo = cos(angulo* PI / 180.0);
-
-                                        l->angulos.push_back(angulo);
-                                        i++;
-                                    }    
-                                }
-                            }
-                        }
-
-                        esfera->material=l;
-                    }else{    
-                        esfera->material = nullptr;
-                    }
-                }
-
-                objetos->push_back(esfera);
-            }
+            t->gradientes.push_back(*(new CorRGB(j["GRADIENTES"][n]["R"],
+                                                 j["GRADIENTES"][n]["G"],
+                                                 j["GRADIENTES"][n]["B"])));
         }
+
+        for(unsigned int n = 0; n<j["ANGULOS"].size();n++){
+
+            float angulo = j["ANGULOS"][n]["VALOR"];
+
+            angulo = cos(angulo* PI / 180.0);
+
+            t->angulos.push_back(angulo);
+        }
+
+        material = t;    
     }
 
-    return *(objetos);             
+    return material;
+}
+
+std::vector<Objeto*>& LeitorObjetos::lerObjetos(std::string nomeArquivo){
+    
+    json j = Leitor::abrirArquivo(nomeArquivo);  
+
+    std::vector<Objeto*>* objetos =  new std::vector<Objeto*>();
+
+    for(unsigned int n=0;n<j["OBJETOS"]["ESFERAS"].size();n++){
+
+        Esfera* esfera = new Esfera();
+
+        esfera->origem[Vetor3::X] = j["OBJETOS"]["ESFERAS"][n]["ORIGEM"]["X"];
+        esfera->origem[Vetor3::Y] = j["OBJETOS"]["ESFERAS"][n]["ORIGEM"]["Y"];
+        esfera->origem[Vetor3::Z] = j["OBJETOS"]["ESFERAS"][n]["ORIGEM"]["Z"];
+                                   
+        esfera->r = j["OBJETOS"]["ESFERAS"][n]["RAIO"];
+            
+        esfera->material = obterMaterial(j["OBJETOS"]["ESFERAS"][n]["MATERIAL"]);
+            
+        objetos->push_back(esfera);
+    }
+
+
+    for(unsigned int n=0;n<j["OBJETOS"]["TRIANGULOS"].size();n++){
+            
+    }
+        
+    return *(objetos);               
 }

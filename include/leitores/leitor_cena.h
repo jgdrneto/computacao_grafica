@@ -5,12 +5,16 @@
 
 #include "cena.h"
 #include "vetor.h"
-#include "../src/utilidades.cpp"
+#include "leitor.h"
+#include "../luzes/luz_pontual.h"
+#include "../luzes/luz_direcional.h"
+#include "../luzes/luz_local.h"
 
-class LeitorCena {
+class LeitorCena : public Leitor{
 
 	public :
-        static Cena& lerCena(std::string);    
+        static Cena& lerCena(std::string);
+        static std::vector<Luz*>& lerLuzes(json j, Cena* cena);    
 };
 
 #include "../../src/leitores/leitor_cena.cpp"

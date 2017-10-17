@@ -1,37 +1,47 @@
-#include <iostream>
-    
+
 Camera* LeitorCamera::lerConfCamera(std::string nomeArquivo){
     
-    Camera* camera = new CameraPerspectiva();
+    json j = Leitor::abrirArquivo(nomeArquivo);  
 
-    std::vector<std::string> lexemas = lerLexemas(lerLinhas(nomeArquivo));
-    
-    for(unsigned int i = 0;i<lexemas.size();i++){
-        if(i<lexemas.size() && lexemas[i]=="CAMERA_LLC"){
-            camera->canto_inferior_esquerdo[Ponto3::X] = std::stof(lexemas[i+2].c_str());
-            camera->canto_inferior_esquerdo[Ponto3::Y] = std::stof(lexemas[i+3].c_str());
-            camera->canto_inferior_esquerdo[Ponto3::Z] = std::stof(lexemas[i+4].c_str());
-            i=i+5;
-        }
-        if(i<lexemas.size() && lexemas[i]=="CAMERA_HOR"){
-            camera->horizontal[Vetor3::X] = std::stof(lexemas[i+2].c_str());
-            camera->horizontal[Vetor3::Y] = std::stof(lexemas[i+3].c_str());
-            camera->horizontal[Vetor3::Z] = std::stof(lexemas[i+4].c_str());
-            i=i+5;
-        }
-        if(i<lexemas.size() && lexemas[i]=="CAMERA_VER"){
-            camera->vertical[Vetor3::X] = std::stof(lexemas[i+2].c_str());
-            camera->vertical[Vetor3::Y] = std::stof(lexemas[i+3].c_str());
-            camera->vertical[Vetor3::Z] = std::stof(lexemas[i+4].c_str());
-            i=i+5;
-        }
-        if(i<lexemas.size() && lexemas[i]=="CAMERA_ORI"){
-            camera->origem[Ponto3::X] = std::stof(lexemas[i+2].c_str());
-            camera->origem[Ponto3::Y] = std::stof(lexemas[i+3].c_str());
-            camera->origem[Ponto3::Z] = std::stof(lexemas[i+4].c_str());
-            i=i+5;
-        }
+    Camera* camera = nullptr; 
 
+    Vetor3 origem(j["CAMERA"]["ORIGEM"]["X"],
+                  j["CAMERA"]["ORIGEM"]["Y"],
+                  j["CAMERA"]["ORIGEM"]["Z"]);
+
+    Ponto3 olhando(j["CAMERA"]["OLHANDO"]["X"],
+                   j["CAMERA"]["OLHANDO"]["Y"],
+                   j["CAMERA"]["OLHANDO"]["Z"]);
+
+    Vetor3 vetorSuperior(j["CAMERA"]["VETOR_SUP"]["X"],
+                         j["CAMERA"]["VETOR_SUP"]["Y"],
+                         j["CAMERA"]["VETOR_SUP"]["Z"]);    
+
+    if(j["CAMERA"]["TIPO"]=="PERSPECTIVA"){
+
+        float fov = j["CAMERA"]["FOV"];
+
+        float aspecto = j["camera"]["ASPECTO"];
+
+        float abertura = j["camera"]["ABERTURA"];
+
+        float distanciaFocal = j["camera"]["DIST_FOCAL"];
+
+        camera = new CameraPerspectiva(origem, olhando, vetorSuperior, fov, aspecto, abertura, distanciaFocal);
+
+    }else if(j["CAMERA"]["TIPO"]=="PARALELA"){
+        /*
+        float acima = j["CAMERA"]["ACIMA"]; 
+        
+        float abaixo = j["CAMERA"]["ABAIXO"];
+
+        float esquerda = j["CAMERA"]["ESQUERDA"];
+
+        float direita = j["CAMERA"]["DIREITA"];
+
+        camera = new CameraParalela(origem, olhando, vetorSuperior, esquerda, direita, abaixo, acima);  
+        */
+        camera = nullptr;
     }
 
     return camera;

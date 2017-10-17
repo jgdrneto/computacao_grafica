@@ -4,13 +4,12 @@
 #include <string>
 #include <vector>
 
+#include "leitor.h"
 #include "../objetos/objeto.h"
 #include "../objetos/esfera.h"
 #include "../materiais/lambertiano.h"
 #include "../materiais/toon.h"
 #include "../vetor.h"
-
-#include "../src/utilidades.cpp"
 
 class LeitorObjetos {
 

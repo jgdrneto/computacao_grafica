@@ -11,7 +11,7 @@ public:
     Vetor3 horizontal;
     Vetor3 vertical;
     Ponto3 origem;
-
+    
     virtual Raio obterRaio(float u, float v)=0;
 };
 

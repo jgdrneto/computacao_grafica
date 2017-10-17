@@ -7,8 +7,6 @@
 #include "objetos/objeto.h"
 #include "acerto.h"
 #include "luzes/luz.h"
-#include "luzes/luz_pontual.h"
-#include "luzes/luz_direcional.h"
 
 class Cena {
     

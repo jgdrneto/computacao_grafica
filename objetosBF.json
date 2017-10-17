@@ -1,0 +1,62 @@
+{
+	"OBJETOS":{
+
+                "ESFERAS":[
+                            {
+                            "MATERIAL":{
+                                            "TIPO":"LAMBERTIANO",
+                                            "AMBIENTE":{
+                                                            "R": 0,
+                                                            "G": 0,
+                                                            "B": 0     
+                                                       },
+                                            "DIFUSO":{
+                                                            "R": 0,
+                                                            "G": 0,
+                                                            "B": 0     
+                                                     },
+                                            "ESPECULAR":{
+                                                            "R": 1,
+                                                            "G": 1,
+                                                            "B": 0     
+                                                        },
+                                            "EXP_ESPECULAR": 64                                 
+                                       },
+                            "ORIGEM":{
+                                        "X": 0,
+                                        "Y": 0,
+                                        "Z": -1
+                                     },
+                            "RAIO": 0.6  
+                            },
+                            {
+                            "MATERIAL":{
+                                            "TIPO":"LAMBERTIANO",
+                                            "AMBIENTE":{
+                                                            "R": 0,
+                                                            "G": 0,
+                                                            "B": 0     
+                                                       },
+                                            "DIFUSO":{
+                                                            "R": 0,
+                                                            "G": 0,
+                                                            "B": 0     
+                                                     },
+                                            "ESPECULAR":{
+                                                            "R": 1,
+                                                            "G": 1,
+                                                            "B": 0     
+                                                        },
+                                            "EXP_ESPECULAR": 5                                 
+                                       },
+                            "ORIGEM":{
+                                        "X": 0,
+                                        "Y": -100.5,
+                                        "Z": -1
+                                     },
+                            "RAIO": 100  
+                            }
+                          ]
+				
+			  }
+}

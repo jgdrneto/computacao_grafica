@@ -9,6 +9,7 @@ class LuzDirecional : public Luz{
 public:
 
 	Vetor3 obterDirecao(Ponto3&);
+	Vetor3 obterIntensidade();
 
 };
 
