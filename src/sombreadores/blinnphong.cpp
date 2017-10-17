@@ -33,11 +33,11 @@ namespace BlinnPhong{
 
 	CorRGB acertarObjetos(Raio& raio, Renderizador& renderizador, Acerto& acerto){
 
-		Lambertiano* lambertiano = (Lambertiano*)acerto.material;
+		BlinnPhongMaterial* bfm = (BlinnPhongMaterial*)acerto.material;
 
 		CorRGB cor;
 
-		CorRGB corAmbiente = lambertiano->ambiente * renderizador.cena.luzAmbiente->intensidade;
+		CorRGB corAmbiente = bfm->ambiente * renderizador.cena.luzAmbiente->intensidade;
 
 		//std::cout << "CorAmbiente: " << corAmbiente << std::endl;
 
@@ -71,7 +71,7 @@ namespace BlinnPhong{
 				//Direçao da luz normalizada
 				
 				//Componente difuso
-				CorRGB difuso = lambertiano->difuso * max(0.f, dot(luzNormalizada, acerto.normal)) * luz->obterIntensidade();
+				CorRGB difuso = bfm->difuso * max(0.f, dot(luzNormalizada, acerto.normal)) * luz->obterIntensidade();
 				
 				//std::cout << "Difuso: " << difuso << std::endl;
 
@@ -81,7 +81,7 @@ namespace BlinnPhong{
 				//std::cout << "Vetor h: " << H << std::endl;
 
 				//Componente especular
-				Vetor3 especular = lambertiano->especular * pow(max(0.f, dot(acerto.normal, H)) , lambertiano->expoenteEspecular /*5 Componente Alfa*/ ) * luz->obterIntensidade();
+				Vetor3 especular = bfm->especular * pow(max(0.f, dot(acerto.normal, H)) , bfm->expoenteEspecular /*5 Componente Alfa*/ ) * luz->obterIntensidade();
 
 				//std::cout << "Especular: " << especular << std::endl;
 

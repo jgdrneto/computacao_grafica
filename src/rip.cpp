@@ -1,11 +1,18 @@
-Rip::Rip(std::string arquivoCena,std::string arquivoObjs,std::string arquivoCam, std::string sombreador){
+Rip::Rip(std::string descricao){
+
+    json j = Leitor::abrirArquivo(descricao);
+
+    std::string arquivoCena = j["CENA"]; 
+    std::string arquivoObjs = j["OBJETOS"];
+    std::string arquivoCam = j["CAMERA"];
+    std::string sombreador = j["SOMBREADOR"];
 
     this->renderizador.cena = LeitorCena::lerCena(arquivoCena);
-    //std:: cout << "leu cena" << std::endl;
+    std:: cout << "leu cena" << std::endl;
     this->renderizador.cena.objetos = LeitorObjetos::lerObjetos(arquivoObjs);
-    //std:: cout << "leu objetos" << std::endl;
+    std:: cout << "leu objetos" << std::endl;
     this->renderizador.camera = LeitorCamera::lerConfCamera(arquivoCam);
-    //std:: cout << "leu camera" << std::endl;
+    std:: cout << "leu camera" << std::endl;
 
     if(sombreador=="blinnphong"){ 
         this->renderizador.acertarObjetos = BlinnPhong::acertarObjetos;
@@ -74,20 +81,6 @@ Rip::Rip(std::string arquivoCena,std::string arquivoObjs,std::string arquivoCam,
     */   
 }
 
-Rip::Rip(std::string arquivoCena,std:: string arquivoCam, std::string sombreador){
-
-    this->renderizador.cena = LeitorCena::lerCena(arquivoCena);
-    this->renderizador.camera = LeitorCamera::lerConfCamera(arquivoCam);
-
-    if(sombreador=="blinnphong"){        
-        this->renderizador.nAcertarObjetos = BlinnPhong::acertarObjetos;
-        this->renderizador.acertarObjetos =  BlinnPhong::nAcertarObjetos;
-    }else{
-        std::cerr << "Sombreador não suportado" << std::endl;
-    }
-
-    std:: cout << "Renderizador de Imagem Progressivo(RIP)\n" << std::endl;
-}
 /*
 void Rip::renderizar(CorRGB (*nAcertarObjetos)(Raio&,Renderizador&, Acerto&), CorRGB (*nNacertarObjetos)(Raio&,Renderizador&, Acerto&) = nullptr){
         

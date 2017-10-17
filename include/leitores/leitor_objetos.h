@@ -7,7 +7,7 @@
 #include "leitor.h"
 #include "../objetos/objeto.h"
 #include "../objetos/esfera.h"
-#include "../materiais/lambertiano.h"
+#include "../materiais/blinnphong.h"
 #include "../materiais/toon.h"
 #include "../vetor.h"
 

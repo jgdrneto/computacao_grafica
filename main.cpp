@@ -6,16 +6,13 @@
 //Método principal
 int main(int argc, char *argv[]) {
 
-	if(argc>3){
+	if(argc>1){
 
 		Rip* rip = nullptr;
 
 		switch(argc){
-			case 4:
-				rip = new Rip(argv[1],argv[2],argv[3]);
-			break;
-			case 5:
-				rip = new Rip(argv[1],argv[2],argv[3],argv[4]);
+			case 2:
+				rip = new Rip(argv[1]);
 			break;	
 		}	
 	

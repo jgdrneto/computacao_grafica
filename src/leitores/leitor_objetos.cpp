@@ -6,9 +6,9 @@ Material* obterMaterial(json j){
 
     Material* material = nullptr;
 
-    if(j["TIPO"] == "LAMBERTIANO"){
+    if(j["TIPO"] == "BLINNPHONG"){
         
-        Lambertiano* l = new Lambertiano();
+        BlinnPhongMaterial* l = new BlinnPhongMaterial();
 
         l->ambiente[CorRGB::R] = j["AMBIENTE"]["R"];
         l->ambiente[CorRGB::G] = j["AMBIENTE"]["G"];

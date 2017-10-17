@@ -1,9 +1,9 @@
-#ifndef _LAMBERTIANO_H_
-#define _LAMBERTIANO_H_
+#ifndef _BLINNPHONG_H_
+#define _BLINNPHONG_H_
 
 #include "material.h"
 
-class Lambertiano : public Material{
+class BlinnPhongMaterial : public Material{
 
 public:
 	CorRGB ambiente;
