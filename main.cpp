@@ -11,10 +11,10 @@ int main(int argc, char *argv[]) {
 		Rip* rip = nullptr;
 
 		switch(argc){
-			case 3:
+			case 4:
 				rip = new Rip(argv[1],argv[2],argv[3]);
 			break;
-			case 4:
+			case 5:
 				rip = new Rip(argv[1],argv[2],argv[3],argv[4]);
 			break;	
 		}	
@@ -33,7 +33,9 @@ int main(int argc, char *argv[]) {
  
 		rip->salvarImagem("ppm", nome);
  		
-	}
+	}else{
 
-    return 0;
+    	return 0;
+
+	}
 }

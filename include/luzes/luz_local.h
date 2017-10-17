@@ -10,7 +10,7 @@ public:
 	Vetor3 origem;
 	float angulo;
 
-	Vetor3 obterDirecao(Ponto3&);
+	Vetor3 obterDirecao(Ponto3);
 	Vetor3 obterIntensidade();
 
 };

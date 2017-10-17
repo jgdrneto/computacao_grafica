@@ -6,14 +6,16 @@ std::vector<Luz*>& LeitorCena::lerLuzes(json j, Cena* cena){
 
     for(unsigned int i=0;i<j["LUZES"].size();i++){
 
-        Luz* luz;
+        Luz* luz = nullptr;
 
         if(j["LUZES"][i]["TIPO"]=="AMBIENTE"){
+
+            cena->luzAmbiente = new LuzPontual();
 
             cena->luzAmbiente->intensidade[CorRGB::R] = j["LUZES"][i]["INTENSIDADE"]["R"];
             cena->luzAmbiente->intensidade[CorRGB::G] = j["LUZES"][i]["INTENSIDADE"]["G"];
             cena->luzAmbiente->intensidade[CorRGB::B] = j["LUZES"][i]["INTENSIDADE"]["B"];        
-        
+
         }else if(j["LUZES"][i]["TIPO"] == "DIRECIONAL"){
 
             LuzDirecional* luzD = new LuzDirecional();
@@ -42,7 +44,7 @@ std::vector<Luz*>& LeitorCena::lerLuzes(json j, Cena* cena){
 
             luz = luzP;
 
-        }else if(j["LUZES"][i]["TIPO"] == "Local"){
+        }else if(j["LUZES"][i]["TIPO"] == "LOCAL"){
 
             LuzLocal* luzL = new LuzLocal();
 
@@ -66,7 +68,10 @@ std::vector<Luz*>& LeitorCena::lerLuzes(json j, Cena* cena){
             luz = nullptr;
         }
 
-        luzes->push_back(luz);
+        if(luz !=nullptr){
+            luzes->push_back(luz);
+        }
+        
     }
 
     return *(luzes);

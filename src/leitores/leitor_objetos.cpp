@@ -6,27 +6,27 @@ Material* obterMaterial(json j){
 
     Material* material = nullptr;
 
-    if(j["TIPO"] = "LAMBERTIANO"){
-
+    if(j["TIPO"] == "LAMBERTIANO"){
+        
         Lambertiano* l = new Lambertiano();
 
         l->ambiente[CorRGB::R] = j["AMBIENTE"]["R"];
         l->ambiente[CorRGB::G] = j["AMBIENTE"]["G"];
         l->ambiente[CorRGB::B] = j["AMBIENTE"]["B"];
-                             
+        
         l->difuso[CorRGB::R] = j["DIFUSO"]["R"];
         l->difuso[CorRGB::G] = j["DIFUSO"]["G"];
         l->difuso[CorRGB::B] = j["DIFUSO"]["B"];
-                           
-        l->especular[CorRGB::R] = j["EXPECULAR"]["R"];
-        l->especular[CorRGB::B] = j["EXPECULAR"]["G"];
-        l->especular[CorRGB::B] = j["EXPECULAR"]["B"];
-                              
+
+        l->especular[CorRGB::R] = j["ESPECULAR"]["R"];
+        l->especular[CorRGB::G] = j["ESPECULAR"]["G"];
+        l->especular[CorRGB::B] = j["ESPECULAR"]["B"];
+                                  
         l->expoenteEspecular = j["EXP_ESPECULAR"];
         
         material = l;
 
-    }else if(j["TIPO"] = "TOON"){
+    }else if(j["TIPO"] == "TOON"){
 
         ToonMaterial* t = new ToonMaterial();
 

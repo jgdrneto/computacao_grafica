@@ -1,8 +1,11 @@
 Rip::Rip(std::string arquivoCena,std::string arquivoObjs,std::string arquivoCam, std::string sombreador){
 
     this->renderizador.cena = LeitorCena::lerCena(arquivoCena);
+    //std:: cout << "leu cena" << std::endl;
     this->renderizador.cena.objetos = LeitorObjetos::lerObjetos(arquivoObjs);
+    //std:: cout << "leu objetos" << std::endl;
     this->renderizador.camera = LeitorCamera::lerConfCamera(arquivoCam);
+    //std:: cout << "leu camera" << std::endl;
 
     if(sombreador=="blinnphong"){ 
         this->renderizador.acertarObjetos = BlinnPhong::acertarObjetos;
@@ -15,26 +18,36 @@ Rip::Rip(std::string arquivoCena,std::string arquivoObjs,std::string arquivoCam,
     }
 
     std:: cout << "Renderizador de Imagem Progressivo(RIP)\n" << std::endl;
-
     /*
-    std::cout << "Amostras: " << renderizador.cena.amostras << std::endl;
-    std::cout << "Camera origem: " << renderizador.camera.origem << std::endl;
-    std::cout << "Camera horizontal: " << renderizador.camera.horizontal << std::endl;
-    std::cout << "Camera vertical: " << renderizador.camera.vertical << std::endl;
-    std::cout << "Camera LLC: " << renderizador.camera.canto_inferior_esquerdo << std::endl;
+    std::cout << "Nome: " << renderizador.cena.nome << std::endl;
+    std::cout << "Tipo: " << renderizador.cena.tipo << std::endl;
+    std::cout << "Codificacao: " << renderizador.cena.codificacao << std::endl;
+    std::cout << "Largura: " << renderizador.cena.largura << std::endl;
+    std::cout << "Altura: " << renderizador.cena.altura << std::endl; 
+    std::cout << "Gama: " << renderizador.cena.gama << std::endl;
+    std::cout << "Superior Esquerdo: " << renderizador.cena.superiorEsquerdo << std::endl;
+    std::cout << "Superior Direito: " << renderizador.cena.superiorDireito << std::endl;
+    std::cout << "Inferior Esquerdo: " << renderizador.cena.inferiorEsquerdo << std::endl;
+    std::cout << "Inferior Direito: " << renderizador.cena.inferiorDireito << std::endl;
+    std::cout << "Ultimo Plano: " << renderizador.cena.ultimoPlano << std::endl;
+    std::cout << "Primeiro Plano: " << renderizador.cena.primeiroPlano << std::endl;
+    std::cout << "Profundidade Maxima: " << renderizador.cena.profundidadeMaxima << std::endl;
+    std::cout << "Profundidade Raio: " << renderizador.cena.profundidadeRaio << std::endl;
+    
+    std:: cout << "luz ambiente" << std::endl;
+
+    std::cout << "Intensidade: " << renderizador.cena.luzAmbiente->intensidade << std::endl;
     */
     /*
+    std::cout << "Luzes\n" << std::endl;
+
     for(unsigned int i=0;i<this->renderizador.cena.luzes.size();i++){
-        std::cout << "Luz ambiente " << i << std::endl;
+        std::cout << "Luz " << i << std::endl;
         std::cout << "Intensidade: " << this->renderizador.cena.luzes[i]->intensidade << std::endl;
         std::cout << "Direcao: " << this->renderizador.cena.luzes[i]->direcao << std::endl;
     }
     */
-    /*
-    std::cout << "Luz Direcional " << std::endl;
-    std::cout << "Intensidade: " << this->renderizador.cena.luzDirecional.intensidade << std::endl;
-    std::cout << "Direcao: " << this->renderizador.cena.luzDirecional.direcao << std::endl;
-    
+    /*    
     for(Objeto* obj : this->renderizador.cena.objetos){
         std::cout << "Origem: " << obj->origem << std::endl;
         std::cout << "raio: " << ((Esfera*)obj)->r << std::endl;

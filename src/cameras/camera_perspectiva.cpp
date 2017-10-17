@@ -1,5 +1,5 @@
 CameraPerspectiva::CameraPerspectiva(Ponto3& o, Ponto3& distancia, Vetor3& vup, float foco, float aspecto, float abertura, float distanciaFocal){
-	this->origem = origem;
+	this->origem = o;
 
 	this->w = unit_vector(o - distancia);
 	this->u = unit_vector(cross(vup,w));
@@ -32,9 +32,22 @@ Vetor3 random_in_unit_sphere()
 Raio CameraPerspectiva::obterRaio(float u, float v){
 
 	Vetor3 rd = this->raioLente * random_in_unit_sphere();
+	
+	//std::cout << "VALOR RD: " << rd << std::endl; 
+
 	Vetor3 foraConjunto = this->u * rd.x() + this->v * rd.y();
 	
-	Ponto3 pontoFinal = this->canto_inferior_esquerdo + this->u * this->horizontal + this->v * this->vertical;
+	//std::cout << "VALOR foraConjunto: " << foraConjunto << std::endl; 
+	
+	Ponto3 pontoFinal = this->canto_inferior_esquerdo + u * this->horizontal + v * this->vertical;
+	/*
+	std::cout << "canto_inferior_esquerdo: " << this->canto_inferior_esquerdo << std::endl;
+	std::cout << "Valor de u: " << u << std::endl;
+	std::cout << "Valor de v: " << v << std::endl;
+	std::cout << "Valor de horizontal: " << this->horizontal << std::endl;
+	std::cout << "Valor de vertical: " << this->vertical << std::endl;
+	*/
+	//std::cout << "VALOR PontoFinal: " << pontoFinal << std::endl; 
 
 	return *(new Raio(this->origem + foraConjunto, pontoFinal - this->origem - foraConjunto));
 

@@ -29,15 +29,23 @@ CorRGB Renderizador::colorir(Raio& raio){
 
     if(acerto!=nullptr){
     	
+        //std::cout << "acertou" << std::endl;
+
         return this->acertarObjetos(raio, *(this), *(acerto));
     
     }else{
+        
+        //std::cout << "acertou nada" << std::endl;
 
+        return  *(new CorRGB(0,0,0));
+
+        /*
     	if(this->nAcertarObjetos!=nullptr){
     		return this->nAcertarObjetos(raio,*(this),*(acerto));
 		}else{
 			return cena.ultimoPlano;
 		}
+        */
     }
 
 }
@@ -116,12 +124,23 @@ Imagem& Renderizador::criarImagem(){
                 // (b) To get the end point of ray we just have to 'walk' from the
                 // vp's origin + horizontal displacement (proportional to 'col') +
                 // vertical displacement (proportional to 'row').
-                Ponto3 end_point = this->camera->canto_inferior_esquerdo + u*this->camera->horizontal + v*this->camera->vertical ;
                 // The ray:
-                Raio r( this->camera->origem, end_point - this->camera->origem );
 
+                Raio r = this->camera->obterRaio(u,v);
+                /*
+                std::cout << "Raio\n"<< std::endl;
+                std::cout << "Origem :" << r.getOrigem() << std::endl;
+                std::cout << "Direcao :" << r.getDirecao() << std:: endl;
+                */    
                 // Determine the color of the ray, as it travels through the virtual space.
-                somaCores+=colorir(r);
+                
+                CorRGB cor = this->colorir(r);
+                /*
+                std::cout << "Cor:" << cor << std::endl;
+
+                system("read -p \"Pressione enter para sair\" saindo");
+                */
+                somaCores+=cor;    
             }
 
                 CorRGB c = somaCores/cena.amostras;

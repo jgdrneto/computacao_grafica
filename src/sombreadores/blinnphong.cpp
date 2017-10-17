@@ -39,20 +39,30 @@ namespace BlinnPhong{
 
 		CorRGB corAmbiente = lambertiano->ambiente * renderizador.cena.luzAmbiente->intensidade;
 
+		//std::cout << "CorAmbiente: " << corAmbiente << std::endl;
+
 		cor+=corAmbiente;
 
 		Vetor3 raioUnit = unit_vector(raio.getDirecao());
 
+		//std::cout << "RaioUnit: " << raioUnit << std::endl;
+
 		//Raio refletido
 		Vetor3 raioRefletido = raio.getDirecao() - 2 * dot(raio.getDirecao(), acerto.normal) * acerto.normal;
+
+		//std::cout << "raioRefletido: " << raioRefletido << std::endl;
 
 		//Raio que volta para a camera
 		Vetor3 v = unit_vector(Vetor3( raioUnit.x(),  raioUnit.y(), raioUnit.z()) * Vetor3(-1,-1,-1));
 
+		//std::cout << " vetor v: " << v << std::endl;
+
 		//Iterando entre as luzes
 		for(Luz* luz : renderizador.cena.luzes){
 
-			Vetor3 luzNormalizada = luz->obterDirecao(acerto.ponto);
+			Vetor3 luzNormalizada = unit_vector(luz->obterDirecao(acerto.ponto));
+
+			//std::cout << "Vetor luz normalizada: " << luzNormalizada << std::endl;
 
 			Acerto* acerto2 = renderizador.cena.acertarObjetos(*(new Raio(acerto.ponto,luzNormalizada)),0.001,luz->obterDirecao(acerto.ponto).length());
 
@@ -63,17 +73,25 @@ namespace BlinnPhong{
 				//Componente difuso
 				CorRGB difuso = lambertiano->difuso * max(0.f, dot(luzNormalizada, acerto.normal)) * luz->obterIntensidade();
 				
+				//std::cout << "Difuso: " << difuso << std::endl;
+
 				//Vetor mediano entre a a luz e o raio da camera
 				Vetor3 H = unit_vector(luzNormalizada + v);	
+
+				//std::cout << "Vetor h: " << H << std::endl;
 
 				//Componente especular
 				Vetor3 especular = lambertiano->especular * pow(max(0.f, dot(acerto.normal, H)) , lambertiano->expoenteEspecular /*5 Componente Alfa*/ ) * luz->obterIntensidade();
 
-				CorRGB espelhado(1,1,1);
+				//std::cout << "Especular: " << especular << std::endl;
+
+				CorRGB espelhado(0,0,0);
 
 				if(renderizador.cena.profundidadeRaio>0){
 
 					renderizador.cena.profundidadeRaio-=1;
+
+					//std::cout << "Cor da 1 interacao: " << cor+difuso+especular << std::endl;
 
 					cor += espelhado*renderizador.colorir(*(new Raio(acerto.ponto , raioRefletido)));
 

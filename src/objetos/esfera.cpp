@@ -14,15 +14,25 @@ Acerto* Esfera::acertar(Raio raio,float tMin,float tMax){
     Acerto* acerto = nullptr;
 
     auto oc = raio.getOrigem() - this->origem;
+
     auto a = dot(raio.getDirecao(), raio.getDirecao());
     auto b = 2 * dot(oc, raio.getDirecao());
     auto c = dot(oc, oc) - this->r*this->r;
 
     float delta = b*b - 4 * a*c;
-
+    /*
+    std::cout << "ESFERA DE RAIO: " << this->r << std::endl;
+    std::cout << "Valor oc: " << oc << std::endl;
+    std::cout << "Valor a: " << a << std::endl;
+    std::cout << "Valor b: " << b << std::endl;
+    std::cout << "Valor c: " << a << std::endl;
+    std::cout << "Valor delta: " << delta << std::endl;
+    */
     if(delta > 0){
 
     	float t = (-b -sqrt(delta))/(2*a);
+
+        //std::cout << "Valor t: " << t << std::endl;
 
     	if(t < tMax && t>tMin){
 

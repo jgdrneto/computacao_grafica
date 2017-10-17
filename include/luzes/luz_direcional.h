@@ -8,8 +8,8 @@ class LuzDirecional : public Luz{
 
 public:
 
-	Vetor3 obterDirecao(Ponto3&);
-	Vetor3 obterIntensidade();
+	virtual Vetor3 obterDirecao(Ponto3);
+	virtual Vetor3 obterIntensidade();
 
 };
 
