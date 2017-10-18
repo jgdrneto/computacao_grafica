@@ -5,7 +5,7 @@ namespace Toon{
 
 	CorRGB acertarObjetos(Raio& raio, Renderizador& renderizador, Acerto& acerto){
 
-        CorRGB hue;
+        CorRGB hue = CorRGB(0,0,0);
         Vetor3 l;
         double coseno_N_raio;
         double coseno_N_luz;
@@ -13,6 +13,8 @@ namespace Toon{
         //Calcula o coseno do angulo entre a normal do vetor e o raio da câmera
         // dot(N * D) = |N|*|D|*cosϴ
         coseno_N_raio = dot( acerto.normal, raio.getDirecao() )/( acerto.normal.length() * raio.getDirecao().length());
+
+        //std::cout << "Cosseno Raio: " << coseno_N_raio << std::endl;
 
         // Cria a borda
         if (fabs(coseno_N_raio) <= anguloBorda)
@@ -25,8 +27,12 @@ namespace Toon{
         //Obtem o tamanho do vetor de angulos
         int tamAngulos = toonM->angulos.size();
 
+        //std::cout << "tamAngulos: " << tamAngulos << std::endl;
+
         //Posição atual da cor escolhida                            
         int posicaoAnguloEscolhida = tamAngulos;
+
+        //std::cout << "posicaoAnguloEscolhida: " << posicaoAnguloEscolhida << std::endl;
 
         //Verifica se o pixel está na sombra
         bool sombra = false;
@@ -40,10 +46,16 @@ namespace Toon{
 
             if(acerto2==NULL){
 
+                //std::cout << "não tem sombra" << std::endl;
+
                 //Direçao da luz normalizada
                 l = luz->obterDirecao(acerto.ponto) - raio.getDirecao();
                 
+                //std::cout << "Depois de normalizar luz" << std::endl;
+
             	coseno_N_luz = dot( acerto.normal, l)/(acerto.normal.length() * l.length());
+
+                //std::cout << "Depois de cosseno de luz" << std::endl;
 
             	//Checa se o angulo entá entre os outros intervalos
                 for (int j = tamAngulos-1; j >= 0; --j)
@@ -58,7 +70,11 @@ namespace Toon{
                     
                             posicaoAnguloEscolhida = j;
 
+                            //std::cout << "Antes dos gradientes" << std::endl; 
+
                             hue = toonM->gradientes[j]; 
+
+                            //std::cout << "depois dos gradientes" << std::endl;
                         }
                     }
                     //Se o angulo que a luz acerta o objeto é menos que o angulo do angulo desejado
@@ -70,7 +86,9 @@ namespace Toon{
                         { 
                             posicaoAnguloEscolhida = j;
 
+                            //std::cout << "Antes dos gradientes abaixo" << std::endl; 
                             hue = toonM->gradientes[j]; 
+                            //std::cout << "depois dos gradientes abaixo" << std::endl;
                         }
         	    	}
             	}

@@ -52,7 +52,7 @@ Camera* LeitorCamera::lerConfCamera(std::string nomeArquivo){
         std::cout << "Origem" << camera->origem << std::endl; 
         */
     }else if(j["CAMERA"]["TIPO"]=="PARALELA"){
-        /*
+        
         float acima = j["CAMERA"]["ACIMA"]; 
         
         float abaixo = j["CAMERA"]["ABAIXO"];
@@ -62,8 +62,6 @@ Camera* LeitorCamera::lerConfCamera(std::string nomeArquivo){
         float direita = j["CAMERA"]["DIREITA"];
 
         camera = new CameraParalela(origem, olhando, vetorSuperior, esquerda, direita, abaixo, acima);  
-        */
-        camera = nullptr;
     }
 
     return camera;

@@ -1,0 +1,6 @@
+{
+	"CENA": "descricoes/toon/cena.json",
+	"CAMERA": "descricoes/toon/camera.json",
+	"OBJETOS": "descricoes/toon/objetos.json",
+	"SOMBREADOR": "toon" 
+}

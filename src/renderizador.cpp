@@ -29,23 +29,15 @@ CorRGB Renderizador::colorir(Raio& raio){
 
     if(acerto!=nullptr){
     	
-        //std::cout << "acertou" << std::endl;
-
         return this->acertarObjetos(raio, *(this), *(acerto));
     
     }else{
         
-        //std::cout << "acertou nada" << std::endl;
-
-        return  *(new CorRGB(0,0,0));
-
-        /*
     	if(this->nAcertarObjetos!=nullptr){
     		return this->nAcertarObjetos(raio,*(this),*(acerto));
 		}else{
 			return cena.ultimoPlano;
 		}
-        */
     }
 
 }

@@ -6,11 +6,10 @@
 class CameraParalela : public Camera{
 
 public:
-    Ponto3 canto_inferior_esquerdo;
-    Vetor3 horizontal;
-    Vetor3 vertical;
-    Ponto3 origem;
 
+	Vetor3 u, v, w;
+
+	CameraParalela(Ponto3&, Ponto3&, Vetor3&, float,float,float,float);
     Raio obterRaio(float u, float v);
 };
 

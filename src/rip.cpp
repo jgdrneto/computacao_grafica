@@ -8,11 +8,11 @@ Rip::Rip(std::string descricao){
     std::string sombreador = j["SOMBREADOR"];
 
     this->renderizador.cena = LeitorCena::lerCena(arquivoCena);
-    std:: cout << "leu cena" << std::endl;
+    //std:: cout << "leu cena" << std::endl;
     this->renderizador.cena.objetos = LeitorObjetos::lerObjetos(arquivoObjs);
-    std:: cout << "leu objetos" << std::endl;
+    //std:: cout << "leu objetos" << std::endl;
     this->renderizador.camera = LeitorCamera::lerConfCamera(arquivoCam);
-    std:: cout << "leu camera" << std::endl;
+    //std:: cout << "leu camera" << std::endl;
 
     if(sombreador=="blinnphong"){ 
         this->renderizador.acertarObjetos = BlinnPhong::acertarObjetos;

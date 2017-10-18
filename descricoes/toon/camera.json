@@ -1,15 +1,15 @@
 {
 	"CAMERA":{
-				"TIPO":"PARALELA",
+				"TIPO":"PERSPECTIVA",
                 "ORIGEM":{
                 			"X": 0,
-                        	"Y": 4,
-                        	"Z": 10
+                        	"Y": 0,
+                        	"Z": 5
                         },
                 "OLHANDO":{
                             "X": 0,
                             "Y": 0,
-                            "Z": -5
+                            "Z": -2
                         },
                 "VETOR_SUP":{
                             "X": 0,
