@@ -73,10 +73,30 @@ std::vector<Objeto*>& LeitorObjetos::lerObjetos(std::string nomeArquivo){
         objetos->push_back(esfera);
     }
 
-
     for(unsigned int n=0;n<j["OBJETOS"]["TRIANGULOS"].size();n++){
-            
-    }
+        
+        Triangulo* triangulo = new Triangulo();
+
+        triangulo->v0[Vetor3::X] = j["OBJETOS"]["TRIANGULOS"][n]["V0"]["X"];
+        triangulo->v0[Vetor3::Y] = j["OBJETOS"]["TRIANGULOS"][n]["V0"]["Y"];
+        triangulo->v0[Vetor3::Z] = j["OBJETOS"]["TRIANGULOS"][n]["V0"]["Z"];
+
+        triangulo->v1[Vetor3::X] = j["OBJETOS"]["TRIANGULOS"][n]["V1"]["X"];
+        triangulo->v1[Vetor3::Y] = j["OBJETOS"]["TRIANGULOS"][n]["V1"]["Y"];
+        triangulo->v1[Vetor3::Z] = j["OBJETOS"]["TRIANGULOS"][n]["V1"]["Z"];
+
+        triangulo->v2[Vetor3::X] = j["OBJETOS"]["TRIANGULOS"][n]["V2"]["X"];
+        triangulo->v2[Vetor3::Y] = j["OBJETOS"]["TRIANGULOS"][n]["V2"]["Y"];
+        triangulo->v2[Vetor3::Z] = j["OBJETOS"]["TRIANGULOS"][n]["V2"]["Z"];    
+        
+        triangulo->material = obterMaterial(j["OBJETOS"]["TRIANGULOS"][n]["MATERIAL"]);
+
+        triangulo->apagarCostas = j["OBJETOS"]["TRIANGULOS"][n]["APG_COSTAS"];
+        
+        objetos->push_back(triangulo);
+
+    }   
+
         
     return *(objetos);               
 }
