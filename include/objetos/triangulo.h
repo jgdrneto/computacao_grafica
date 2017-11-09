@@ -12,7 +12,7 @@ public:
 
 	Ponto3 v0,v1,v2;
 	
-	bool apagarCostas = true;
+	bool apagarCostas = false;
 
 	Triangulo();
 

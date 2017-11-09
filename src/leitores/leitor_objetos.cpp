@@ -52,6 +52,39 @@ Material* obterMaterial(json j){
     return material;
 }
 
+std::vector<glm::vec4> realizarTransformacoes(std::vector<glm::vec4> p, json j){
+
+    std::vector<glm::vec4> p_t;
+
+    glm::mat4 transformacao = glm::mat4(1.0f);
+
+    for(unsigned int t = 0;t< j.size();t++){
+
+        if(j[t]["TIPO"]=="TRANSLACAO"){
+
+            glm::vec3 fator_transformacao( j[t]["MUDAR"]["X"],
+                                           j[t]["MUDAR"]["Y"],
+                                           j[t]["MUDAR"]["Z"]);
+
+            glm::mat4 transformador = glm::translate( glm::mat4(1.0f),fator_transformacao);
+                           
+            transformacao  = transformador * transformacao;
+
+        }else if(j[t]["TIPO"]=="ROTACAO"){
+            
+            //transformacao  = transformador * transformacao;
+        }else if(j[t]["TIPO"]=="ESCALA"){
+            
+        }
+    }
+
+    for(unsigned int i=0; i<p.size(); i++){
+        p_t.push_back(transformacao * p[i]);
+    }
+
+    return p_t;    
+}
+
 std::vector<Objeto*>& LeitorObjetos::lerObjetos(std::string nomeArquivo){
     
     json j = Leitor::abrirArquivo(nomeArquivo);  
@@ -62,14 +95,31 @@ std::vector<Objeto*>& LeitorObjetos::lerObjetos(std::string nomeArquivo){
 
         Esfera* esfera = new Esfera();
 
+        std::vector<glm::vec4> pontos;
+        
+        pontos.push_back(
+                    glm::vec4(j["OBJETOS"]["ESFERAS"][n]["ORIGEM"]["X"],
+                              j["OBJETOS"]["ESFERAS"][n]["ORIGEM"]["Y"],
+                              j["OBJETOS"]["ESFERAS"][n]["ORIGEM"]["Z"],
+                              j["OBJETOS"]["ESFERAS"][n]["ORIGEM"]["H"]));
+            
+        /*
         esfera->origem[Vetor3::X] = j["OBJETOS"]["ESFERAS"][n]["ORIGEM"]["X"];
         esfera->origem[Vetor3::Y] = j["OBJETOS"]["ESFERAS"][n]["ORIGEM"]["Y"];
         esfera->origem[Vetor3::Z] = j["OBJETOS"]["ESFERAS"][n]["ORIGEM"]["Z"];
-                                   
+        */    
+
         esfera->r = j["OBJETOS"]["ESFERAS"][n]["RAIO"];
             
         esfera->material = obterMaterial(j["OBJETOS"]["ESFERAS"][n]["MATERIAL"]);
-            
+        
+        pontos = realizarTransformacoes(pontos,j["OBJETOS"]["ESFERAS"][n]["TRANSFORMACOES"]);
+
+        
+        esfera->origem[Vetor3::X] = pontos[0][0];
+        esfera->origem[Vetor3::Y] = pontos[0][1];
+        esfera->origem[Vetor3::Z] = pontos[0][2];
+        
         objetos->push_back(esfera);
     }
 
@@ -77,6 +127,28 @@ std::vector<Objeto*>& LeitorObjetos::lerObjetos(std::string nomeArquivo){
         
         Triangulo* triangulo = new Triangulo();
 
+        
+        std::vector<glm::vec4> pontos;
+
+        pontos.push_back(
+            *(new glm::vec4(j["OBJETOS"]["TRIANGULOS"][n]["V0"]["X"],
+                            j["OBJETOS"]["TRIANGULOS"][n]["V0"]["Y"],
+                            j["OBJETOS"]["TRIANGULOS"][n]["V0"]["Z"],
+                            j["OBJETOS"]["TRIANGULOS"][n]["V0"]["H"]))
+            );
+        pontos.push_back(
+            *(new glm::vec4(j["OBJETOS"]["TRIANGULOS"][n]["V1"]["X"],
+                            j["OBJETOS"]["TRIANGULOS"][n]["V1"]["Y"],
+                            j["OBJETOS"]["TRIANGULOS"][n]["V1"]["Z"],
+                            j["OBJETOS"]["TRIANGULOS"][n]["V1"]["H"]))
+            );
+        pontos.push_back(    
+            *(new glm::vec4(j["OBJETOS"]["TRIANGULOS"][n]["V2"]["X"],
+                            j["OBJETOS"]["TRIANGULOS"][n]["V2"]["Y"],
+                            j["OBJETOS"]["TRIANGULOS"][n]["V2"]["Z"],
+                            j["OBJETOS"]["TRIANGULOS"][n]["V2"]["H"]))
+            );
+        /*
         triangulo->v0[Vetor3::X] = j["OBJETOS"]["TRIANGULOS"][n]["V0"]["X"];
         triangulo->v0[Vetor3::Y] = j["OBJETOS"]["TRIANGULOS"][n]["V0"]["Y"];
         triangulo->v0[Vetor3::Z] = j["OBJETOS"]["TRIANGULOS"][n]["V0"]["Z"];
@@ -88,11 +160,26 @@ std::vector<Objeto*>& LeitorObjetos::lerObjetos(std::string nomeArquivo){
         triangulo->v2[Vetor3::X] = j["OBJETOS"]["TRIANGULOS"][n]["V2"]["X"];
         triangulo->v2[Vetor3::Y] = j["OBJETOS"]["TRIANGULOS"][n]["V2"]["Y"];
         triangulo->v2[Vetor3::Z] = j["OBJETOS"]["TRIANGULOS"][n]["V2"]["Z"];    
-        
+        */
+
         triangulo->material = obterMaterial(j["OBJETOS"]["TRIANGULOS"][n]["MATERIAL"]);
 
         triangulo->apagarCostas = j["OBJETOS"]["TRIANGULOS"][n]["APG_COSTAS"];
         
+        pontos = realizarTransformacoes(pontos,j["OBJETOS"]["TRIANGULOS"][n]["TRANSFORMACOES"]);
+        
+        triangulo->v0[Vetor3::X] = pontos[0][0];
+        triangulo->v0[Vetor3::Y] = pontos[0][1];
+        triangulo->v0[Vetor3::Z] = pontos[0][2];
+
+        triangulo->v1[Vetor3::X] = pontos[1][0];
+        triangulo->v1[Vetor3::Y] = pontos[1][1];
+        triangulo->v1[Vetor3::Z] = pontos[1][2];
+
+        triangulo->v2[Vetor3::X] = pontos[2][0];
+        triangulo->v2[Vetor3::Y] = pontos[2][1];
+        triangulo->v2[Vetor3::Z] = pontos[2][2];
+
         objetos->push_back(triangulo);
 
     }   

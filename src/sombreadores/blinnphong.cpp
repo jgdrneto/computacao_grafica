@@ -60,16 +60,19 @@ namespace BlinnPhong{
 		//Iterando entre as luzes
 		for(Luz* luz : renderizador.cena.luzes){
 
-			Vetor3 luzNormalizada = unit_vector(luz->obterDirecao(acerto.ponto));
+			Vetor3 luzNormalizada = luz->obterDirecao(acerto.ponto);
+
+			Raio sr = Raio(acerto.ponto, luzNormalizada);
 
 			//std::cout << "Vetor luz normalizada: " << luzNormalizada << std::endl;
 
-			Acerto* acerto2 = renderizador.cena.acertarObjetos(*(new Raio(acerto.ponto,luzNormalizada)),0.001,luz->obterDirecao(acerto.ponto).length());
+			Acerto* acerto2 = renderizador.cena.acertarObjetos(sr,0.001,1);
 
 			if(acerto2==NULL){
 
 				//Direçao da luz normalizada
-				
+				luzNormalizada = unit_vector(luzNormalizada);
+
 				//Componente difuso
 				CorRGB difuso = bfm->difuso * max(0.f, dot(luzNormalizada, acerto.normal)) * luz->obterIntensidade();
 				

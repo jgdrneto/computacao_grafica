@@ -14,7 +14,7 @@
 class LeitorCamera : public Leitor{
 
 	public:
-    	static Camera* lerConfCamera(std::string);
+    	static Camera* lerConfCamera(std::string, double);
 };
 
 #include "../../src/leitores/leitor_camera.cpp"

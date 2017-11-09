@@ -11,7 +11,10 @@ Rip::Rip(std::string descricao){
     //std:: cout << "leu cena" << std::endl;
     this->renderizador.cena.objetos = LeitorObjetos::lerObjetos(arquivoObjs);
     //std:: cout << "leu objetos" << std::endl;
-    this->renderizador.camera = LeitorCamera::lerConfCamera(arquivoCam);
+
+    double aspecto = this->renderizador.cena.largura/this->renderizador.cena.altura;
+
+    this->renderizador.camera = LeitorCamera::lerConfCamera(arquivoCam, aspecto);
     //std:: cout << "leu camera" << std::endl;
 
     if(sombreador=="blinnphong"){ 

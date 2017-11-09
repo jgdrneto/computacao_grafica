@@ -18,38 +18,81 @@ Acerto* Triangulo::acertar(Raio raio,float tMin,float tMax){
 
     det = dot(e1, h);
 
-    if (det > -0.0001 && det < 0.0001){
-        return acerto;
-    }
+    if(this->apagarCostas){
 
-    det_inv = 1.0/det;
+        if (det < 0.00001){
+            return acerto;
+        }
 
-    s =  raio.getOrigem() - this->v0;
+        s =  raio.getOrigem() - this->v0;
 
-    u = det_inv * dot(s, h);
+        u = dot(s, h);
 
-    if (u < 0.0 || u > 1.0){
-        return acerto;
-    }
+        if (u < 0.0 || u > det){
+            return acerto;
+        }
 
-    q = cross(s, e1);
-    v = det_inv * dot(raio.getDirecao(), q);
+        q = cross(s, e1);
+        v = dot(raio.getDirecao(), q);
     
-    if (v < 0.0 || u + v > 1.0){
-        return acerto;
-    }
-    
-    float t = det_inv * dot(e2, q);
+        if (v < 0.0 || u + v > det){
+            return acerto;
+        }
+        
+        det_inv = 1.0/det;
 
-    if(t < tMax && t>tMin){
+        float t = det_inv * dot(e2, q);
 
-        acerto = new Acerto();
+        t*=det_inv;
+        u*=det_inv;
+        v*=det_inv;
 
-        acerto->t = t;
-        acerto->ponto = raio.apontar(acerto->t);    
-        acerto->normal = unit_vector(cross(e1,e2));
-        acerto->material = this->material;
+        if(t < tMax && t>0.00001){
+
+            acerto = new Acerto();
+
+            acerto->t = t;
+            acerto->ponto = raio.apontar(acerto->t);    
+            acerto->normal = unit_vector(cross(e1,e2));
+            acerto->material = this->material;
+        }    
            
+    }else{
+
+        if (det > -0.0001 && det < 0.0001){
+            return acerto;
+        }
+
+        det_inv = 1.0/det;
+
+        s =  raio.getOrigem() - this->v0;
+
+        u = det_inv * dot(s, h);
+
+        if (u < 0.0 || u > 1.0){
+            return acerto;
+        }
+
+        q = cross(s, e1);
+        v = det_inv * dot(raio.getDirecao(), q);
+        
+        if (v < 0.0 || u + v > 1.0){
+            return acerto;
+        }
+        
+        float t = det_inv * dot(e2, q);
+
+        if(t < tMax && t>0.0001){
+
+            acerto = new Acerto();
+
+            acerto->t = t;
+            acerto->ponto = raio.apontar(acerto->t);    
+            acerto->normal = unit_vector(cross(e1,e2));
+            acerto->material = this->material;
+               
+        }
+
     }
 
 	return acerto;

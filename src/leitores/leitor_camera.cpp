@@ -1,5 +1,5 @@
 
-Camera* LeitorCamera::lerConfCamera(std::string nomeArquivo){
+Camera* LeitorCamera::lerConfCamera(std::string nomeArquivo, double aspecto){
     
     json j = Leitor::abrirArquivo(nomeArquivo);  
 
@@ -29,7 +29,7 @@ Camera* LeitorCamera::lerConfCamera(std::string nomeArquivo){
 
         //std::cout << "fov: " << fov << std::endl;
 
-        float aspecto = j["CAMERA"]["ASPECTO"];
+        //float aspecto = j["CAMERA"]["ASPECTO"];
 
         //std::cout << "aspecto: " << aspecto << std::endl;
 
