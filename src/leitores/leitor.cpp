@@ -1,8 +1,8 @@
 json& Leitor::abrirArquivo(std::string arquivo){
-	json* j = new json();
+		json* j = new json();
 
-	std::ifstream i(arquivo);
-    i >> *j;
+		std::ifstream i(arquivo);
+	    i >> *j;
 
-    return *j;
+	    return *j;
 }

@@ -1,6 +1,12 @@
 #include <iostream>
 
 #define PI 3.14159265
+
+/// User-define literal to convert from degrees to radian.
+long double convertToDegrees( long double deg )
+{
+    return deg*PI/180;
+}
     
 Material* obterMaterial(json j){
 
@@ -72,6 +78,29 @@ std::vector<glm::vec4> realizarTransformacoes(std::vector<glm::vec4> p, json j){
 
         }else if(j[t]["TIPO"]=="ROTACAO"){
             
+            std::string coordenada = j[t]["MUDAR"]["EIXO"];
+
+            glm::vec3 vetorTransformacao(0.0f,0.0f,0.0f);
+
+            if(coordenada=="X"){
+                std::cout << "Entrou no X" << std::endl;
+                vetorTransformacao.x = 1.0f;
+            }else if(coordenada=="Y"){
+                std::cout << "Entrou no Y" << std::endl;
+                vetorTransformacao.y = 1.0f;
+            }else{
+                std::cout << "Entrou no Z" << std::endl;
+                vetorTransformacao.z = 1.0f;
+            }
+
+            float angulo = convertToDegrees(j[t]["MUDAR"]["ANGULO"]);
+
+            glm::mat4 rotacao = glm::rotate(glm::mat4(1.0f), 
+                                            angulo, 
+                                            vetorTransformacao);
+                           
+            transformacao  = rotacao * transformacao;
+
             //transformacao  = transformador * transformacao;
         }else if(j[t]["TIPO"]=="ESCALA"){
             

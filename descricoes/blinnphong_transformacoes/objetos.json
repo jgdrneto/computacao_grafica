@@ -33,7 +33,7 @@
                                                 {
                                                     "TIPO": "TRANSLACAO",
                                                     "MUDAR":{
-                                                                "X":0,
+                                                                "X":2,
                                                                 "Y":0,
                                                                 "Z":0
                                                             }
@@ -100,7 +100,15 @@
                                                                         "Z":0
                                                                     }
 
-                                                        }   
+                                                        },
+                                                        {
+                                                            "TIPO": "ROTACAO",
+                                                            "MUDAR":{
+                                                                        "EIXO":"X",
+                                                                        "ANGULO": 10
+                                                                    }
+
+                                                        }
                                                      ]                                    
                                 },
                                 {

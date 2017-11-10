@@ -47,7 +47,7 @@ Acerto* Triangulo::acertar(Raio raio,float tMin,float tMax){
         u*=det_inv;
         v*=det_inv;
 
-        if(t < tMax && t>0.00001){
+        if(t <= tMax && t>0.00001){
 
             acerto = new Acerto();
 
@@ -82,7 +82,7 @@ Acerto* Triangulo::acertar(Raio raio,float tMin,float tMax){
         
         float t = det_inv * dot(e2, q);
 
-        if(t < tMax && t>0.0001){
+        if(t <= tMax && t>0.0001){
 
             acerto = new Acerto();
 
