@@ -68,13 +68,13 @@ std::vector<glm::vec4> realizarTransformacoes(std::vector<glm::vec4> p, json j){
 
         if(j[t]["TIPO"]=="TRANSLACAO"){
 
-            glm::vec3 fator_transformacao( j[t]["MUDAR"]["X"],
+            glm::vec3 fator_translacao( j[t]["MUDAR"]["X"],
                                            j[t]["MUDAR"]["Y"],
                                            j[t]["MUDAR"]["Z"]);
 
-            glm::mat4 transformador = glm::translate( glm::mat4(1.0f),fator_transformacao);
+            glm::mat4 translacao = glm::translate( glm::mat4(1.0f),fator_translacao);
                            
-            transformacao  = transformador * transformacao;
+            transformacao  = translacao * transformacao;
 
         }else if(j[t]["TIPO"]=="ROTACAO"){
             
@@ -104,6 +104,10 @@ std::vector<glm::vec4> realizarTransformacoes(std::vector<glm::vec4> p, json j){
             //transformacao  = transformador * transformacao;
         }else if(j[t]["TIPO"]=="ESCALA"){
             
+            double fator_escala = j[t]["MUDAR"];
+
+            transformacao = glm::scale(transformacao, glm::vec3 (fator_escala,fator_escala,fator_escala));
+
         }
     }
 

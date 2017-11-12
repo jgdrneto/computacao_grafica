@@ -3,8 +3,8 @@
 
 #include <string>
 
-#include "cena.h"
-#include "vetor.h"
+#include "../cena.h"
+#include "../vetor.h"
 #include "leitor.h"
 #include "../luzes/luz_pontual.h"
 #include "../luzes/luz_direcional.h"
