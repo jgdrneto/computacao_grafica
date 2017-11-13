@@ -58,7 +58,7 @@ Material* obterMaterial(json j){
     return material;
 }
 
-std::vector<glm::vec4> realizarTransformacoes(std::vector<glm::vec4> p, json j){
+std::vector<glm::vec4> realizarTransformacoes(std::vector<glm::vec4> p, json j, Objeto* objeto){
 
     std::vector<glm::vec4> p_t;
 
@@ -69,8 +69,8 @@ std::vector<glm::vec4> realizarTransformacoes(std::vector<glm::vec4> p, json j){
         if(j[t]["TIPO"]=="TRANSLACAO"){
 
             glm::vec3 fator_translacao( j[t]["MUDAR"]["X"],
-                                           j[t]["MUDAR"]["Y"],
-                                           j[t]["MUDAR"]["Z"]);
+                                        j[t]["MUDAR"]["Y"],
+                                        j[t]["MUDAR"]["Z"]);
 
             glm::mat4 translacao = glm::translate( glm::mat4(1.0f),fator_translacao);
                            
@@ -88,9 +88,11 @@ std::vector<glm::vec4> realizarTransformacoes(std::vector<glm::vec4> p, json j){
             }else if(coordenada=="Y"){
                 std::cout << "Entrou no Y" << std::endl;
                 vetorTransformacao.y = 1.0f;
-            }else{
+            }else if(coordenada=="Z"){
                 std::cout << "Entrou no Z" << std::endl;
                 vetorTransformacao.z = 1.0f;
+            }else{
+
             }
 
             float angulo = convertToDegrees(j[t]["MUDAR"]["ANGULO"]);
@@ -104,12 +106,26 @@ std::vector<glm::vec4> realizarTransformacoes(std::vector<glm::vec4> p, json j){
             //transformacao  = transformador * transformacao;
         }else if(j[t]["TIPO"]=="ESCALA"){
             
-            double fator_escala = j[t]["MUDAR"];
+            if(typeid(*objeto) == typeid(Triangulo)){
 
-            transformacao = glm::scale(transformacao, glm::vec3 (fator_escala,fator_escala,fator_escala));
+                double fator_escala = j[t]["MUDAR"];
 
+                glm::mat4 escala = glm::scale(glm::mat4(1.0f), glm::vec3 (fator_escala,fator_escala,fator_escala));
+                
+                transformacao = escala * transformacao;
+
+            }else{
+
+                Esfera* esfera = (Esfera *)objeto;
+                
+                double fator_escala = j[t]["MUDAR"];
+
+                esfera->r = esfera->r*fator_escala;                             
+                
+            }
         }
     }
+
 
     for(unsigned int i=0; i<p.size(); i++){
         p_t.push_back(transformacao * p[i]);
@@ -146,7 +162,7 @@ std::vector<Objeto*>& LeitorObjetos::lerObjetos(std::string nomeArquivo){
             
         esfera->material = obterMaterial(j["OBJETOS"]["ESFERAS"][n]["MATERIAL"]);
         
-        pontos = realizarTransformacoes(pontos,j["OBJETOS"]["ESFERAS"][n]["TRANSFORMACOES"]);
+        pontos = realizarTransformacoes(pontos,j["OBJETOS"]["ESFERAS"][n]["TRANSFORMACOES"], esfera);
 
         
         esfera->origem[Vetor3::X] = pontos[0][0];
@@ -199,7 +215,7 @@ std::vector<Objeto*>& LeitorObjetos::lerObjetos(std::string nomeArquivo){
 
         triangulo->apagarCostas = j["OBJETOS"]["TRIANGULOS"][n]["APG_COSTAS"];
         
-        pontos = realizarTransformacoes(pontos,j["OBJETOS"]["TRIANGULOS"][n]["TRANSFORMACOES"]);
+        pontos = realizarTransformacoes(pontos,j["OBJETOS"]["TRIANGULOS"][n]["TRANSFORMACOES"],triangulo);
         
         triangulo->v0[Vetor3::X] = pontos[0][0];
         triangulo->v0[Vetor3::Y] = pontos[0][1];
