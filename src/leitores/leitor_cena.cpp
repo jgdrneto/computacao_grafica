@@ -69,6 +69,7 @@ std::vector<Luz*>& LeitorCena::lerLuzes(json j, Cena* cena){
         }
 
         if(luz !=nullptr){
+
             luzes->push_back(luz);
         }
         
@@ -118,6 +119,7 @@ Cena& LeitorCena::lerCena(std::string nomeArquivo){
     cena->amostras = j["AMOSTRAS"];
 
     cena->profundidadeRaio = j["PRO_RAIO"];
+    cena->contProfundidadeRaio = j["PRO_RAIO"];
 
     cena->gama = j["GAMA"];
 

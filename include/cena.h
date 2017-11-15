@@ -42,6 +42,7 @@ class Cena {
         float profundidadeMaxima;
         
         float profundidadeRaio;
+        float contProfundidadeRaio;
 
         std::vector<Objeto*> objetos;
 

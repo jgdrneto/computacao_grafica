@@ -25,10 +25,16 @@ Renderizador::Renderizador(Cena& nCena){
 
 CorRGB Renderizador::colorir(Raio& raio){
     
+    //std::cout << "Raio D:" << raio.getDirecao() << std::endl;
+    //std::cout << "Raio O:" << raio.getOrigem() << std::endl;
+
     Acerto* acerto = this->cena.acertarObjetos(raio,0.001,this->cena.profundidadeMaxima);
 
     if(acerto!=nullptr){
-    	
+        /*
+        std::cout << "Especular: " << ((BlinnPhongMaterial*)acerto->material)->especular << std::endl;
+        std::cout << "ambiente: " << ((BlinnPhongMaterial*)acerto->material)->ambiente << std::endl;
+        */
         return this->acertarObjetos(raio, *(this), *(acerto));
     
     }else{
@@ -94,6 +100,9 @@ Imagem& Renderizador::criarImagem(){
 
     int cont=0;
 
+    //std::cout << "Altura:" << this->cena.altura << std::endl; 
+    //std::cout << "Largura:" << this->cena.largura << std::endl; 
+
     for ( auto row{this->cena.altura-1} ; row >= 0 ; --row ) // Y
     {
         for( auto col{0} ; col < this->cena.largura ; col++ ) // X
@@ -117,6 +126,9 @@ Imagem& Renderizador::criarImagem(){
                 // vp's origin + horizontal displacement (proportional to 'col') +
                 // vertical displacement (proportional to 'row').
                 // The ray:
+
+                //std::cout<< "VALOR U: " << u << std::endl;
+                //std::cout<< "VALOR V: " << v << std::endl; 
 
                 Raio r = this->camera->obterRaio(u,v);
                 /*
@@ -145,7 +157,7 @@ Imagem& Renderizador::criarImagem(){
 
                 imagem->pixeis[cont++] = *(new CorRGB(ir,ig,ib));
 
-                barraProgresso.incrementar();
+                //barraProgresso.incrementar();
         }
     }
 

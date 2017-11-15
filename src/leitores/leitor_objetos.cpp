@@ -55,7 +55,7 @@ Material* obterMaterial(json j){
         material = t;    
     }
 
-    return material;
+    return &*material;
 }
 
 std::vector<glm::vec4> realizarTransformacoes(std::vector<glm::vec4> p, json j, Objeto* objeto){
@@ -78,31 +78,42 @@ std::vector<glm::vec4> realizarTransformacoes(std::vector<glm::vec4> p, json j, 
 
         }else if(j[t]["TIPO"]=="ROTACAO"){
             
-            std::string coordenada = j[t]["MUDAR"]["EIXO"];
+            if(typeid(*objeto) != typeid(Esfera)){
 
-            glm::vec3 vetorTransformacao(0.0f,0.0f,0.0f);
+                std::string coordenada = j[t]["MUDAR"]["EIXO"];
 
-            if(coordenada=="X"){
-                std::cout << "Entrou no X" << std::endl;
-                vetorTransformacao.x = 1.0f;
-            }else if(coordenada=="Y"){
-                std::cout << "Entrou no Y" << std::endl;
-                vetorTransformacao.y = 1.0f;
-            }else if(coordenada=="Z"){
-                std::cout << "Entrou no Z" << std::endl;
-                vetorTransformacao.z = 1.0f;
-            }else{
+                glm::vec3 vetorTransformacao(0.0f,0.0f,0.0f);
 
-            }
+                if(coordenada=="X"){
+                    //std::cout << "Entrou no X" << std::endl;
+                    vetorTransformacao.x = 1.0f;
+                }else if(coordenada=="Y"){
+                    //std::cout << "Entrou no Y" << std::endl;
+                    vetorTransformacao.y = 1.0f;
+                }else if(coordenada=="Z"){
+                    //std::cout << "Entrou no Z" << std::endl;
+                    vetorTransformacao.z = 1.0f;
+                }else{
 
-            float angulo = convertToDegrees(j[t]["MUDAR"]["ANGULO"]);
+                }
 
-            glm::mat4 rotacao = glm::rotate(glm::mat4(1.0f), 
+                float angulo = convertToDegrees(j[t]["MUDAR"]["ANGULO"]);
+
+                glm::mat4 translacao1 = glm::translate( glm::mat4(1.0f), glm::vec3(-p[0].x, -p[0].y,-p[0].z)); 
+
+                glm::mat4 translacao2 = glm::translate( glm::mat4(1.0f), glm::vec3(p[0].x, p[0].y,p[0].z)); 
+
+                glm::mat4 rotacao = glm::rotate(glm::mat4(1.0f), 
                                             angulo, 
                                             vetorTransformacao);
-                           
-            transformacao  = rotacao * transformacao;
 
+                transformacao  = translacao1 * transformacao;            
+    
+                transformacao  = rotacao * transformacao;
+                
+                transformacao  = translacao2 * transformacao;            
+
+            }
             //transformacao  = transformador * transformacao;
         }else if(j[t]["TIPO"]=="ESCALA"){
             
@@ -110,9 +121,17 @@ std::vector<glm::vec4> realizarTransformacoes(std::vector<glm::vec4> p, json j, 
 
                 double fator_escala = j[t]["MUDAR"];
 
+                glm::mat4 translacao1 = glm::translate( glm::mat4(1.0f), glm::vec3(-p[0].x, -p[0].y,-p[0].z)); 
+
+                glm::mat4 translacao2 = glm::translate( glm::mat4(1.0f), glm::vec3(p[0].x, p[0].y,p[0].z)); 
+
                 glm::mat4 escala = glm::scale(glm::mat4(1.0f), glm::vec3 (fator_escala,fator_escala,fator_escala));
                 
+                transformacao  = translacao1 * transformacao;  
+                
                 transformacao = escala * transformacao;
+
+                transformacao  = translacao2 * transformacao;
 
             }else{
 

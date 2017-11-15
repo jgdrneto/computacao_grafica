@@ -1,0 +1,6 @@
+{
+	"CENA": "descricoes/blinnphong_translacao/cena.json",
+	"CAMERA": "descricoes/blinnphong_translacao/camera.json",
+	"OBJETOS": "descricoes/blinnphong_translacao/objetos.json",
+	"SOMBREADOR": "blinnphong" 
+}

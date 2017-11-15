@@ -10,22 +10,22 @@ namespace BlinnPhong{
 	}
 
 	CorRGB corrigirCor(CorRGB c){
-		if(c.r() > 1.f){
+		if(c.r() > 1){
 			c.e[0] = 1.0;
 		}
-		if(c.g() > 1.f){
+		if(c.g() > 1){
 			c.e[1] = 1.0;
 		}
-		if(c.b() > 1.f){
+		if(c.b() > 1){
 			c.e[2] = 1.0;
 		}
-		if(c.r() < 0.f){
+		if(c.r() < 0){
 			c.e[0] = 0.0;
 		}
-		if(c.g() < 0.f){
+		if(c.g() < 0){
 			c.e[1] = 0.0;
 		}
-		if(c.b() < 0.f){
+		if(c.b() < 0){
 			c.e[2] = 0.0;
 		}
 		return c;
@@ -33,7 +33,11 @@ namespace BlinnPhong{
 
 	CorRGB acertarObjetos(Raio& raio, Renderizador& renderizador, Acerto& acerto){
 
+		//std::cout << "Raio D:" << raio.getDirecao() << std::endl;
+
 		BlinnPhongMaterial* bfm = (BlinnPhongMaterial*)acerto.material;
+
+		//std::cout << "Difuso: " << bfm->difuso  << std::endl;
 
 		CorRGB cor;
 
@@ -62,11 +66,13 @@ namespace BlinnPhong{
 
 			Vetor3 luzNormalizada = luz->obterDirecao(acerto.ponto);
 
+			//std::cout << "DIRECAO LUZ: " << luzNormalizada << std::endl;
+
 			Raio sr = Raio(acerto.ponto, luzNormalizada);
 
 			//std::cout << "Vetor luz normalizada: " << luzNormalizada << std::endl;
 
-			Acerto* acerto2 = renderizador.cena.acertarObjetos(sr,0.001,1);
+			Acerto* acerto2 = renderizador.cena.acertarObjetos(sr,0.001f,1);
 
 			if(acerto2==NULL){
 
@@ -92,12 +98,16 @@ namespace BlinnPhong{
 
 				if(renderizador.cena.profundidadeRaio>0){
 
+					//std::cout << "REFLETIDO" << std::endl;
+
 					renderizador.cena.profundidadeRaio-=1;
 
 					//std::cout << "Cor da 1 interacao: " << cor+difuso+especular << std::endl;
-
+					//std::cout << "Ponto:"<< acerto.ponto << std::endl;
+					//std::cout << "Raio refletido:"<< raioRefletido << std::endl;
 					cor += espelhado*renderizador.colorir(*(new Raio(acerto.ponto , raioRefletido)));
-
+					
+					renderizador.cena.profundidadeRaio=renderizador.cena.contProfundidadeRaio;
 				}
 
 				cor += difuso + especular; 

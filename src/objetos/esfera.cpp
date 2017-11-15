@@ -28,7 +28,7 @@ Acerto* Esfera::acertar(Raio raio,float tMin,float tMax){
     std::cout << "Valor c: " << a << std::endl;
     std::cout << "Valor delta: " << delta << std::endl;
     */
-    if(delta > 0){
+    if(delta >= 0){
 
     	float t = (-b -sqrt(delta))/(2*a);
 
@@ -39,9 +39,12 @@ Acerto* Esfera::acertar(Raio raio,float tMin,float tMax){
             acerto = new Acerto();
 
     	   	acerto->t = t;
-    		acerto->ponto = raio.apontar(acerto->t);	
+    		acerto->ponto = raio.apontar(t);	
     		acerto->normal = (acerto->ponto - this->origem)/this->r;
     	    acerto->material = this->material;
+
+            //std::cout << "DIFUSO BOLA" << ((BlinnPhongMaterial*)(this->material))->difuso << std::endl;
+
             return acerto;   
         }	
 	}

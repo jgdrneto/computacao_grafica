@@ -1,6 +1,0 @@
-{
-	"CENA": "descricoes/blinnphong_transformacoes/cena.json",
-	"CAMERA": "descricoes/blinnphong_transformacoes/camera.json",
-	"OBJETOS": "descricoes/blinnphong_transformacoes/objetos.json",
-	"SOMBREADOR": "blinnphong" 
-}

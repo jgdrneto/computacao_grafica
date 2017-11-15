@@ -26,10 +26,16 @@ Acerto* Cena::acertarObjetos(Raio& raio, float tMin, float tMax){
 			
 			tDec = tempAcerto->t;
 
-			acerto = tempAcerto;
+			acerto = &*tempAcerto;
 			
 		}
 	}
-
+	/*
+	if(acerto!=nullptr){
+		std::cout << "DIFUSO aqui: " << ((BlinnPhongMaterial*)acerto->material)->difuso << std::endl;
+		std::cout << "DIFUSO aqui: " << ((BlinnPhongMaterial*)acerto->material)->especular << std::endl;
+		std::cout << "DIFUSO aqui: " << ((BlinnPhongMaterial*)acerto->material)->ambiente << std::endl;
+	}
+	*/
 	return acerto;
 }

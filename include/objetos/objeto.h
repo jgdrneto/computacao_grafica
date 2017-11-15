@@ -3,6 +3,7 @@
 
 #include "../raio.h"
 #include "../materiais/material.h"
+#include "../materiais/blinnphong.h"
 #include "../acerto.h"
 
 class Objeto{

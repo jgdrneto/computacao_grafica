@@ -21,7 +21,7 @@ Acerto* Triangulo::acertar(Raio raio,float tMin,float tMax){
     if(this->apagarCostas){
 
         if (det < 0.00001){
-            return acerto;
+            return nullptr;
         }
 
         s =  raio.getOrigem() - this->v0;
@@ -29,14 +29,14 @@ Acerto* Triangulo::acertar(Raio raio,float tMin,float tMax){
         u = dot(s, h);
 
         if (u < 0.0 || u > det){
-            return acerto;
+            return nullptr;
         }
 
         q = cross(s, e1);
         v = dot(raio.getDirecao(), q);
     
         if (v < 0.0 || u + v > det){
-            return acerto;
+            return nullptr;
         }
         
         det_inv = 1.0/det;
@@ -52,15 +52,19 @@ Acerto* Triangulo::acertar(Raio raio,float tMin,float tMax){
             acerto = new Acerto();
 
             acerto->t = t;
-            acerto->ponto = raio.apontar(acerto->t);    
+            acerto->ponto = raio.apontar(t);    
             acerto->normal = unit_vector(cross(e1,e2));
             acerto->material = this->material;
+
+            return acerto;
+        }else{
+            return nullptr;
         }    
            
     }else{
 
         if (det > -0.0001 && det < 0.0001){
-            return acerto;
+            return nullptr;
         }
 
         det_inv = 1.0/det;
@@ -70,14 +74,14 @@ Acerto* Triangulo::acertar(Raio raio,float tMin,float tMax){
         u = det_inv * dot(s, h);
 
         if (u < 0.0 || u > 1.0){
-            return acerto;
+            return nullptr;
         }
 
         q = cross(s, e1);
         v = det_inv * dot(raio.getDirecao(), q);
         
         if (v < 0.0 || u + v > 1.0){
-            return acerto;
+            return nullptr;
         }
         
         float t = det_inv * dot(e2, q);
@@ -90,10 +94,11 @@ Acerto* Triangulo::acertar(Raio raio,float tMin,float tMax){
             acerto->ponto = raio.apontar(acerto->t);    
             acerto->normal = unit_vector(cross(e1,e2));
             acerto->material = this->material;
-               
+            
+            return acerto;   
+        }else{
+            return nullptr;
         }
 
     }
-
-	return acerto;
 }

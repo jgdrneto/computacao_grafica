@@ -1,14 +1,16 @@
 Vetor3 LuzLocal::obterDirecao(Ponto3 ponto){
 	Vetor3 dir = this->origem - ponto;
 
-	Vetor3 direcao = this->origem - this->direcao;
+	Vetor3 direcaoV = this->origem - this->direcao;
 
-	float cosseno = dot(this->direcao, dir) / (direcao.length() * dir.length());
+	float cosseno = dot(direcaoV, dir) / (direcaoV.length() * dir.length());
 
-	if(cosseno >=angulo){
-		return direcao;
+	//std::cout << "Cosseno: " << cosseno << std::endl; 
+
+	if(cosseno>=this->angulo){
+		return dir;
 	}else{
-		return *(new Vetor3());
+		return *(new Vetor3(0,0,0));
 	}
 }
 
