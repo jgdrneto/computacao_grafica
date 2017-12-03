@@ -147,8 +147,11 @@ Imagem& Renderizador::criarImagem(){
                 somaCores+=cor;    
             }
 
-                CorRGB c = somaCores/cena.amostras;
+                //std::cout << "Cor: " << somaCores << std::endl;
 
+                CorRGB c = somaCores/cena.amostras;
+                
+            
                 c = CorRGB(pow(c[CorRGB::R],1.0/this->cena.gama),pow(c[CorRGB::G],1.0/this->cena.gama),pow(c[CorRGB::B],1.0/this->cena.gama));
 
                 int ir = int( 255.99f * c[CorRGB::R] );
@@ -157,7 +160,7 @@ Imagem& Renderizador::criarImagem(){
 
                 imagem->pixeis[cont++] = *(new CorRGB(ir,ig,ib));
 
-                //barraProgresso.incrementar();
+                barraProgresso.incrementar();
         }
     }
 
@@ -165,7 +168,7 @@ Imagem& Renderizador::criarImagem(){
      
     std::chrono::duration<double> duration = t2 - t1;
 
-    std::cout << "\nTempo de renderização: " << duration.count() << " segundo(s)" << std::endl;
+    std::cout << "\nTempo de renderização: " <<     duration.count() << " segundo(s)" << std::endl;
 
     return *(imagem);
 }

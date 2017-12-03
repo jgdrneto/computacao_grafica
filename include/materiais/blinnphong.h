@@ -1,5 +1,5 @@
-#ifndef _BLINNPHONG_H_
-#define _BLINNPHONG_H_
+#ifndef _BLINNPHONG_MATERIAL_H_
+#define _BLINNPHONG_MATERIAL_H_
 
 #include "material.h"
 

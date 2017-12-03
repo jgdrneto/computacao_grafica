@@ -23,71 +23,83 @@
                                             "EXP_ESPECULAR": 64                                 
                                        },
                             "ORIGEM":{
-                                        "X": -2,
-                                        "Y": -1,
-                                        "Z": -3,
+                                        "X": 1,
+                                        "Y": 0,
+                                        "Z": 0,
                                         "H": 1
                                      },
                             "RAIO": 0.5,
                             "TRANSFORMACOES":[
                                                 
-                                                {
-                                                    "TIPO": "TRANSLACAO",
-                                                    "MUDAR":{
-                                                                "X":2,
-                                                                "Y":1,
-                                                                "Z":0
-                                                            }
 
-                                                }
+                                             ]
+                            },
+                            {
+                            "MATERIAL":{
+                                            "TIPO":"BLINNPHONG",
+                                            "AMBIENTE":{
+                                                            "R": 0.1,
+                                                            "G": 0.1,
+                                                            "B": 0.1     
+                                                       },
+                                            "DIFUSO":{
+                                                            "R": 1,
+                                                            "G": 1,
+                                                            "B": 1     
+                                                     },
+                                            "ESPECULAR":{
+                                                            "R": 0.9,
+                                                            "G": 0.9,
+                                                            "B": 0.9     
+                                                        },
+                                            "EXP_ESPECULAR": 64                                 
+                                       },
+                            "ORIGEM":{
+                                        "X": -1,
+                                        "Y": 0,
+                                        "Z": 0,
+                                        "H": 1
+                                     },
+                            "RAIO": 0.5,
+                            "TRANSFORMACOES":[
+                                                
+                                             ]
+                            },
+                            {
+                            "MATERIAL":{
+                                            "TIPO":"BLINNPHONG",
+                                            "AMBIENTE":{
+                                                            "R": 0.1,
+                                                            "G": 0.1,
+                                                            "B": 0.1     
+                                                       },
+                                            "DIFUSO":{
+                                                            "R": 1,
+                                                            "G": 1,
+                                                            "B": 1     
+                                                     },
+                                            "ESPECULAR":{
+                                                            "R": 0.9,
+                                                            "G": 0.9,
+                                                            "B": 0.9     
+                                                        },
+                                            "EXP_ESPECULAR": 64                                 
+                                       },
+                            "ORIGEM":{
+                                        "X": 0,
+                                        "Y": 0,
+                                        "Z": -1,
+                                        "H": 1
+                                     },
+                            "RAIO": 0.5,
+                            "TRANSFORMACOES":[
+                                                
 
                                              ]
                             }
                           ],
                 "TRIANGULOS":[
-                                {
-                                    "APG_COSTAS":false,    
-                                    "MATERIAL":{
-                                                "TIPO":"BLINNPHONG",
-                                                "AMBIENTE":{
-                                                                "R": 0.1,
-                                                                "G": 0.1,
-                                                                "B": 0.1     
-                                                           },
-                                                "DIFUSO":{
-                                                                "R": 1,
-                                                                "G": 0,
-                                                                "B": 1     
-                                                         },
-                                                "ESPECULAR":{
-                                                                "R": 0.9,
-                                                                "G": 0.9,
-                                                                "B": 0.9     
-                                                            },
-                                                "EXP_ESPECULAR": 64                                 
-                                               },
-                                    "V0":{
-                                            "X": -1.75,
-                                            "Y": -0.75,
-                                            "Z": -4,
-                                            "H": 1
-                                         },
-                                    "V1":{
-                                            "X": 0.5,
-                                            "Y": -0.75,
-                                            "Z": -4,
-                                            "H": 1
-                                         },
-                                    "V2":{
-                                            "X": 0,
-                                            "Y": -0.75,
-                                            "Z": -8,
-                                            "H": 1
-                                         },
-                                    "TRANSFORMACOES":[
-                                                        
-                                                     ]                                    
-                                }
+                                
 
                              ]
               }

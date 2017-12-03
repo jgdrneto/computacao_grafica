@@ -23,6 +23,9 @@ Rip::Rip(std::string descricao){
     }else if(sombreador=="toon"){ 
         this->renderizador.acertarObjetos = Toon::acertarObjetos;
         this->renderizador.nAcertarObjetos =  Toon::nAcertarObjetos;
+    }else if(sombreador=="lambertiano"){
+        this->renderizador.acertarObjetos = Lambertiano::acertarObjetos;
+        this->renderizador.nAcertarObjetos =  Lambertiano::nAcertarObjetos;
     }else{
         std::cerr << "Sombreador não suportado" << std::endl;
     }

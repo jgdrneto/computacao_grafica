@@ -53,6 +53,38 @@ Material* obterMaterial(json j){
         }
 
         material = t;    
+    }else if (j["TIPO"] == "LAMBERTIANO"){
+
+        LambertianoMaterial* l = new LambertianoMaterial();
+        Textura* text = nullptr;
+
+        if(j["TEXTURA"]=="CONSTANTE"){
+            
+            ConstanteTextura* ct = new ConstanteTextura();
+
+            ct->cor[CorRGB::R] = j["COR1"]["R"];
+            ct->cor[CorRGB::G] = j["COR1"]["G"];
+            ct->cor[CorRGB::B] = j["COR1"]["B"];
+
+            text = ct;
+
+        }else if(j["TEXTURA"]=="QUADRICULADA"){
+            QuadriculadaTextura* qt = new QuadriculadaTextura();
+
+            qt->cor1[CorRGB::R] = j["COR1"]["R"];
+            qt->cor1[CorRGB::G] = j["COR1"]["G"];
+            qt->cor1[CorRGB::B] = j["COR1"]["B"];
+
+            qt->cor2[CorRGB::R] = j["COR2"]["R"];
+            qt->cor2[CorRGB::G] = j["COR2"]["G"];
+            qt->cor2[CorRGB::B] = j["COR2"]["B"];
+
+            text = qt;
+
+        }
+        l->textura = text;
+        material = l;      
+
     }
 
     return &*material;
@@ -252,6 +284,108 @@ std::vector<Objeto*>& LeitorObjetos::lerObjetos(std::string nomeArquivo){
 
     }   
 
+    for(unsigned int n=0;n<j["OBJETOS"]["PLANOS"].size();n++){
         
+        Plano* plano = new Plano();
+
+        std::vector<glm::vec4> pontosT1;
+        std::vector<glm::vec4> pontosT2;
+
+        pontosT1.push_back(
+            *(new glm::vec4(j["OBJETOS"]["PLANOS"][n]["V1"]["X"],
+                            j["OBJETOS"]["PLANOS"][n]["V1"]["Y"],
+                            j["OBJETOS"]["PLANOS"][n]["V1"]["Z"],
+                            j["OBJETOS"]["PLANOS"][n]["V1"]["H"]))
+            );    
+
+        pontosT1.push_back(
+            *(new glm::vec4(j["OBJETOS"]["PLANOS"][n]["V0"]["X"],
+                            j["OBJETOS"]["PLANOS"][n]["V0"]["Y"],
+                            j["OBJETOS"]["PLANOS"][n]["V0"]["Z"],
+                            j["OBJETOS"]["PLANOS"][n]["V0"]["H"]))
+            );
+        
+        pontosT1.push_back(    
+            *(new glm::vec4(j["OBJETOS"]["PLANOS"][n]["V2"]["X"],
+                            j["OBJETOS"]["PLANOS"][n]["V2"]["Y"],
+                            j["OBJETOS"]["PLANOS"][n]["V2"]["Z"],
+                            j["OBJETOS"]["PLANOS"][n]["V2"]["H"]))
+            );
+
+        pontosT2.push_back(
+            *(new glm::vec4(j["OBJETOS"]["PLANOS"][n]["V0"]["X"],
+                            j["OBJETOS"]["PLANOS"][n]["V0"]["Y"],
+                            j["OBJETOS"]["PLANOS"][n]["V0"]["Z"],
+                            j["OBJETOS"]["PLANOS"][n]["V0"]["H"]))
+            );
+
+        pontosT2.push_back(    
+            *(new glm::vec4(j["OBJETOS"]["PLANOS"][n]["V3"]["X"],
+                            j["OBJETOS"]["PLANOS"][n]["V3"]["Y"],
+                            j["OBJETOS"]["PLANOS"][n]["V3"]["Z"],
+                            j["OBJETOS"]["PLANOS"][n]["V3"]["H"]))
+            );
+
+        pontosT2.push_back(    
+            *(new glm::vec4(j["OBJETOS"]["PLANOS"][n]["V2"]["X"],
+                            j["OBJETOS"]["PLANOS"][n]["V2"]["Y"],
+                            j["OBJETOS"]["PLANOS"][n]["V2"]["Z"],
+                            j["OBJETOS"]["PLANOS"][n]["V2"]["H"]))
+            );
+
+        /*
+        triangulo->v0[Vetor3::X] = j["OBJETOS"]["TRIANGULOS"][n]["V0"]["X"];
+        triangulo->v0[Vetor3::Y] = j["OBJETOS"]["TRIANGULOS"][n]["V0"]["Y"];
+        triangulo->v0[Vetor3::Z] = j["OBJETOS"]["TRIANGULOS"][n]["V0"]["Z"];
+
+        triangulo->v1[Vetor3::X] = j["OBJETOS"]["TRIANGULOS"][n]["V1"]["X"];
+        triangulo->v1[Vetor3::Y] = j["OBJETOS"]["TRIANGULOS"][n]["V1"]["Y"];
+        triangulo->v1[Vetor3::Z] = j["OBJETOS"]["TRIANGULOS"][n]["V1"]["Z"];
+
+        triangulo->v2[Vetor3::X] = j["OBJETOS"]["TRIANGULOS"][n]["V2"]["X"];
+        triangulo->v2[Vetor3::Y] = j["OBJETOS"]["TRIANGULOS"][n]["V2"]["Y"];
+        triangulo->v2[Vetor3::Z] = j["OBJETOS"]["TRIANGULOS"][n]["V2"]["Z"];    
+        */
+
+        plano->triangulos.push_back(*(new Triangulo()));
+        plano->triangulos.push_back(*(new Triangulo()));
+
+        plano->triangulos[0].material = obterMaterial(j["OBJETOS"]["PLANOS"][n]["MATERIAL"]);
+        plano->triangulos[1].material = obterMaterial(j["OBJETOS"]["PLANOS"][n]["MATERIAL"]);
+
+        plano->triangulos[0].apagarCostas = j["OBJETOS"]["PLANOS"][n]["APG_COSTAS"];
+        plano->triangulos[1].apagarCostas = j["OBJETOS"]["PLANOS"][n]["APG_COSTAS"];
+
+        pontosT1 = realizarTransformacoes(pontosT1,j["OBJETOS"]["PLANOS"][n]["TRANSFORMACOES"],&plano->triangulos[0]);
+        pontosT2 = realizarTransformacoes(pontosT2,j["OBJETOS"]["PLANOS"][n]["TRANSFORMACOES"],&plano->triangulos[1]);
+        
+        plano->triangulos[0].v0[Vetor3::X] = pontosT1[0][0];
+        plano->triangulos[0].v0[Vetor3::Y] = pontosT1[0][1];
+        plano->triangulos[0].v0[Vetor3::Z] = pontosT1[0][2];
+
+        plano->triangulos[0].v1[Vetor3::X] = pontosT1[1][0];
+        plano->triangulos[0].v1[Vetor3::Y] = pontosT1[1][1];
+        plano->triangulos[0].v1[Vetor3::Z] = pontosT1[1][2];
+
+        plano->triangulos[0].v2[Vetor3::X] = pontosT1[2][0];
+        plano->triangulos[0].v2[Vetor3::Y] = pontosT1[2][1];
+        plano->triangulos[0].v2[Vetor3::Z] = pontosT1[2][2];
+
+        plano->triangulos[1].v0[Vetor3::X] = pontosT2[0][0];
+        plano->triangulos[1].v0[Vetor3::Y] = pontosT2[0][1];
+        plano->triangulos[1].v0[Vetor3::Z] = pontosT2[0][2];
+
+        plano->triangulos[1].v1[Vetor3::X] = pontosT2[1][0];
+        plano->triangulos[1].v1[Vetor3::Y] = pontosT2[1][1];
+        plano->triangulos[1].v1[Vetor3::Z] = pontosT2[1][2];
+
+        plano->triangulos[1].v2[Vetor3::X] = pontosT2[2][0];
+        plano->triangulos[1].v2[Vetor3::Y] = pontosT2[2][1];
+        plano->triangulos[1].v2[Vetor3::Z] = pontosT2[2][2];
+
+        objetos->push_back(plano);
+
+    }     
+
     return *(objetos);               
 }

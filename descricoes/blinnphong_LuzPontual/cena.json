@@ -53,8 +53,8 @@
 					"ANGULO": 15,
 					"ORIGEM":{
 								"X": 0,
-								"Y": 1,
-								"Z": -1
+								"Y": 0,
+								"Z": 0
 							 },
 					"INTENSIDADE": {
 										"R": 0.7,

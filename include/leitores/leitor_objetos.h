@@ -10,8 +10,12 @@
 #include "../objetos/objeto.h"
 #include "../objetos/esfera.h"
 #include "../objetos/triangulo.h"
+#include "../objetos/plano.h"
 #include "../materiais/blinnphong.h"
 #include "../materiais/toon.h"
+#include "../materiais/lambertiano.h"
+#include "../texturas/constante.h"
+#include "../texturas/quadriculada.h"
 #include "../vetor.h"
 
 //GLM arquivo

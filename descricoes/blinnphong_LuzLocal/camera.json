@@ -1,7 +1,6 @@
 {
     "CAMERA":{
                 "TIPO":"PERSPECTIVA",
-                "ANGULO": 10,
                 "ORIGEM":{
                             "X": 0.1,
                             "Y": 5,

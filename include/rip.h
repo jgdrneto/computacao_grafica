@@ -10,6 +10,7 @@
 #include "impressora.h"
 #include "../src/sombreadores/blinnphong.cpp"
 #include "../src/sombreadores/toon.cpp"
+#include "../src/sombreadores/lambertiano.cpp"
 
 class Rip {
 
