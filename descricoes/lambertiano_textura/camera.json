@@ -3,12 +3,12 @@
                 "TIPO":"PERSPECTIVA",
                 "ORIGEM":{
                             "X": 0,
-                            "Y": 5,
-                            "Z": 15
+                            "Y": 4,
+                            "Z": 6
                         },
                 "OLHANDO":{
                             "X": 0,
-                            "Y": 0,
+                            "Y": 1,
                             "Z": 0
                         },
                 "VETOR_SUP":{

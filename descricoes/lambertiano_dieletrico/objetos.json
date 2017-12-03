@@ -1,0 +1,70 @@
+{
+    "OBJETOS":{
+                "ESFERAS":[
+                            {
+                            "MATERIAL":{
+                                            "TIPO":"DIELETRICO",
+                                            "INDICEREFRACAO" : 1.2,
+                                            "TEXTURA" : "CONSTANTE",
+                                            "COR1":{
+                                                        "R": 1,
+                                                        "G": 0,
+                                                        "B": 0     
+                                                    }                              
+                                       },
+                            "ORIGEM":{
+                                        "X": 0,
+                                        "Y": 1.2,
+                                        "Z": 0,
+                                        "H": 1
+                                     },
+                            "RAIO": 0.2
+                            }
+                          ],  
+                "PLANOS":[
+
+                            {
+                                    "APG_COSTAS":false,    
+                                    "MATERIAL":{
+                                                "TIPO":"LAMBERTIANO",
+                                                "TEXTURA" : "QUADRICULADA",
+                                                "COR1":{
+                                                        "R": 1,
+                                                        "G": 0,
+                                                        "B": 0     
+                                                       },
+                                                "COR2":{
+                                                        "R": 0,
+                                                        "G": 0,
+                                                        "B": 1  
+                                                }                                        
+                                               },
+                                    "V0":{
+                                            "X": -1.5,
+                                            "Y": 1,
+                                            "Z": -1.5,
+                                            "H": 1
+                                         },
+                                    "V1":{
+                                            "X": -1.5,
+                                            "Y": 1,
+                                            "Z": 1.5,
+                                            "H": 1
+                                         },
+                                    "V2":{
+                                            "X": 1.5,
+                                            "Y": 1,
+                                            "Z": 1.5,
+                                            "H": 1
+                                         },
+                                    "V3":{
+                                            "X": 1.5,
+                                            "Y": 1,
+                                            "Z": -1.5,
+                                            "H": 1
+                                         }                                    
+                                }
+
+                         ]
+              }
+}

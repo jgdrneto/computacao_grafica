@@ -7,6 +7,37 @@ long double convertToDegrees( long double deg )
 {
     return deg*PI/180;
 }
+
+Textura* obterTextura(json j){
+
+    Textura* text = nullptr;
+
+    if(j["TEXTURA"]=="CONSTANTE"){
+            
+        ConstanteTextura* ct = new ConstanteTextura();
+
+        ct->cor[CorRGB::R] = j["COR1"]["R"];
+        ct->cor[CorRGB::G] = j["COR1"]["G"];
+        ct->cor[CorRGB::B] = j["COR1"]["B"];
+
+        text = ct;
+
+    }else if(j["TEXTURA"]=="QUADRICULADA"){
+        QuadriculadaTextura* qt = new QuadriculadaTextura();
+
+        qt->cor1[CorRGB::R] = j["COR1"]["R"];
+        qt->cor1[CorRGB::G] = j["COR1"]["G"];
+        qt->cor1[CorRGB::B] = j["COR1"]["B"];
+
+        qt->cor2[CorRGB::R] = j["COR2"]["R"];
+        qt->cor2[CorRGB::G] = j["COR2"]["G"];
+        qt->cor2[CorRGB::B] = j["COR2"]["B"];
+
+        text = qt;
+    }
+
+    return text;
+}
     
 Material* obterMaterial(json j){
 
@@ -54,37 +85,22 @@ Material* obterMaterial(json j){
 
         material = t;    
     }else if (j["TIPO"] == "LAMBERTIANO"){
-
+    
         LambertianoMaterial* l = new LambertianoMaterial();
-        Textura* text = nullptr;
+        l->textura = obterTextura(j);
+        l->nome = "LAMBERTIANO";
+        material = l;
 
-        if(j["TEXTURA"]=="CONSTANTE"){
-            
-            ConstanteTextura* ct = new ConstanteTextura();
+    }else if(j["TIPO"] == "DIELETRICO"){
+        
+        std::cout << "Entrou aqui" << std::endl;
 
-            ct->cor[CorRGB::R] = j["COR1"]["R"];
-            ct->cor[CorRGB::G] = j["COR1"]["G"];
-            ct->cor[CorRGB::B] = j["COR1"]["B"];
-
-            text = ct;
-
-        }else if(j["TEXTURA"]=="QUADRICULADA"){
-            QuadriculadaTextura* qt = new QuadriculadaTextura();
-
-            qt->cor1[CorRGB::R] = j["COR1"]["R"];
-            qt->cor1[CorRGB::G] = j["COR1"]["G"];
-            qt->cor1[CorRGB::B] = j["COR1"]["B"];
-
-            qt->cor2[CorRGB::R] = j["COR2"]["R"];
-            qt->cor2[CorRGB::G] = j["COR2"]["G"];
-            qt->cor2[CorRGB::B] = j["COR2"]["B"];
-
-            text = qt;
-
-        }
-        l->textura = text;
-        material = l;      
-
+        DieletricoMaterial* l = new DieletricoMaterial();
+        l->textura = obterTextura(j);
+        l->indRef = j["INDICEREFRACAO"];
+        l->nome = "DIELETRICO";
+        material = l; 
+    
     }
 
     return &*material;

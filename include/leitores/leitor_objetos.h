@@ -14,6 +14,7 @@
 #include "../materiais/blinnphong.h"
 #include "../materiais/toon.h"
 #include "../materiais/lambertiano.h"
+#include "../materiais/dieletrico.h"
 #include "../texturas/constante.h"
 #include "../texturas/quadriculada.h"
 #include "../vetor.h"

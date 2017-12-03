@@ -6,12 +6,19 @@ namespace Lambertiano{
         CorRGB atenuacao = CorRGB(1,1,1);
         CorRGB cor =  CorRGB(0,0,0);
 
-
-        LambertianoMaterial* material = (LambertianoMaterial*)acerto.material;
-
 		if(renderizador.cena.profundidadeRaio>0){
-			
-			material->obterDispersao(raio,acerto,atenuacao,raioDisperso);
+
+			if (acerto.material->nome == "LAMBERTIANO"){
+      			
+      			LambertianoMaterial* lm = (LambertianoMaterial*)acerto.material;
+    			lm->obterDispersao(raio,acerto,atenuacao,raioDisperso);
+
+    		}else{
+
+    			DieletricoMaterial* dm = (DieletricoMaterial*)acerto.material;
+    			dm->obterDispersao(raio,acerto,atenuacao,raioDisperso);
+    			
+    		}
 
 			renderizador.cena.profundidadeRaio-=1;
 

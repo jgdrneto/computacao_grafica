@@ -10,7 +10,7 @@ class ToonMaterial : public Material{
 
 public:
 	std::vector<CorRGB> gradientes;
-	std::vector<float> angulos;
+	std::vector<float> angulos; 
 };
 
 #endif

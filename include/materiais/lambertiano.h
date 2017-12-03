@@ -13,7 +13,6 @@ public:
 	Vetor3 random_in_unit_sphere();
 
 	void obterDispersao(Raio& raio, Acerto& acerto,Vetor3& atenuacao, Raio& raioDisperso);
-
 };
 
 #include "../../src/materiais/lambertiano.cpp"

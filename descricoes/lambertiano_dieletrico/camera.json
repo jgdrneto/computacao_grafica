@@ -1,0 +1,28 @@
+{
+    "CAMERA":{
+                "TIPO":"PERSPECTIVA",
+                "ORIGEM":{
+                            "X": 0,
+                            "Y": 4,
+                            "Z": 6
+                        },
+                "OLHANDO":{
+                            "X": 0,
+                            "Y": 1,
+                            "Z": 0
+                        },
+                "VETOR_SUP":{
+                            "X": 0,
+                            "Y": 1,
+                            "Z": 0
+                        },
+                "ESQUERDA": -2,
+                "DIREITA": 2,
+                "ABAIXO": -1,
+                "ACIMA": 1,
+                "FOV": 20,
+                "ASPECTO": 2,
+                "ABERTURA": 0.0,
+                "DIST_FOCAL": 2
+             }
+}
