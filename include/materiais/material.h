@@ -3,8 +3,12 @@
 
 #include <string>
 
+#include "../vetor.h"
+
 class Material{
+
 public:	
+	
 	std::string nome;
 };
 

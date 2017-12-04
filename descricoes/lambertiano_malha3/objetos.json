@@ -1,0 +1,24 @@
+{
+    "OBJETOS":{
+                "MALHAS":[
+                            {
+                                "APG_COSTAS":false,
+                                "MATERIAL":{
+                                                "TIPO":"LAMBERTIANO",
+                                                "TEXTURA" : "CONSTANTE",
+                                                "COR1":{
+                                                        "R": 0,
+                                                        "G": 0,
+                                                        "B": 0.8     
+                                                       },
+                                                "COR2":{
+                                                        "R": 0,
+                                                        "G": 0,
+                                                        "B": 1  
+                                                }                                        
+                                            },
+                                "ARQUIVOOBJ": "teste.obj"
+                            }
+                ]
+              }
+}

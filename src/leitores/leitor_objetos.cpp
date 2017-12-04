@@ -8,6 +8,55 @@ long double convertToDegrees( long double deg )
     return deg*PI/180;
 }
 
+std::vector<Triangulo> obterFaces(json j, std::string caminho){
+
+    std::vector<Triangulo> triangulos;
+    std::vector<Ponto3> pontos;
+
+    std::string nomeArquivo = j["ARQUIVOOBJ"];
+
+    std::ifstream arq;  
+    arq.open (caminho+nomeArquivo);
+    
+    std::string a;
+    float x,y,z;
+
+    if (arq.is_open() && arq.good()){
+        while(!arq.fail()){
+            arq >> a;
+
+            if(a == "v"){
+                arq >> x;
+                arq >> y;
+                arq >> z;
+
+                pontos.push_back(Ponto3(x, y, z));
+            }
+
+            if (a == "f"){
+                unsigned int p1, p2, p3;
+                arq >> p1;
+                arq >> p2;
+                arq >> p3;
+
+                Triangulo* t = new Triangulo();
+
+                t->v0 = pontos[p1-1];
+                t->v1 = pontos[p2-1];
+                t->v2 = pontos[p3-1];
+
+                t->apagarCostas = j["APG_COSTAS"];
+
+                triangulos.push_back(*t);
+            }
+        }
+    }                    
+    
+    arq.close();
+
+    return triangulos;
+}
+
 Textura* obterTextura(json j){
 
     Textura* text = nullptr;
@@ -92,8 +141,6 @@ Material* obterMaterial(json j){
         material = l;
 
     }else if(j["TIPO"] == "DIELETRICO"){
-        
-        std::cout << "Entrou aqui" << std::endl;
 
         DieletricoMaterial* l = new DieletricoMaterial();
         l->textura = obterTextura(j);
@@ -101,6 +148,11 @@ Material* obterMaterial(json j){
         l->nome = "DIELETRICO";
         material = l; 
     
+    }else if(j["TIPO"] == "DIFUSOLUMINOSO"){
+        DifusoLuminosoMaterial* dlm = new DifusoLuminosoMaterial();
+        dlm->textura =  obterTextura(j);
+        dlm->nome = "DIFUSOLUMINOSO";
+        material = dlm;
     }
 
     return &*material;
@@ -402,6 +454,24 @@ std::vector<Objeto*>& LeitorObjetos::lerObjetos(std::string nomeArquivo){
         objetos->push_back(plano);
 
     }     
+
+    for(unsigned int n=0;n<j["OBJETOS"]["MALHAS"].size();n++){
+        Malha* malha = new Malha();
+
+        unsigned int found = nomeArquivo.find_last_of("/");
+        std::string caminho = nomeArquivo.substr(0,found) + "/";
+        
+        malha->faces = obterFaces(j["OBJETOS"]["MALHAS"][n], caminho);
+
+        Material* m = obterMaterial(j["OBJETOS"]["MALHAS"][n]["MATERIAL"]);
+
+        for(unsigned int i=0;i<malha->faces.size();i++){
+            malha->faces[i].material = m; 
+        }
+
+        objetos->push_back(malha);
+
+    }
 
     return *(objetos);               
 }

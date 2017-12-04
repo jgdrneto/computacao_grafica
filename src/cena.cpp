@@ -30,6 +30,9 @@ Acerto* Cena::acertarObjetos(Raio& raio, float tMin, float tMax){
 			
 		}
 	}
+
+	delete tempAcerto;
+
 	/*
 	if(acerto!=nullptr){
 		std::cout << "DIFUSO aqui: " << ((BlinnPhongMaterial*)acerto->material)->difuso << std::endl;

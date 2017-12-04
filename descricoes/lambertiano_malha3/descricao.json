@@ -1,0 +1,6 @@
+{
+	"CENA": "descricoes/lambertiano_malha3/cena.json",
+	"CAMERA": "descricoes/lambertiano_malha3/camera.json",
+	"OBJETOS": "descricoes/lambertiano_malha3/objetos.json",
+	"SOMBREADOR": "lambertiano" 
+}

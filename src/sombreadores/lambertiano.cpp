@@ -5,6 +5,14 @@ namespace Lambertiano{
 		Raio raioDisperso = raio;
         CorRGB atenuacao = CorRGB(1,1,1);
         CorRGB cor =  CorRGB(0,0,0);
+        CorRGB emitido =  CorRGB(0,0,0);
+
+        if (acerto.material->nome == "DIFUSOLUMINOSO"){
+        	
+        	DifusoLuminosoMaterial* dfm = (DifusoLuminosoMaterial*)acerto.material;
+
+    		return dfm->obterEmissaoLuz(0,0,acerto.ponto);
+        }
 
 		if(renderizador.cena.profundidadeRaio>0){
 
@@ -13,7 +21,7 @@ namespace Lambertiano{
       			LambertianoMaterial* lm = (LambertianoMaterial*)acerto.material;
     			lm->obterDispersao(raio,acerto,atenuacao,raioDisperso);
 
-    		}else{
+    		}else if(acerto.material->nome == "DIELETRICO"){
 
     			DieletricoMaterial* dm = (DieletricoMaterial*)acerto.material;
     			dm->obterDispersao(raio,acerto,atenuacao,raioDisperso);
@@ -22,10 +30,10 @@ namespace Lambertiano{
 
 			renderizador.cena.profundidadeRaio-=1;
 
-			cor += atenuacao*renderizador.colorir(raioDisperso);
+			cor += emitido + atenuacao*renderizador.colorir(raioDisperso);
 
 		}else{
-			cor = CorRGB(0,0,0);
+			cor = CorRGB(1,1,1);
 		}
 
 
@@ -35,6 +43,7 @@ namespace Lambertiano{
 	}
 
 	CorRGB nAcertarObjetos(Raio& raio,Renderizador& renderizador, Acerto& acerto){
+		
 		CorRGB top (0.5, 0.7, 1 );
 	    CorRGB bottom(1,1,1);
 

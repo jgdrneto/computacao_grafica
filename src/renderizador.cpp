@@ -46,6 +46,7 @@ CorRGB Renderizador::colorir(Raio& raio){
 		}
     }
 
+    delete acerto;
 }
 
 /*

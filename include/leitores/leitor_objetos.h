@@ -5,16 +5,19 @@
 #include <vector>
 #include <ios>
 #include <iomanip>
+#include <fstream>
 
 #include "leitor.h"
 #include "../objetos/objeto.h"
 #include "../objetos/esfera.h"
 #include "../objetos/triangulo.h"
 #include "../objetos/plano.h"
+#include "../objetos/malha.h"
 #include "../materiais/blinnphong.h"
 #include "../materiais/toon.h"
 #include "../materiais/lambertiano.h"
 #include "../materiais/dieletrico.h"
+#include "../materiais/difusoLuminoso.h"
 #include "../texturas/constante.h"
 #include "../texturas/quadriculada.h"
 #include "../vetor.h"

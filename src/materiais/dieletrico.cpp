@@ -6,9 +6,9 @@ Vetor3 DieletricoMaterial::reflexao(Vetor3 v, Vetor3 n){
 
 bool DieletricoMaterial::refracao(Vetor3 v, Vetor3& n, float ni_over_nt, Vetor3& refratado){
 
-	Vetor3 uv = unit_vector(v);
+	//Vetor3 uv = unit_vector(v);
     float dt = dot(v, n);
-    float discriminante =  1.0 - ni_over_nt*ni_over_nt * (1 -dt*dt);
+    float discriminante =  1.f - (ni_over_nt*ni_over_nt * (1 -(dt*dt)));
     if(discriminante > 0){
         refratado = ni_over_nt*(v - n*dt) - n*sqrt(discriminante);
         return true;
@@ -34,7 +34,13 @@ void DieletricoMaterial::obterDispersao(Raio& raio, Acerto& acerto,Vetor3& atenu
 
         outward_normal =-acerto.normal;
         ni_over_nt = indRef;
+        
         coseno = indRef * dot(raio.getDirecao(), acerto.normal) / raio.getDirecao().length();
+
+        /*
+        coseno = (dot(raio.getDirecao(), acerto.normal) / raio.getDirecao().length());
+        coseno = std::sqrt(1 - ((indRef * indRef) * (1 - (coseno * coseno))));
+        */
     
     }else{
         outward_normal = acerto.normal;
@@ -45,14 +51,12 @@ void DieletricoMaterial::obterDispersao(Raio& raio, Acerto& acerto,Vetor3& atenu
     if(refracao(raio.getDirecao(), outward_normal, ni_over_nt, refratado)){
 
         reflect_prob = schlick(coseno, ni_over_nt);
-        raioDisperso = Raio(acerto.ponto, refratado);
     
     }else{
         reflect_prob = 1.0;
-        raioDisperso = Raio(acerto.ponto, refletido);
     }
 
-    if(drand48() <= reflect_prob){
+    if(drand48() < reflect_prob){
         raioDisperso = Raio(acerto.ponto, refletido);
     }else{
         raioDisperso = Raio(acerto.ponto, refratado);
